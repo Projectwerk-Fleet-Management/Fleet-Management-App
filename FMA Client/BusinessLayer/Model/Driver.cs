@@ -20,81 +20,82 @@ namespace BusinessLayer
         public Fuelcard AssignedFuelcard { get; private set; }
         private static NINValidator NINValidator = new NINValidator();
 
-        #region ctors
-
-        //Constructor without car, fuelcard, address and licenses
-        public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber)
-        {
-            SetDriverId(driverId);
-            SetLastName(lastName);
-            SetFirstName(firstName);
-            SetDateOfBirth(dateOfBirth);
-            SetNationalIdentificationNumber(nationalIdentificationNumber);
-        }
+        ////Constructor without car, fuelcard, address and licenses
+        //public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber)
+        //{
+        //    SetDriverId(driverId);
+        //    SetLastName(lastName);
+        //    SetFirstName(firstName);
+        //    SetDateOfBirth(dateOfBirth);
+        //    SetNationalIdentificationNumber(nationalIdentificationNumber);
+        //}
 
         //Constructor without car, fuelcard and address
-        public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses)
+        public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType>? licenses, Address? address, Car? assignedCar, Fuelcard? assignedFuelcard)
         {
             SetDriverId(driverId);
             SetLastName(lastName);
             SetFirstName(firstName);
             SetDateOfBirth(dateOfBirth);
             SetNationalIdentificationNumber(nationalIdentificationNumber);
-            SetLicenses(licenses);
+            if (licenses != null) { SetLicenses(licenses); } 
+            if (address != null) { SetAddress(address); }
+            if (assignedCar != null) { SetCar(assignedCar); }
+            if (assignedFuelcard != null) { SetFuelcard(assignedFuelcard); }
         }
 
-        //Constructor without car and fuelcard
-        public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses, Address address)
-        {
-            SetDriverId(driverId);
-            SetLastName(lastName);
-            SetFirstName(firstName);
-            SetDateOfBirth(dateOfBirth);
-            SetNationalIdentificationNumber(nationalIdentificationNumber);
-            SetLicenses(licenses);
-            SetAddress(address);
-        }
+        ////Constructor without car and fuelcard
+        //public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses, Address address)
+        //{
+        //    SetDriverId(driverId);
+        //    SetLastName(lastName);
+        //    SetFirstName(firstName);
+        //    SetDateOfBirth(dateOfBirth);
+        //    SetNationalIdentificationNumber(nationalIdentificationNumber);
+        //    SetLicenses(licenses);
+        //    SetAddress(address);
+        //}
 
-        //Constructor with car and without fuelcard
-        public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses, Car assignedCar, Address address)
-        {
-            SetDriverId(driverId);
-            SetLastName(lastName);
-            SetFirstName(firstName);
-            SetDateOfBirth(dateOfBirth);
-            SetNationalIdentificationNumber(nationalIdentificationNumber);
-            SetLicenses(licenses);
-            SetCar(assignedCar);
-            SetAddress(address);
-        }
+        ////Constructor with car and without fuelcard
+        //public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses, Car assignedCar, Address address)
+        //{
+        //    SetDriverId(driverId);
+        //    SetLastName(lastName);
+        //    SetFirstName(firstName);
+        //    SetDateOfBirth(dateOfBirth);
+        //    SetNationalIdentificationNumber(nationalIdentificationNumber);
+        //    SetLicenses(licenses);
+        //    SetCar(assignedCar);
+        //    SetAddress(address);
+        //}
 
-        //Constructor without car and with fuelcard
-        public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses, Fuelcard assignedFuelcard, Address address)
-        {
-            SetDriverId(driverId);
-            SetLastName(lastName);
-            SetFirstName(firstName);
-            SetDateOfBirth(dateOfBirth);
-            SetNationalIdentificationNumber(nationalIdentificationNumber);
-            SetLicenses(licenses);
-            SetFuelcard(assignedFuelcard);
-            SetAddress(address);
-        }
+        ////Constructor without car and with fuelcard
+        //public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses, Fuelcard assignedFuelcard, Address address)
+        //{
+        //    SetDriverId(driverId);
+        //    SetLastName(lastName);
+        //    SetFirstName(firstName);
+        //    SetDateOfBirth(dateOfBirth);
+        //    SetNationalIdentificationNumber(nationalIdentificationNumber);
+        //    SetLicenses(licenses);
+        //    SetFuelcard(assignedFuelcard);
+        //    SetAddress(address);
+        //}
 
-        //Constructor with car and fuelcard
-        public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses, Car assignedCar, Fuelcard assignedFuelcard, Address address)
-        {
-            SetDriverId(driverId);
-            SetLastName(lastName);
-            SetFirstName(firstName);
-            SetDateOfBirth(dateOfBirth);
-            SetNationalIdentificationNumber(nationalIdentificationNumber);
-            SetLicenses(licenses);
-            SetCar(assignedCar);
-            SetFuelcard(assignedFuelcard);
-            SetAddress(address);
-        }
-#endregion
+
+        ////Constructor with car and fuelcard
+        //public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses, Car assignedCar, Fuelcard assignedFuelcard, Address address)
+        //{
+        //    SetDriverId(driverId);
+        //    SetLastName(lastName);
+        //    SetFirstName(firstName);
+        //    SetDateOfBirth(dateOfBirth);
+        //    SetNationalIdentificationNumber(nationalIdentificationNumber);
+        //    SetLicenses(licenses);
+        //    SetCar(assignedCar);
+        //    SetFuelcard(assignedFuelcard);
+        //    SetAddress(address);
+        //}
 
         #region Setting of variables
         public void SetDriverId(int driverId)
