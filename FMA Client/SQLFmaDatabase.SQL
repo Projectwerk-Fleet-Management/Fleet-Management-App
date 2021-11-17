@@ -1,5 +1,9 @@
 CREATE DATABASE fmaDatabase;
 
+GO
+USE fmaDatabase;
+GO
+
 CREATE TABLE Fuelcard(
     FuelcardId INT IDENTITY(1,1) PRIMARY KEY,
     Cardnumber VARCHAR(255) NOT NULL,
