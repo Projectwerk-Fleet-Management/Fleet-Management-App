@@ -11,20 +11,12 @@ namespace BusinessLayer
         public string City { get; private set; }
         public int Postalcode { get; private set; }
 
-        public Address(int addressId, string street, string housenumber, string city, int postalcode)
+        public Address(int addressId, string street, string housenumber, string? addendum, string city, int postalcode)
         {
             SetAddressId(addressId);
             SetStreet(street);
             SetHousenumber(housenumber);
-            SetCity(city);
-            SetPostalcode(postalcode);
-        }
-        public Address(int addressId, string street, string housenumber, string addendum, string city, int postalcode)
-        {
-            SetAddressId(addressId);
-            SetStreet(street);
-            SetHousenumber(housenumber);
-            SetAddendum(addendum); 
+            if (!string.IsNullOrWhiteSpace(addendum)) { SetAddendum(addendum); }; 
             SetCity(city);
             SetPostalcode(postalcode);
         }
