@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Exceptions;
+﻿using System.ComponentModel;
+using BusinessLayer.Exceptions;
 
 namespace BusinessLayer
 {
@@ -61,5 +62,6 @@ namespace BusinessLayer
             this.Postalcode = postalcode;
         }
         #endregion
+
     }
 }

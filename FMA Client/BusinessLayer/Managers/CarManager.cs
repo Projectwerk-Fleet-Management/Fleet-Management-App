@@ -39,7 +39,7 @@ namespace BusinessLayer.Managers
             }
         }
 
-        public Car GetCarByCin(string vin)
+        public Car GetCarByVin(string vin)
         {
             try
             {
