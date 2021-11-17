@@ -101,7 +101,7 @@ namespace BusinessLayer.Managers
             }
             catch (Exception e)
             {
-                throw new DriverManagerException("Could not update driver");
+                throw new DriverManagerException("Could not update driver", e);
             }
         }
     }
