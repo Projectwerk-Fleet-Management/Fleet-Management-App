@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
 
 namespace BusinessLayer.Managers
@@ -17,11 +18,11 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                
+
             }
             catch(Exception exception)
             {
-
+                throw new FuelcardException("", exception);
 
             }
             return _repo.GetFuelcards();

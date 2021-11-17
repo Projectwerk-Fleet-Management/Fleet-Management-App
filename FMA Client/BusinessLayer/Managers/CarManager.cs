@@ -48,7 +48,7 @@ namespace BusinessLayer.Managers
             }
             catch (Exception e)
             {
-                throw new CarmanagerException("couldn't get car by id");
+                throw new CarmanagerException("couldn't get car by id", e);
             }
         }
 

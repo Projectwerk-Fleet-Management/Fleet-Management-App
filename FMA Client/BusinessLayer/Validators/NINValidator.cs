@@ -51,7 +51,7 @@ namespace BusinessLayer.Validators
             }
             catch (Exception ex)
             {
-                throw new NINValidatorException("Something went wrong validting the National Idendifaction Number");
+                throw new NINValidatorException("Something went wrong validting the National Idendifaction Number", ex);
             }
             
         }
