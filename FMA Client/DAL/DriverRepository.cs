@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using BusinessLayer;
+﻿using BusinessLayer;
 using BusinessLayer.Interfaces;
+using BusinessLayer.Model;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using BusinessLayer.Model;
 
 namespace DAL
 {
@@ -44,9 +44,9 @@ namespace DAL
                         DateTime dateOfBirth = (DateTime)datareader["DateOfBirth"];
                         string nationalIdentificationNumber = (string)datareader["NationalIdentificationNumber"];
                         string licensesDb = "";
-                        int addressId;
-                        int fuelcardId;
-                        int carId;
+                        int addressId = 0;
+                        int fuelcardId = 0;
+                        int carId = 0;
 
                         #region Null checking
                         if (DBNull.Value != datareader["Licenses"])
@@ -71,7 +71,7 @@ namespace DAL
                         #region Check if licenseDb is valid in the enum and add it to the licenses -> Also do a for loop for each license in licensesDb
                         if (!string.IsNullOrWhiteSpace(licensesDb))
                         {
-                            
+
                             licensesDb = licensesDb.Replace(" ", "");
                             string[] licensesList = licensesDb.ToUpper().Split(",");
                             foreach (string s in licensesList)
@@ -127,10 +127,8 @@ namespace DAL
                         }
                         #endregion
 
-
-                        Driver driver = new(driverId, lastName, firstName, dateOfBirth, nationalIdentificationNumber);
-
-                        drivers.Add(driver);
+                        //Driver driver = new(driverId, lastName, firstName, dateOfBirth, nationalIdentificationNumber, licenses, addressId, carId, fuelcardId);
+                        //drivers.Add(driver);
                     }
                     datareader.Close();
 
@@ -322,7 +320,127 @@ namespace DAL
 
             return drivers;
         }
+        
+        /*
+        public Driver GetDriverById(int id)
+        {
+            Driver driver;
+            SqlConnection connection = getConnection();
+            string query = "SELECT * FROM dbo.Driver WHERE id = @id";
 
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                try
+                {
+                    connection.Open();
+                    command.CommandText = query;
+                    SqlDataReader datareader = command.ExecuteReader();
+                    while (datareader.Read())
+                    {
+                        int driverId = (int)datareader["DriverId"];
+                        string firstName = (string)datareader["FirstName"];
+                        string lastName = (string)datareader["LastName"];
+                        DateTime dateOfBirth = (DateTime)datareader["DateOfBirth"];
+                        string nationalIdentificationNumber = (string)datareader["NationalIdentificationNumber"];
+                        string licensesDb = "";
+                        int addressId = 0;
+                        int fuelcardId = 0;
+                        int carId = 0;
+
+                        #region Null checking
+                        if (DBNull.Value != datareader["Licenses"])
+                        {
+                            licensesDb = (string)datareader["Licenses"];
+                        }
+                        if (DBNull.Value != datareader["AddressId"])
+                        {
+                            addressId = (int)datareader["AddressId"];
+                        }
+                        if (DBNull.Value != datareader["FuelcardId"])
+                        {
+                            fuelcardId = (int)datareader["FuelcardId"];
+                        }
+                        if (DBNull.Value != datareader["CarId"])
+                        {
+                            carId = (int)datareader["CarId"];
+                        }
+                        #endregion
+
+                        List<LicenseType> licenses = new();
+                        #region Check if licenseDb is valid in the enum and add it to the licenses -> Also do a for loop for each license in licensesDb
+                        if (!string.IsNullOrWhiteSpace(licensesDb))
+                        {
+
+                            licensesDb = licensesDb.Replace(" ", "");
+                            string[] licensesList = licensesDb.ToUpper().Split(",");
+                            foreach (string s in licensesList)
+                            {
+                                if (string.IsNullOrWhiteSpace(s)) { continue; }
+                                if (s == LicenseType.A.ToString())
+                                {
+                                    licenses.Add(LicenseType.A);
+                                } else if (s == LicenseType.A1.ToString())
+                                {
+                                    licenses.Add(LicenseType.A1);
+                                } else if (s == LicenseType.A2.ToString())
+                                {
+                                    licenses.Add(LicenseType.A2);
+                                } else if (s == LicenseType.AM.ToString())
+                                {
+                                    licenses.Add(LicenseType.AM);
+                                } else if (s == LicenseType.B.ToString())
+                                {
+                                    licenses.Add(LicenseType.B);
+                                } else if (s == LicenseType.BE.ToString())
+                                {
+                                    licenses.Add(LicenseType.BE);
+                                } else if (s == LicenseType.C.ToString())
+                                {
+                                    licenses.Add(LicenseType.C);
+                                } else if (s == LicenseType.C1.ToString())
+                                {
+                                    licenses.Add(LicenseType.C1);
+                                } else if (s == LicenseType.C1E.ToString())
+                                {
+                                    licenses.Add(LicenseType.C1E);
+                                } else if (s == LicenseType.CE.ToString())
+                                {
+                                    licenses.Add(LicenseType.CE);
+                                } else if (s == LicenseType.D.ToString())
+                                {
+                                    licenses.Add(LicenseType.D);
+                                } else if (s == LicenseType.D1.ToString())
+                                {
+                                    licenses.Add(LicenseType.D1);
+                                } else if (s == LicenseType.D1E.ToString())
+                                {
+                                    licenses.Add(LicenseType.D1E);
+                                } else if (s == LicenseType.DE.ToString())
+                                {
+                                    licenses.Add(LicenseType.DE);
+                                } else if (s == LicenseType.G.ToString())
+                                {
+                                    licenses.Add(LicenseType.G);
+                                }
+                            }
+                        }
+                        #endregion
+
+                        driver = new(driverId, lastName, firstName, dateOfBirth, nationalIdentificationNumber, licenses, addressId, carId, fuelcardId);
+                    }
+                    datareader.Close();
+
+                } catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                } finally
+                {
+                    connection.Close();
+                    return driver;
+                }              
+            }
+        }
+        */
         public void DeleteDriver(Driver driver)
         {
             throw new NotImplementedException();
@@ -342,7 +460,5 @@ namespace DAL
         {
             throw new NotImplementedException();
         }
-
-
     }
 }

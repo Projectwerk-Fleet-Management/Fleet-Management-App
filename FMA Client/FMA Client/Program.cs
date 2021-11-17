@@ -11,9 +11,18 @@ namespace FMA_Client
     {
         static void Main(string[] args)
         {
-            DriverRepository y = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+            //DriverRepository y = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
-            y.GetAllDrivers();
+            //y.GetAllDrivers();
+
+            AddressRepository p = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+
+            var test = p.GetAllAddresses();
+
+            foreach (var t in test)
+            {
+                Console.WriteLine($"{t.AddressId} {t.Street} {t.City} {t.Postalcode}");
+            }
 
             //connection string marnick: Data Source=PROTOBEAR\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True
             //connection string Bryan: Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True
