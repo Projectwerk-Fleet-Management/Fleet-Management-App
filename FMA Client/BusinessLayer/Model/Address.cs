@@ -4,7 +4,6 @@ namespace BusinessLayer
 {
     public class Address
     {
-        //Marnick is een rare guy
         public int AddressId { get; private set; }
         public string Street { get; private set; }
         public string Housenumber { get; private set; }
