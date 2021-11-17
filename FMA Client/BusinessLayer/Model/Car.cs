@@ -161,8 +161,14 @@ namespace BusinessLayer
         }
         public void SetFueltype(Fuel fueltype)
         {
-            if (fueltype == null) throw new CarException("Fueltype cannot be null");
-            this.FuelType = fueltype;
+            try
+            {
+                this.FuelType = fueltype;
+            }
+            catch (Exception e)
+            {
+                throw new CarException("Problem occurred setting fueltype", e);
+            }
         }
         #endregion
 
