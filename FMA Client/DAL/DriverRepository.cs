@@ -23,11 +23,11 @@ namespace DAL
             return connection;
         }
 
-        public IReadOnlyList<Driver> GetDrivers()
+        public IReadOnlyList<Driver> GetAllDrivers()
         {
             List<Driver> drivers = new();
             SqlConnection connection = getConnection();
-            string query = "SELECT * FROM dbo.drivers";
+            string query = "SELECT * FROM dbo.Driver";
 
             using (SqlCommand command = connection.CreateCommand())
             {
@@ -38,31 +38,100 @@ namespace DAL
                     SqlDataReader datareader = command.ExecuteReader();
                     while (datareader.Read())
                     {
-                        //Check hoe je een foreign key data krijgt
-                        int driverId = (int)datareader["driverId"];
-                        string firstName = (string)datareader["firstName"];
-                        string lastName = (string)datareader["lastName"];
-                        DateTime dateOfBirth = (DateTime)datareader["dateOfBirth"];
-                        int nationalIdentificationNumber = (int)datareader["nationalIdentificationNumber"];
-                        string licensesDb = (string)datareader["licenses"];
+                        int driverId = (int)datareader["DriverId"];
+                        string firstName = (string)datareader["FirstName"];
+                        string lastName = (string)datareader["LastName"];
+                        DateTime dateOfBirth = (DateTime)datareader["DateOfBirth"];
+                        string nationalIdentificationNumber = (string)datareader["NationalIdentificationNumber"];
+                        string licensesDb = "";
+                        int addressId;
+                        int fuelcardId;
+                        int carId;
+
+                        #region Null checking
+                        if (DBNull.Value != datareader["Licenses"])
+                        {
+                            licensesDb = (string)datareader["Licenses"];
+                        }
+                        if (DBNull.Value != datareader["AddressId"])
+                        {
+                            addressId = (int)datareader["AddressId"];
+                        }
+                        if (DBNull.Value != datareader["FuelcardId"])
+                        {
+                            fuelcardId = (int)datareader["FuelcardId"];
+                        }
+                        if (DBNull.Value != datareader["CarId"])
+                        {
+                            carId = (int)datareader["CarId"];
+                        }
+                        #endregion
 
                         List<LicenseType> licenses = new();
-
-                        //Check if licenseDb is valid in the enum and add it to the licenses -> Also do a for loop for each license in licensesDb
-                        if (LicenseType.A.ToString() == licensesDb)
+                        #region Check if licenseDb is valid in the enum and add it to the licenses -> Also do a for loop for each license in licensesDb
+                        if (!string.IsNullOrWhiteSpace(licensesDb))
                         {
-
-                            break;
-                        } else if (true)
-                        {
-
-                            break;
+                            
+                            licensesDb = licensesDb.Replace(" ", "");
+                            string[] licensesList = licensesDb.ToUpper().Split(",");
+                            foreach (string s in licensesList)
+                            {
+                                if (string.IsNullOrWhiteSpace(s)) { continue; }
+                                if (s == LicenseType.A.ToString())
+                                {
+                                    licenses.Add(LicenseType.A);
+                                } else if (s == LicenseType.A1.ToString())
+                                {
+                                    licenses.Add(LicenseType.A1);
+                                } else if (s == LicenseType.A2.ToString())
+                                {
+                                    licenses.Add(LicenseType.A2);
+                                } else if (s == LicenseType.AM.ToString())
+                                {
+                                    licenses.Add(LicenseType.AM);
+                                } else if (s == LicenseType.B.ToString())
+                                {
+                                    licenses.Add(LicenseType.B);
+                                } else if (s == LicenseType.BE.ToString())
+                                {
+                                    licenses.Add(LicenseType.BE);
+                                } else if (s == LicenseType.C.ToString())
+                                {
+                                    licenses.Add(LicenseType.C);
+                                } else if (s == LicenseType.C1.ToString())
+                                {
+                                    licenses.Add(LicenseType.C1);
+                                } else if (s == LicenseType.C1E.ToString())
+                                {
+                                    licenses.Add(LicenseType.C1E);
+                                } else if (s == LicenseType.CE.ToString())
+                                {
+                                    licenses.Add(LicenseType.CE);
+                                } else if (s == LicenseType.D.ToString())
+                                {
+                                    licenses.Add(LicenseType.D);
+                                } else if (s == LicenseType.D1.ToString())
+                                {
+                                    licenses.Add(LicenseType.D1);
+                                } else if (s == LicenseType.D1E.ToString())
+                                {
+                                    licenses.Add(LicenseType.D1E);
+                                } else if (s == LicenseType.DE.ToString())
+                                {
+                                    licenses.Add(LicenseType.DE);
+                                } else if (s == LicenseType.G.ToString())
+                                {
+                                    licenses.Add(LicenseType.G);
+                                }
+                            }
                         }
+                        #endregion
 
-                        Driver driver = new(driverId, lastName, firstName, dateOfBirth, nationalIdentificationNumber.ToString(), licenses);
 
-                        drivers.Add(driver);                      
-                    }                  
+                        Driver driver = new(driverId, lastName, firstName, dateOfBirth, nationalIdentificationNumber);
+
+                        drivers.Add(driver);
+                    }
                     datareader.Close();
 
                 } catch (Exception ex)
@@ -98,7 +167,7 @@ namespace DAL
                 {
                     query += " UPPER(id)=UPPER(@id)";
                 }
-                
+
             }
             if (!string.IsNullOrWhiteSpace(firstName))
             {
@@ -231,12 +300,12 @@ namespace DAL
                     if (!string.IsNullOrWhiteSpace(license))
                     {
                         command.Parameters.Add(new SqlParameter("@licenses", SqlDbType.NVarChar));
-                        command.Parameters[@licenses].Value = license;
+                        //command.Parameters[@licenses].Value = license;
                     }
                     if (dateOfBirth != null)
                     {
                         command.Parameters.Add(new SqlParameter("@dateOfBirth", SqlDbType.Timestamp));
-                        command.Parameters[@dateOfBirth].Value = dateOfBirth;
+                        //command.Parameters[@dateOfBirth].Value = dateOfBirth;
                     }
                     command.CommandText = query;
 
@@ -262,7 +331,7 @@ namespace DAL
         public bool Exists(Driver driver)
         {
             throw new NotImplementedException();
-        }      
+        }
 
         public void InsertDriver(Driver driver)
         {
@@ -274,6 +343,6 @@ namespace DAL
             throw new NotImplementedException();
         }
 
-        
+
     }
 }

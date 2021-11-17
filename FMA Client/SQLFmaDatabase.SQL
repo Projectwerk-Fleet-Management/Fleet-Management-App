@@ -1,10 +1,10 @@
 CREATE DATABASE fmaDatabase;
 
-GO
-USE fmaDatabase;
+GO 
+USE fmaDatabase
 GO
 
-CREATE TABLE Fuelcard(
+CREATE TABLE dbo.Fuelcard(
     FuelcardId INT IDENTITY(1,1) PRIMARY KEY,
     Cardnumber VARCHAR(255) NOT NULL,
     ExpiryDate DATE NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE Fuelcard(
     DriverId INT NULL
 );
 
-CREATE TABLE Address(
+CREATE TABLE dbo.Address(
     AddressId INT IDENTITY(1,1) PRIMARY KEY,
     Street VARCHAR(255) NOT NULL,
     Housenumber VARCHAR(10) NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE Address(
     DriverId INT NULL
 );
 
-CREATE TABLE Car(
+CREATE TABLE dbo.Car(
     CarId INT IDENTITY(1,1) PRIMARY KEY,
     Vin VARCHAR(18) NOT NULL,
     Licenseplate VARCHAR(15) NOT NULL,
@@ -37,12 +37,12 @@ CREATE TABLE Car(
     DriverId INT NULL
 );
 
-CREATE TABLE Driver(
+CREATE TABLE dbo.Driver(
     DriverId INT IDENTITY(1,1) PRIMARY KEY,
     FirstName VARCHAR(255) NOT NULL,
-    LastName VARChaR(255) NOT NULL,
+    LastName VARCHAR(255) NOT NULL,
     DateOfBirth DATE NOT NULL,
-    NationalIdentificationNumber INT NOT NULL,
+    NationalIdentificationNumber VARCHAR(255) NOT NULL,
     Licenses VARCHAR(255) NULL,
     AddressId INT NULL,
     FuelcardId INT NULL,

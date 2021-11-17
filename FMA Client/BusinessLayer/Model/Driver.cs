@@ -20,6 +20,16 @@ namespace BusinessLayer
         public Fuelcard AssignedFuelcard { get; private set; }
         private static NINValidator NINValidator = new NINValidator();
 
+        //Constructor without car, fuelcard, address and licenses
+        public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber)
+        {
+            SetDriverId(driverId);
+            SetLastName(lastName);
+            SetFirstName(firstName);
+            SetDateOfBirth(dateOfBirth);
+            SetNationalIdentificationNumber(nationalIdentificationNumber);
+        }
+
         //Constructor without car, fuelcard and address
         public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses)
         {
