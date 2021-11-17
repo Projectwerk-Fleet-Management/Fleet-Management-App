@@ -22,7 +22,7 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                return _repo.GetDrivers();
+                return _repo.GetAllDrivers();
             }
             catch
             {

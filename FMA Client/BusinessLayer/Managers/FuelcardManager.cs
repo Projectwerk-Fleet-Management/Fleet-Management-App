@@ -17,13 +17,14 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                return _repo.GetFuelcards();
+                
             }
             catch(Exception exception)
             {
 
 
             }
+            return _repo.GetFuelcards();
         }
 
     }

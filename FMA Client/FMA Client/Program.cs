@@ -11,10 +11,12 @@ namespace FMA_Client
     {
         static void Main(string[] args)
         {
-            DriverRepository y =
-                new($"Data Source=PROTOBEAR\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+            DriverRepository y = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+
+            y.GetAllDrivers();
 
             //connection string marnick: Data Source=PROTOBEAR\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True
+            //connection string Bryan: Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True
 
             //NINValidator x = new NINValidator();
             //bool test = x.isValid("93.11.23-283.87");

@@ -8,7 +8,7 @@ namespace BusinessLayer.Interfaces
 {
     public interface IDriverRepository
     {
-        IReadOnlyList<Driver> GetDrivers();
+        IReadOnlyList<Driver> GetAllDrivers();
         IReadOnlyList<Driver> GetDrivers(string? id, string? firstName, string? lastName, DateTime? dateOfBirth, string? nationalIdentificationNumber, string? vin, string? fuelcardNumber, string? license, bool strikt = true);
         bool Exists(Driver driver);
         void InsertDriver(Driver driver);
