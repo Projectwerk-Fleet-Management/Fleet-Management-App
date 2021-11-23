@@ -24,7 +24,7 @@ namespace DAL
             return connection;
         }
 
-        //Not completely done, need to work with the new constructors we use (Nullables) Priority nr 1
+        //Not completely done, need to work with the new constructors we use (Nullables / this) Priority nr 1
         public IReadOnlyList<Address> GetAllAddresses()
         {
             List<Address> addresses = new();
@@ -83,7 +83,7 @@ namespace DAL
             throw new NotImplementedException();
         }
 
-        //Done? Maybe add ways to check if it exists based on street + number?
+        //Not done, add ways to check if it exists based on street + number + addendum + City
         public bool Exists(int id)
         {
             SqlConnection connection = getConnection();
@@ -117,8 +117,8 @@ namespace DAL
         //On going -> Priority nr 2
         public void InsertDriver(Address address)
         {
-            /*
             SqlConnection connection = getConnection();
+            //Query nakijken, waarschijnlijk klopt er iets niet aan bij de ?
             string query = "INSERT INTO dbo.Address ([Street],[Housenumber],[Addendum],[Postalcode],[City]) VALUES (?, ?, ?, ?, ?)";
 
             using (SqlCommand command = connection.CreateCommand())
@@ -127,33 +127,7 @@ namespace DAL
                 {
                     connection.Open();
                     command.CommandText = query;
-                    SqlDataReader datareader = command.ExecuteReader();
-                    while (datareader.Read())
-                    {
-                        int addressId = (int)datareader["AddressId"];
-                        string street = (string)datareader["Street"];
-                        string housenumber = (string)datareader["Housenumber"];
-                        int postalcode = (int)datareader["Postalcode"];
-                        string city = (string)datareader["City"];
-                        string addendum = "";
-                        int driverId;
-
-                        #region Null checking
-                        if (DBNull.Value != datareader["Addendum"])
-                        {
-                            addendum = (string)datareader["Addendum"];
-                        }
-                        if (DBNull.Value != datareader["DriverId"])
-                        {
-                            driverId = (int)datareader["DriverId"];
-                        }
-                        #endregion
-
-                        Address address = new(addressId, street, housenumber, addendum, city, postalcode);
-
-                        addresses.Add(address);
-                    }
-                    datareader.Close();
+                    
 
                 } catch (Exception ex)
                 {
@@ -162,10 +136,7 @@ namespace DAL
                 {
                     connection.Close();
                 }
-
-                return addresses;
-            }
-            */
+            }       
         }
 
         //Priority nr 4

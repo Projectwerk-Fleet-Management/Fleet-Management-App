@@ -11,6 +11,11 @@ namespace BusinessLayer
         public string City { get; private set; }
         public int Postalcode { get; private set; }
 
+        //Nullables or this (Constructor chaining)? 
+        //Nullables -> string?
+        //this (Constructor chaining), prefer this way 
+        //-> https://codecompiled.com/constructor-chaining-c
+        //-> https://stackoverflow.com/questions/10377888/how-can-i-use-multiple-constructors-to-remove-duplicated-code-while-maintaining
         public Address(int addressId, string street, string housenumber, string? addendum, string city, int postalcode)
         {
             SetAddressId(addressId);

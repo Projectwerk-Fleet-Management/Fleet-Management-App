@@ -20,7 +20,7 @@ namespace FMA_Client
 
             AddressRepository p = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
-            Console.WriteLine(p.Exists(1));
+            //Console.WriteLine(p.Exists(1));
 
             var test = p.GetAllAddresses();
 
