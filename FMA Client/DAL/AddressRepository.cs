@@ -1,6 +1,7 @@
 ﻿using BusinessLayer;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Model;
+using BusinessLayer.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,6 +24,7 @@ namespace DAL
             return connection;
         }
 
+        //Not completely done, need to work with the new constructors we use (Nullables / this) Priority nr 1
         public IReadOnlyList<Address> GetAllAddresses()
         {
             List<Address> addresses = new();
@@ -65,7 +67,7 @@ namespace DAL
 
                 } catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    throw new AddressRepositoryException("GetAllAddresses failed" + ex.Message);
                 } finally
                 {
                     connection.Close();
@@ -73,28 +75,72 @@ namespace DAL
 
                 return addresses;
             }
-        }   
+        }
+
+        //Priority nr 5
         public IReadOnlyList<Address> GetAddress(int id, bool strikt = true)
         {
             throw new NotImplementedException();
         }
 
-        public bool Exists(Address driver)
+        //Not done, add ways to check if it exists based on street + number + addendum + City
+        public bool Exists(int id)
+        {
+            SqlConnection connection = getConnection();
+            string sql = "SELECT count(*) FROM [dbo].[Address] WHERE AddressId = @Id";
+            using SqlCommand command = new(sql, connection);
+            try
+            {
+                connection.Open();
+                command.Parameters.AddWithValue("@Id", id);
+                int n = (int)command.ExecuteScalar();
+                if (n > 0)
+                {
+                    return true;
+                }
+                return false;
+            } catch (Exception ex)
+            {
+                throw new AddressRepositoryException("Exists failed" + ex.Message);
+            } finally
+            {
+                connection.Close();
+            }
+        }
+
+        //Priority nr 3
+        public void DeleteDriver(Address address)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteDriver(Address driver)
+        //On going -> Priority nr 2
+        public void InsertDriver(Address address)
         {
-            throw new NotImplementedException();
+            SqlConnection connection = getConnection();
+            //Query nakijken, waarschijnlijk klopt er iets niet aan bij de ?
+            string query = "INSERT INTO dbo.Address ([Street],[Housenumber],[Addendum],[Postalcode],[City]) VALUES (?, ?, ?, ?, ?)";
+
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                try
+                {
+                    connection.Open();
+                    command.CommandText = query;
+                    
+
+                } catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                } finally
+                {
+                    connection.Close();
+                }
+            }       
         }
 
-        public void InsertDriver(Address driver)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateDriver(Address driver)
+        //Priority nr 4
+        public void UpdateDriver(Address address)
         {
             throw new NotImplementedException();
         }

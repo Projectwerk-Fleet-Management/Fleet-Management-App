@@ -10,7 +10,7 @@ namespace BusinessLayer.Interfaces
     {
         IReadOnlyList<Address> GetAllAddresses();
         IReadOnlyList<Address> GetAddress(int id, bool strikt = true);
-        bool Exists(Address address);
+        bool Exists(int id);
         void InsertDriver(Address address);
         void DeleteDriver(Address address);
         void UpdateDriver(Address address);
