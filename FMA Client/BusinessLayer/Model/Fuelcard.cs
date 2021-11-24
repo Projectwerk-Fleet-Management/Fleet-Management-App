@@ -10,127 +10,157 @@ namespace BusinessLayer
         public int FuelcardId { private set; get; }
         public string Cardnumber { private set; get; }
         public DateTime ExpiryDate { private set; get; }
-        public string Pincode { private set; get; }
+        public int Pincode { private set; get; }
         public List<Fuel> FueltypeList { private set; get; }
         public Driver Driver { private set; get; }
         public bool isActive { private set; get; }
 
         private FuelcardNumberValidator validator = new FuelcardNumberValidator();
 
+        #region Constructors
+        public Fuelcard(int fuelcardId ,string cardnumber, DateTime expiryDate, bool isActive = true)
+            : this(fuelcardId, cardnumber, expiryDate, null, null, null, isActive)
+        {           
+        }
 
-        //TODO: Add set/remove methodes
-        public Fuelcard(string cardnumber, DateTime expiryDate)
+        public Fuelcard(int fuelcardId, string cardnumber, DateTime expiryDate, int? pincode, bool isActive = true)
+            : this(fuelcardId, cardnumber, expiryDate, pincode, null, null, isActive)
+        {
+        }
+
+        public Fuelcard(int fuelcardId, string cardnumber, DateTime expiryDate, List<Fuel> fueltypeList, bool isActive = true)
+            : this(fuelcardId, cardnumber, expiryDate, null, fueltypeList, null, isActive)
+        {
+        }
+
+        public Fuelcard(int fuelcardId, string cardnumber, DateTime expiryDate, Driver driver, bool isActive = true)
+            : this(fuelcardId, cardnumber, expiryDate, null, null, driver,isActive)
+        {
+        }
+
+        public Fuelcard(int fuelcardId, string cardnumber, DateTime expiryDate, int? pincode, List<Fuel> fueltypeList, bool isActive = true)
+            : this(fuelcardId, cardnumber, expiryDate, pincode, fueltypeList, null, isActive)
+        {
+        }
+
+        public Fuelcard(int fuelcardId, string cardnumber, DateTime expiryDate, int? pincode, Driver driver, bool isActive = true)
+            : this(fuelcardId, cardnumber, expiryDate, pincode, null, driver, isActive)
+        {
+        }
+
+        public Fuelcard(int fuelcardId, string cardnumber, DateTime expiryDate, List<Fuel> fueltypeList, Driver driver,bool isActive = true)
+            : this(fuelcardId, cardnumber, expiryDate, null, fueltypeList, driver, isActive)
+        {
+        }
+
+        public Fuelcard(int fuelcardId, string cardnumber, DateTime expiryDate, int? pincode, List<Fuel> fueltypeList, Driver driver, bool isActive = true)
+        {
+            SetFuelcardId(fuelcardId);
+            SetCardnumber(cardnumber);
+            SetExpiryDate(expiryDate);
+            if (pincode != null) SetPincode(pincode);
+            if (fueltypeList != null) SetFueltypeList(fueltypeList);
+            if (driver != null) SetDriver(driver);
+            SetIsActive(isActive);
+        }
+        #endregion
+
+        #region Set Methods
+        public void SetFuelcardId(int fuelcardId)
+        {
+            if (fuelcardId <= 0)
+            {
+                throw new FuelcardException("FuelcardId is not valid");
+            }
+            this.FuelcardId = fuelcardId;
+        }
+        public void SetCardnumber(string cardnumber)
         {
             if (cardnumber == null)
             {
                 throw new FuelcardException("Cardnumber cannot be null");
             }
-
             if (!validator.isValid(cardnumber))
             {
                 throw new FuelcardException("The entered fuelcardnumber is not valid");
             }
-            if (expiryDate < DateTime.Now)
-            {
-                throw new FuelcardException("This card is already expired");
-            }
-            Cardnumber = cardnumber;
-            ExpiryDate = expiryDate;
+            this.Cardnumber = cardnumber;
         }
-
-        public Fuelcard(string cardnumber, DateTime expiryDate, string pincode, List<Fuel> fueltypeList,
-            Driver driver)
+        public void SetExpiryDate(DateTime expiryDate)
         {
-            if (cardnumber == null)
-            {
-                throw new FuelcardException("Cardnumber cannot be null");
-            }
-
-            if (!validator.isValid(cardnumber))
-            {
-                throw new FuelcardException("The entered fuelcardnumber is not valid");
-            }
+            
             if (expiryDate < DateTime.Now)
             {
                 throw new FuelcardException("This card is already expired");
             }
-            Cardnumber = cardnumber;
-            ExpiryDate = expiryDate;
-            Pincode = pincode;
-            FueltypeList = fueltypeList;
-            Driver = driver;
-            isActive = true;
-        }
 
-        public Fuelcard(string cardnumber, DateTime expiryDate, string pincode, Fuel fuel,
-            Driver driver)
+            this.ExpiryDate = expiryDate;
+        }
+        public void SetPincode(int? pincode)
         {
-            if (cardnumber == null)
+            if (pincode < 1000 || pincode > 1000000)
             {
-                throw new FuelcardException("Cardnumber cannot be null");
+                throw new FuelcardException("Pincode needs to contain at least 4 and can only contain 6 at max");
             }
-
-            if (!validator.isValid(cardnumber))
-            {
-                throw new FuelcardException("The entered fuelcardnumber is not valid");
-            }
-            if (expiryDate < DateTime.Now)
-            {
-                throw new FuelcardException("This card is already expired");
-            }
-            Cardnumber = cardnumber;
-            ExpiryDate = expiryDate;
-            Pincode = pincode;
-            FueltypeList.Add(fuel);
-            Driver = driver;
-            isActive = true;
+            this.Pincode = (int)pincode;
         }
-
-        public void addDriver(Driver d)
+        public void SetFueltypeList(List<Fuel> fueltypeList)
+        {
+            this.FueltypeList = fueltypeList;
+        }
+        public void SetDriver(Driver driver)
         {
             if (Driver != null) throw new FuelcardException("Driver is already assigned");
-            if (d == null) throw new FuelcardException("Driver cannot be null");
-            d.SetFuelcard(this);
-            Driver = d;
+            if (driver == null) throw new FuelcardException("Driver cannot be null");
+            this.Driver = driver;
+            driver.SetFuelcard(this);
         }
-
-        public void removeDriver()
+        public void SetIsActive(bool isActive)
         {
-            if (Driver == null) throw new FuelcardException("Fuelcard does not have driver to remove");
-            Driver.RemoveFuelcard();
-            Driver = null;
+            this.isActive = isActive;
         }
+        #endregion
 
-        public void SetPincode(string pincode)
-        {
-            if (Pincode != null) throw new FuelcardException("There already is a pincode");
-            Pincode = pincode;
-        }
-
-        public void ChangePincode(string pincode)
-        {
-            if (Pincode == null) throw new FuelcardException("You cannot change an empty pincode");
-            Pincode = pincode;
-
-        }
-
+        #region Add Methods
         public void AddFueltype(Fuel fueltype)
         {
-            if (FueltypeList.Contains(fueltype)) throw new FuelcardException("Fuelcard already contains fueltype"); 
+            if (FueltypeList.Contains(fueltype)) throw new FuelcardException("Fuelcard already contains fueltype");
             FueltypeList.Add(fueltype);
         }
+        #endregion
 
-        public void RetractFueltype(Fuel fueltype)
+        #region Remove Methods
+        public void RemoveDriver()
+        {
+            if (Driver == null) throw new FuelcardException("Fuelcard does not have driver to remove");
+            Driver = null;
+            Driver.RemoveFuelcard();
+        }
+        public void RemoveFueltype(Fuel fueltype)
         {
             if (!FueltypeList.Contains(fueltype))
                 throw new FuelcardException("Card doesn't contain fueltype to be removed");
             FueltypeList.Remove(fueltype);
         }
+        #endregion
 
+        #region Update Methods
+        public void UpdatePincode(int pincode)
+        {
+            if (pincode < 1000 || pincode > 1000000)
+            {
+                throw new FuelcardException("Pincode needs to contain at least 4 and can only contain 6 at max");
+            }
+            Pincode = pincode;
+
+        }
+        #endregion
+
+        #region Block Methods
         public void BlockFuelcard()
         {
             isActive = false;
         }
-
+        #endregion
     }
 }

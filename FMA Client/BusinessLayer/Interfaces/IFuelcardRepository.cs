@@ -8,11 +8,11 @@ namespace BusinessLayer.Interfaces
 {
     public interface IFuelcardRepository
     {
-        IReadOnlyList<Fuelcard> GetFuelcards();
-        IReadOnlyList<Fuelcard> GetFuelcards(string? cardNumber, DateTime? expiryDate, string? fuelTypes, bool? isActive, bool strikt = true);
-        bool Exists();
-        void InsertFuelcard();
-        void DeleteFuelcard();
-        void UpdateFuelcard();
+        IReadOnlyList<Fuelcard> GetAllFuelcards();
+        IReadOnlyList<Fuelcard> GetFuelcard(int? fuelcardId, string cardnumber, DateTime? expiryDate, List<Fuel> fueltypes, bool? isActive);
+        bool Exists(int? fuelcardId, string cardnumber, DateTime? expiryDate, List<Fuel> fueltypes, bool? isActive);
+        void InsertFuelcard(string cardnumber, DateTime expiryDate, List<Fuel> fueltypes, int? pincode, bool? isActive);
+        void DeleteFuelcard(Fuelcard fuelcard);
+        void UpdateFuelcard(Fuelcard oldFuelcard, Fuelcard newFuelcard);
     }
 }

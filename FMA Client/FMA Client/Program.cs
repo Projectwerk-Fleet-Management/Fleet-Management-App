@@ -16,19 +16,14 @@ namespace FMA_Client
             //connection string Bryan: Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True
             #endregion
             #region Address testing
-            Address test1 = new(13, "steenbakkerij", "25", "A","Goeferdinge", 9500);
+            //Address test1 = new(13, "steenbakkerij", "25", "A","Goeferdinge", 9500);
             //Console.WriteLine(testt1.AddressId.ToString() + testt1.Street + testt1.Housenumber + testt1.Addendum + testt1.City + testt1.Postalcode.ToString());
 
-            Address test2 = new(1, "Steenbakkerij", "21", "a", "Geraardsbergen", 9500);
+            //Address test2 = new(1, "Steenbakkerij", "21", "a", "Geraardsbergen", 9500);
             //Console.WriteLine(testt.AddressId.ToString() + testt.Street + testt.Housenumber + testt.Addendum + testt.City + testt.Postalcode.ToString());
-            #endregion
-            #region DriverRepository testing
-            //DriverRepository y = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
-
-            //y.GetAllDrivers();
-            #endregion
+            #endregion         
             #region AddressRepository Testing
-            AddressRepository p = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+            //AddressRepository p = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
             #region InsertAddress
             //p.InsertAddress("Steenbakkerij", "21", null, "Geraardsbergen", 9500);
@@ -37,13 +32,14 @@ namespace FMA_Client
             #endregion   
 
             #region GetAddress and GetAllAddresses
+            /*
             var testAllAddresses = p.GetAllAddresses();
 
             foreach (var t in testAllAddresses)
             {
                 Console.WriteLine($"{t.AddressId} {t.Street} {t.Housenumber} {t.Addendum} {t.City} {t.Postalcode}");
             }
-            /*
+            
             var testtt = p.GetAddress(null, null, null, null, null, 9500);
 
             foreach (var t in testtt)
@@ -56,13 +52,23 @@ namespace FMA_Client
             #endregion
 
             #region UpdateAddress
-            p.UpdateAddress(testAllAddresses[1], test1);
+            //p.UpdateAddress(testAllAddresses[1], test1);
             #endregion
 
             #region DeleteAddress
             //p.DeleteAddress(testAllAddresses[2]);
             #endregion
 
+            #endregion
+            #region DriverRepository testing
+            //DriverRepository y = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+
+            //y.GetAllDrivers();
+            #endregion
+            #region FuelcardRepository testing
+            FuelcardRepository f = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+
+            var fList = f.GetAllFuelcards();
             #endregion
             #region NINValidatior
             //NINValidator x = new NINValidator();

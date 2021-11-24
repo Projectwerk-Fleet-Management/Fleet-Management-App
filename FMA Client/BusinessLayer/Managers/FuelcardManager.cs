@@ -24,7 +24,7 @@ namespace BusinessLayer.Managers
 
 
             }
-            return _repo.GetFuelcards();
+            return _repo.GetAllFuelcards();
         }
 
     }
