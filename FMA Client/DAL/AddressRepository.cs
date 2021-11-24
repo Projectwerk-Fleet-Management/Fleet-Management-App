@@ -425,7 +425,7 @@ namespace DAL
             }
         }
 
-        //Priority nr 1
+        //Done
         public void UpdateAddress(Address oldAddressInfo, Address newAddressInfo)
         {
             #region Check if given variables aren't empty or invalid of the new address (Old one should already be correct)
