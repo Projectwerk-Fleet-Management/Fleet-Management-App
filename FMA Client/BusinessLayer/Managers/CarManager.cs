@@ -67,6 +67,7 @@ namespace BusinessLayer.Managers
 
         public void InsertCar(Car car)
         {
+            //todo: check voor dubbels
             try
             {
                 _repo.InsertCar(car);
@@ -93,6 +94,7 @@ namespace BusinessLayer.Managers
         {
             try
             {
+                //todo: check if exists
                 _repo.UpdateCar(car);
             }
             catch (Exception e)
