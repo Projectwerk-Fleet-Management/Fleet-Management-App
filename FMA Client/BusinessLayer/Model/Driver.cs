@@ -106,13 +106,13 @@ namespace BusinessLayer
         }
         public void SetLastName(string lastName)
         {
-            if (lastName == null) throw new DriverException("Last name cannot be null");
+            if (string.IsNullOrWhiteSpace(lastName)) throw new DriverException("Last name cannot be null");
             this.LastName = lastName;
             OnPropertyChanged("lastName");
         }
         public void SetFirstName(string firstName)
         {
-            if (firstName == null) throw new DriverException("First name cannot be null");
+            if (string.IsNullOrWhiteSpace(firstName)) throw new DriverException("First name cannot be null");
             this.FirstName = firstName;
             OnPropertyChanged("firstName");
         }

@@ -29,29 +29,9 @@ namespace Views
             DataContext = this;
             InitializeComponent();
 
-        }
-
-        private int _boundNumber;
-
-        public int BoundNumber
-        {
-            get { return _boundNumber;}
-            set
-            {
-                if (_boundNumber != value)
-                {
-                    _boundNumber = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            List<LicenseType> licenses = new List<LicenseType>();
+            licenses.Add(LicenseType.B);
+            DataContext = new Driver(1, "Batselier", "Bryan", new DateTime(1993, 11, 23), "93.11.23-283.87", null,null,null,null);
 
         }
     }

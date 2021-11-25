@@ -7,6 +7,7 @@ namespace BusinessLayer.Managers
 {
     public class FuelcardManager
     {
+        //todo: check voor dubbels
         private IFuelcardRepository _repo;
 
         public FuelcardManager(IFuelcardRepository repo)
