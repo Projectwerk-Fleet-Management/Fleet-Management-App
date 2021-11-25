@@ -12,12 +12,17 @@ namespace BusinessLayer
         public string City { get; private set; }
         public int Postalcode { get; private set; }
 
-        //Nullables or this (Constructor chaining)? 
-        //Nullables -> string?
-        //this (Constructor chaining), prefer this way
+
+        //(Constructor chaining)
+
         //-> https://codecompiled.com/constructor-chaining-c
         //-> https://stackoverflow.com/questions/10377888/how-can-i-use-multiple-constructors-to-remove-duplicated-code-while-maintaining
-        public Address(int addressId, string street, string housenumber, string? addendum, string city, int postalcode)
+        public Address(int addressId, string street, string housenumber, string city, int postalcode) : this(addressId, street, housenumber, null, city, postalcode)
+        {
+
+        }
+
+        public Address(int addressId, string street, string housenumber, string addendum, string city, int postalcode)
         {
             SetAddressId(addressId);
             SetStreet(street);
@@ -25,7 +30,7 @@ namespace BusinessLayer
             if (!string.IsNullOrWhiteSpace(addendum)) { SetAddendum(addendum); }; 
             SetCity(city);
             SetPostalcode(postalcode);
-        }
+        }        
 
         #region Setting of variables
         public void SetAddressId(int addressId)

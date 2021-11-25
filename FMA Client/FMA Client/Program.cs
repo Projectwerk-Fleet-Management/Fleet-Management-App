@@ -11,30 +11,66 @@ namespace FMA_Client
     {
         static void Main(string[] args)
         {
+            #region Connectionstrings
             //connection string marnick: Data Source=PROTOBEAR\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True
             //connection string Bryan: Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True
+            #endregion
+            #region Address testing
+            Address test1 = new(13, "steenbakkerij", "25", "A","Goeferdinge", 9500);
+            //Console.WriteLine(testt1.AddressId.ToString() + testt1.Street + testt1.Housenumber + testt1.Addendum + testt1.City + testt1.Postalcode.ToString());
 
+            Address test2 = new(1, "Steenbakkerij", "21", "a", "Geraardsbergen", 9500);
+            //Console.WriteLine(testt.AddressId.ToString() + testt.Street + testt.Housenumber + testt.Addendum + testt.City + testt.Postalcode.ToString());
+            #endregion
+            #region DriverRepository testing
             //DriverRepository y = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
             //y.GetAllDrivers();
-
+            #endregion
+            #region AddressRepository Testing
             AddressRepository p = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
-            //Console.WriteLine(p.Exists(1));
+            #region InsertAddress
+            //p.InsertAddress("Steenbakkerij", "21", null, "Geraardsbergen", 9500);
+            //p.InsertAddress("Steenbakkerij", "20", null, "Geraardsbergen", 9500);
+            //p.InsertAddress("Hogeweg", "15", "A", "Geraardsbergen", 9500);
+            #endregion   
 
-            var test = p.GetAllAddresses();
+            #region GetAddress and GetAllAddresses
+            var testAllAddresses = p.GetAllAddresses();
 
-            foreach (var t in test)
+            foreach (var t in testAllAddresses)
             {
-                Console.WriteLine($"{t.AddressId} {t.Street} {t.City} {t.Postalcode}");
-            }         
+                Console.WriteLine($"{t.AddressId} {t.Street} {t.Housenumber} {t.Addendum} {t.City} {t.Postalcode}");
+            }
+            /*
+            var testtt = p.GetAddress(null, null, null, null, null, 9500);
 
+            foreach (var t in testtt)
+            {
+                Console.WriteLine($"{t.AddressId} {t.Street} {t.Housenumber} {t.Addendum} {t.City} {t.Postalcode}");
+            }
+
+            Console.WriteLine(p.Exists(null, "steenbakkerij", null, null, null, 9500));
+            */
+            #endregion
+
+            #region UpdateAddress
+            p.UpdateAddress(testAllAddresses[1], test1);
+            #endregion
+
+            #region DeleteAddress
+            //p.DeleteAddress(testAllAddresses[2]);
+            #endregion
+
+            #endregion
+            #region NINValidatior
             //NINValidator x = new NINValidator();
             //bool test = x.isValid("93.11.23-283.87");
 
             //Driver t = new Driver("-5", "Batselier", "Bryan", new DateTime(1993, 11, 23), "93.11.23-283.85", new List<LicenseType> { LicenseType.A, LicenseType.BE });
 
-            VINValidator x = new VINValidator();
+            //VINValidator x = new VINValidator();
 
             //First four give errors back, fifth gives false back and last two give true back
             //Console.WriteLine(x.IsValid(null));
@@ -44,6 +80,7 @@ namespace FMA_Client
             //Console.WriteLine(x.IsValid("1M8GDM9A_KP042798"));
             //Console.WriteLine(x.IsValid("1M8GDM9AXKP042788"));
             //Console.WriteLine(x.IsValid("WAUZZZ8V5KA106598"));
+            #endregion
         }
     }
 }
