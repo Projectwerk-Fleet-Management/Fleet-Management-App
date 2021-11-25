@@ -27,7 +27,7 @@ namespace Views
             InitializeComponent();
             List<LicenseType> licenses = new List<LicenseType>();
             licenses.Add(LicenseType.B);
-            DataContext = new Driver(1, "Batselier", "Bryan", new DateTime(1993, 11, 23), "93.11.23-283.87", licenses);
+            DataContext = new Driver(1, "Batselier", "Bryan", new DateTime(1993, 11, 23), "93.11.23-283.87", null,null,null,null);
         }
     }
 }
