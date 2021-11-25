@@ -111,13 +111,13 @@ namespace BusinessLayer
         }
         public void SetMake(string make)
         {
-            if (make == null) throw new CarException("Make of car is not allowed to be null");
+            if (string.IsNullOrWhiteSpace(make)) throw new CarException("Make of car is not allowed to be null");
             this.Make = make;
             OnPropertyChanged("Make");
         }
         public void SetModel(string model)
         {
-            if (model == null) throw new CarException("Model of a car cannot be null");
+            if (string.IsNullOrWhiteSpace(model)) throw new CarException("Model of a car cannot be null");
             this.Model = model;
             OnPropertyChanged("Model");
 
@@ -134,7 +134,7 @@ namespace BusinessLayer
         public void SetLicenseplate(string licenseplate)
         {
             LicenseplateValidator x = new LicenseplateValidator();
-            if (licenseplate == null) throw new CarException("Licenseplate cannot be null");
+            if (string.IsNullOrWhiteSpace(licenseplate)) throw new CarException("Licenseplate cannot be null");
             if (!x.isValid(licenseplate)) throw new CarException("Licenseplate is not valid");
             this.Licenseplate = licenseplate;
             OnPropertyChanged("Licenseplate");
@@ -168,7 +168,7 @@ namespace BusinessLayer
         }
         public void SetType(string type)
         {
-            if (type == null) throw new CarException("Type cannot be null");
+            if (string.IsNullOrWhiteSpace(type)) throw new CarException("Type cannot be null");
             this.Type = type;
             OnPropertyChanged("Type");
         }

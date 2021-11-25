@@ -22,41 +22,16 @@ namespace BusinessLayer
         //TODO: Add set/remove methodes
         public Fuelcard(string cardnumber, DateTime expiryDate)
         {
-            if (cardnumber == null)
-            {
-                throw new FuelcardException("Cardnumber cannot be null");
-            }
-
-            if (!validator.isValid(cardnumber))
-            {
-                throw new FuelcardException("The entered fuelcardnumber is not valid");
-            }
-            if (expiryDate < DateTime.Now)
-            {
-                throw new FuelcardException("This card is already expired");
-            }
-            Cardnumber = cardnumber;
-            ExpiryDate = expiryDate;
+            setCardnumber(cardnumber);
+            setExpiryDate(expiryDate);
         }
 
         public Fuelcard(string cardnumber, DateTime expiryDate, string pincode, List<Fuel> fueltypeList,
             Driver driver)
         {
-            if (cardnumber == null)
-            {
-                throw new FuelcardException("Cardnumber cannot be null");
-            }
+            setCardnumber(cardnumber);
+            setExpiryDate(expiryDate);
 
-            if (!validator.isValid(cardnumber))
-            {
-                throw new FuelcardException("The entered fuelcardnumber is not valid");
-            }
-            if (expiryDate < DateTime.Now)
-            {
-                throw new FuelcardException("This card is already expired");
-            }
-            Cardnumber = cardnumber;
-            ExpiryDate = expiryDate;
             Pincode = pincode;
             FueltypeList = fueltypeList;
             Driver = driver;
@@ -66,27 +41,30 @@ namespace BusinessLayer
         public Fuelcard(string cardnumber, DateTime expiryDate, string pincode, Fuel fuel,
             Driver driver)
         {
-            if (cardnumber == null)
-            {
-                throw new FuelcardException("Cardnumber cannot be null");
-            }
-
-            if (!validator.isValid(cardnumber))
-            {
-                throw new FuelcardException("The entered fuelcardnumber is not valid");
-            }
-            if (expiryDate < DateTime.Now)
-            {
-                throw new FuelcardException("This card is already expired");
-            }
-            Cardnumber = cardnumber;
-            ExpiryDate = expiryDate;
-            Pincode = pincode;
+            setCardnumber(cardnumber);
+            setExpiryDate(expiryDate);
             FueltypeList.Add(fuel);
             Driver = driver;
             isActive = true;
         }
 
+
+        public void setExpiryDate(DateTime expiryDate)
+        {
+            if (expiryDate < DateTime.Now)
+            {
+                throw new FuelcardException("This card is already expired");
+            }
+            ExpiryDate = expiryDate;
+        }
+        public void setCardnumber(string cn)
+        {
+            if (string.IsNullOrWhiteSpace(cn)) throw new FuelcardException("is empty");
+            if (Cardnumber != null) throw new FuelcardException("There already is a cardnumber");
+            if (!validator.isValid(cn)) throw new FuelcardException("The entered fuelcardnumber is not valid");
+                
+            Cardnumber = cn;
+        }
         public void addDriver(Driver d)
         {
             if (Driver != null) throw new FuelcardException("Driver is already assigned");

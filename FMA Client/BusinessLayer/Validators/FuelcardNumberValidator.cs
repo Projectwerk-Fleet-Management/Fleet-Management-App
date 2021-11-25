@@ -13,7 +13,7 @@
                 }
             }
             if (tocheck.Length == 18)
-            {
+            { 
                 return true;
             }
 
