@@ -9,6 +9,8 @@ using BusinessLayer.Model;
 
 namespace BusinessLayer.Managers
 {
+    //todo: check voor dubbels
+
     public class DriverManager
     {
         private IDriverRepository _repo;

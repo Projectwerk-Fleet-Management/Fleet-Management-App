@@ -143,7 +143,9 @@ namespace BusinessLayer
         {
             if (driver == null) throw new CarException("Driver cannot be null");
             driver.SetCar(this);
+            //check of het al heeft
             this.Driver = driver;
+            //TODO onpropertychanged uit buslaag 
             OnPropertyChanged("Driver");
         }
         public void SetColour(string colour)
