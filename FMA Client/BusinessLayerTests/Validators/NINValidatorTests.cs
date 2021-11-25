@@ -2,7 +2,7 @@ using System;
 using BusinessLayer.Validators;
 using Xunit;
 
-namespace BusinessLayerTests
+namespace BusinessLayerTests.Validators
 {
     public class NINValidatorTests
     {

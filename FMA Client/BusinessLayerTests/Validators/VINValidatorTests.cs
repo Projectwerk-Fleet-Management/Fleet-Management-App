@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using BusinessLayer;
 using BusinessLayer.Model;
 
-namespace BusinessLayerTests
+namespace BusinessLayerTests.Validators
 {
     public class VINValidatorTests
     {
