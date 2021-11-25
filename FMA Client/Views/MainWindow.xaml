@@ -7,11 +7,14 @@
         mc:Ignorable="d"
         Title="Fleet Management App" Height="450" Width="800">
     <Grid>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-            <Label>Driver Name:</Label>
-            <TextBox Width="140"/>
-            <Button>Update</Button>
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBox Grid.Row="0" Text="{Binding Path=BoundNumber, Mode=TwoWay}" />
+            <Slider Grid.Row="1" Value="{Binding Path=BoundNumber, Mode=TwoWay}" />
         
     </Grid>
 </Window>
