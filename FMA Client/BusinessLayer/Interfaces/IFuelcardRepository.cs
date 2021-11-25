@@ -9,9 +9,9 @@ namespace BusinessLayer.Interfaces
     public interface IFuelcardRepository
     {
         IReadOnlyList<Fuelcard> GetAllFuelcards();
-        IReadOnlyList<Fuelcard> GetFuelcard(int? fuelcardId, string cardnumber, DateTime? expiryDate, List<Fuel> fueltypes, bool? isActive);
-        bool Exists(int? fuelcardId, string cardnumber, DateTime? expiryDate, List<Fuel> fueltypes, bool? isActive);
-        void InsertFuelcard(string cardnumber, DateTime expiryDate, List<Fuel> fueltypes, int? pincode, bool? isActive);
+        IReadOnlyList<Fuelcard> GetFuelcard(int? fuelcardId, string cardnumber, string expiryDate, List<Fuel> fueltypes, bool? isActive);
+        bool Exists(int? fuelcardId, string cardnumber, string expiryDate, List<Fuel> fueltypes, bool? isActive);
+        void InsertFuelcard(string cardnumber, string expiryDate, List<Fuel> fueltypes, int? pincode, bool? isActive);
         void DeleteFuelcard(Fuelcard fuelcard);
         void UpdateFuelcard(Fuelcard oldFuelcard, Fuelcard newFuelcard);
     }

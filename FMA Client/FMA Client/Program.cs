@@ -68,7 +68,22 @@ namespace FMA_Client
             #region FuelcardRepository testing
             FuelcardRepository f = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
+            #region GetAllFuelcards and GetFuelcard Checking
             var fList = f.GetAllFuelcards();
+
+            var fList2 = f.GetFuelcard(null, null, "2022-06-25", null, false);
+            #endregion
+
+            #region Exists Testing
+            //List<Fuel> fTypes1 = new();
+            //fTypes1.Add(Fuel.Benzine);
+            //List<Fuel> fTypes2 = new();
+            //fTypes2.Add(Fuel.Benzine);
+            //fTypes2.Add(Fuel.Electrisch);
+
+            //Console.WriteLine(f.Exists(8, "189349996715246875", "2022-06-25", fTypes1, false));
+            //Console.WriteLine(f.Exists(9, "189349996715246847", "2022-06-25", fTypes2, false));
+            #endregion
             #endregion
             #region NINValidatior
             //NINValidator x = new NINValidator();
