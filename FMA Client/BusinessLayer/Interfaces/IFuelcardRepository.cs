@@ -13,6 +13,6 @@ namespace BusinessLayer.Interfaces
         bool Exists(int? fuelcardId, string cardnumber, string expiryDate, List<Fuel> fueltypes, bool? isActive);
         void InsertFuelcard(string cardnumber, string expiryDate, List<Fuel> fueltypes, int? pincode, bool? isActive);
         void DeleteFuelcard(Fuelcard fuelcard);
-        void UpdateFuelcard(Fuelcard oldFuelcard, Fuelcard newFuelcard);
+        oid UpdateFuelcard(Fuelcard oldFuelcard, Fuelcard newFuelcard);
     }
 }
