@@ -143,7 +143,7 @@ namespace BusinessLayer
         public void SetFuelcard(Fuelcard fuelcard)
         {
             if (fuelcard == null) throw new DriverException("Fuelcard cannot be null");
-            fuelcard.addDriver(this);
+            fuelcard.SetDriver(this);
             AssignedFuelcard = fuelcard;
             OnPropertyChanged("AssignedFuelcard");
         }
@@ -168,7 +168,7 @@ namespace BusinessLayer
         public void RemoveFuelcard()
         {
             if (this.AssignedFuelcard == null) throw new DriverException("There is no fuelcard assigned to this driver");
-            AssignedFuelcard.removeDriver();
+            AssignedFuelcard.RemoveDriver();
             AssignedFuelcard = null;
         }
         public void RemoveCar()

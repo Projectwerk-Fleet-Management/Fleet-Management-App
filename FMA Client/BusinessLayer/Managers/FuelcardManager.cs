@@ -26,7 +26,7 @@ namespace BusinessLayer.Managers
                 throw new FuelcardException("", exception);
 
             }
-            return _repo.GetFuelcards();
+            return _repo.GetAllFuelcards();
         }
 
     }
