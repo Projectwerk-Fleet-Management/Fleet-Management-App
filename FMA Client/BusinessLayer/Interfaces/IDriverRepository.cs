@@ -13,6 +13,6 @@ namespace BusinessLayer.Interfaces
         bool Exists(int? driverId, string firstName, string lastName, string dateOfBirth, int? nationalIdentificationNumber, string licenses);
         void InsertDriver(string firstName, string lastName, string dateOfBirth, int nationalIdentificationNumber, string licenses);
         void DeleteDriver(Driver driver);
-        void UpdateDriver(Driver driver);
+        void UpdateDriver(Driver oldDriverInfo, Driver newDriverInfo);
     }
 }

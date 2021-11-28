@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Runtime.InteropServices;
-using BusinessLayer.Exceptions;
+﻿using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
-using BusinessLayer.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLayer.Managers
 {
@@ -20,63 +17,46 @@ namespace BusinessLayer.Managers
             _repo = repo;
         }
 
-        public IReadOnlyList<Driver> DriverList()
+        public IReadOnlyList<Driver> GetAllDrivers()
         {
             try
             {
                 return _repo.GetAllDrivers();
-            }
-            catch
+            } catch
             {
                 throw new DriverManagerException("Getting driver list failed");
             }
         }
 
 
-        public IReadOnlyList<Driver> DriverList(string? id, string? firstName, string? lastName, DateTime? dateOfBirth, string? nationalIdentificationNumber, string? vin, string? fuelcardNumber, string? license, bool strikt = true)
+        public IReadOnlyList<Driver> GetDrivers(int? driverId, string firstName, string lastName, string dateOfBirth, int? nationalIdentificationNumber, string licenses)
         {
             try
             {
-                return _repo.GetDrivers(id, firstName, lastName, dateOfBirth, nationalIdentificationNumber, vin, fuelcardNumber, license, strikt);
-            }
-            catch
+                return _repo.GetDrivers(driverId, firstName, lastName, dateOfBirth, nationalIdentificationNumber, licenses);
+            } catch
             {
                 throw new DriverManagerException("Failed getting driver list with specific arguments");
             }
         }
 
-        public Driver DriverByID(string id)
+        public bool Exists(int? driverId, string firstName, string lastName, string dateOfBirth, int? nationalIdentificationNumber, string licenses)
         {
             try
             {
-                IReadOnlyList<Driver> driverByID = _repo.GetDrivers(id, null, null, null, null, null, null, null, true);
-                return driverByID.First();
-            }
-            catch
-            {
-                throw new DriverManagerException($"Failed getting driver list with ID {id}");
-            }
-        }
-
-        public bool Exists(Driver driver)
-        {
-            try
-            {
-                return _repo.Exists(driver);
-            }
-            catch
+                return _repo.Exists(driverId, firstName, lastName, dateOfBirth, nationalIdentificationNumber, licenses);
+            } catch
             {
                 throw new DriverManagerException("Could complete operation 'exists'");
             }
         }
 
-        public void InsertDriver(Driver driver)
+        public void InsertDriver(string firstName, string lastName, string dateOfBirth, int nationalIdentificationNumber, string licenses)
         {
             try
             {
-                _repo.InsertDriver(driver);
-            }
-            catch
+                _repo.InsertDriver(firstName, lastName, dateOfBirth, nationalIdentificationNumber, licenses);
+            } catch
             {
                 throw new DriverManagerException("Failed to insert driver");
             }
@@ -87,21 +67,19 @@ namespace BusinessLayer.Managers
             try
             {
                 _repo.DeleteDriver(driver);
-            }
-            catch
+            } catch
             {
 
                 throw new DriverManagerException("Could not delete driver");
             }
         }
 
-        public void UpdateDriver(Driver driver)
+        public void UpdateDriver(Driver oldDriverInfo, Driver newDriverInfo)
         {
             try
             {
-                _repo.UpdateDriver(driver);
-            }
-            catch (Exception e)
+                _repo.UpdateDriver(oldDriverInfo, newDriverInfo);
+            } catch (Exception e)
             {
                 throw new DriverManagerException("Could not update driver", e);
             }
