@@ -9,6 +9,8 @@ using BusinessLayer.Model;
 
 namespace BusinessLayer.Managers
 {
+    //todo: check voor dubbels
+
     public class DriverManager
     {
         private IDriverRepository _repo;
@@ -101,7 +103,7 @@ namespace BusinessLayer.Managers
             }
             catch (Exception e)
             {
-                throw new DriverManagerException("Could not update driver");
+                throw new DriverManagerException("Could not update driver", e);
             }
         }
     }

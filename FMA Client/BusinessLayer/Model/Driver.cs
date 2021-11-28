@@ -7,7 +7,7 @@ using BusinessLayer.Validators;
 
 namespace BusinessLayer
 {
-    public class Driver
+    public class Driver : INotifyPropertyChanged
     {
         public int DriverId { get; private set; }
         public string LastName { get; private set; }
@@ -82,6 +82,7 @@ namespace BusinessLayer
         //    SetAddress(address);
         //}
 
+
         ////Constructor with car and fuelcard
         //public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses, Car assignedCar, Fuelcard assignedFuelcard, Address address)
         //{
@@ -101,47 +102,56 @@ namespace BusinessLayer
         {
             if (driverId <= 0) throw new DriverException("Id is less or equal to zero");
             this.DriverId = driverId;
+            OnPropertyChanged("driverID");
         }
         public void SetLastName(string lastName)
         {
-            if (lastName == null) throw new DriverException("Last name cannot be null");
+            if (string.IsNullOrWhiteSpace(lastName)) throw new DriverException("Last name cannot be null");
             this.LastName = lastName;
+            OnPropertyChanged("lastName");
         }
         public void SetFirstName(string firstName)
         {
-            if (firstName == null) throw new DriverException("First name cannot be null");
+            if (string.IsNullOrWhiteSpace(firstName)) throw new DriverException("First name cannot be null");
             this.FirstName = firstName;
+            OnPropertyChanged("firstName");
         }
         public void SetDateOfBirth(DateTime dateOfBirth)
         {
             if (dateOfBirth == null) throw new DriverException("Date of birth cannot be null");
             this.DateOfBirth = dateOfBirth;
+            OnPropertyChanged("DateOfBirth");
         }
         public void SetNationalIdentificationNumber (string nationalIdentificationNumber)
         {
             if (NINValidator.isValid(nationalIdentificationNumber) == false) throw new DriverException("National identification number is not valid");
             this.NationalIdentificationNumber = nationalIdentificationNumber;
+            OnPropertyChanged("NationalIdentificationNumber");
         }
         public void SetLicenses (List<LicenseType> licenses)
         {
             if (licenses == null) throw new DriverException("Licenses cannot be null");
             this.Licenses = licenses;
+            OnPropertyChanged("Licenses");
         }
         public void SetCar(Car car)
         {
             if (car == null) throw new DriverException("Car cannot be null");
             AssignedCar = car;
+            OnPropertyChanged("AssignedCar");
         }
         public void SetFuelcard(Fuelcard fuelcard)
         {
             if (fuelcard == null) throw new DriverException("Fuelcard cannot be null");
             fuelcard.SetDriver(this);
             AssignedFuelcard = fuelcard;
+            OnPropertyChanged("AssignedFuelcard");
         }
         public void SetAddress(Address address)
         {
             if (address == null) throw new DriverException("Address cannot be null");
             Address = address;
+            OnPropertyChanged("Address");
         }
         #endregion
 
@@ -150,6 +160,7 @@ namespace BusinessLayer
         {
             if (Licenses.Contains(license)) throw new DriverException("Driver already has this license");
             Licenses.Add(license);
+            OnPropertyChanged("Licenses");
         }
         #endregion
 
@@ -171,6 +182,21 @@ namespace BusinessLayer
             if (!Licenses.Contains(license)) throw new DriverException("Driver does not have this license");
             Licenses.Remove(license);
         }
+        #endregion
+
+        #region INotifypropertychanged members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
         #endregion
 
     }

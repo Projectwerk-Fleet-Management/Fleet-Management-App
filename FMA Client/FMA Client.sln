@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{E2682B7F-22D
 		SQLFmaDatabase.SQL = SQLFmaDatabase.SQL
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Views", "Views\Views.csproj", "{CA131BFB-981F-4627-9518-D4D900A0F1BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{1E789078-6FA8-4703-8449-5FE95FA71ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E789078-6FA8-4703-8449-5FE95FA71ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E789078-6FA8-4703-8449-5FE95FA71ECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA131BFB-981F-4627-9518-D4D900A0F1BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA131BFB-981F-4627-9518-D4D900A0F1BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA131BFB-981F-4627-9518-D4D900A0F1BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA131BFB-981F-4627-9518-D4D900A0F1BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

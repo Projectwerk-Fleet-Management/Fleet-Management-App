@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Exceptions;
+﻿using System.ComponentModel;
+using BusinessLayer.Exceptions;
 
 namespace BusinessLayer
 {
@@ -11,7 +12,9 @@ namespace BusinessLayer
         public string City { get; private set; }
         public int Postalcode { get; private set; }
 
+
         //(Constructor chaining)
+
         //-> https://codecompiled.com/constructor-chaining-c
         //-> https://stackoverflow.com/questions/10377888/how-can-i-use-multiple-constructors-to-remove-duplicated-code-while-maintaining
         public Address(int addressId, string street, string housenumber, string city, int postalcode) : this(addressId, street, housenumber, null, city, postalcode)
@@ -61,5 +64,6 @@ namespace BusinessLayer
             this.Postalcode = postalcode;
         }
         #endregion
+
     }
 }
