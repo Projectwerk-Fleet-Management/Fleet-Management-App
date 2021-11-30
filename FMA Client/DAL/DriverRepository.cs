@@ -294,7 +294,7 @@ namespace DAL
                         command.Parameters.Add(new SqlParameter("@fuelcardNumber", SqlDbType.NVarChar));
                         command.Parameters[@fuelcardNumber].Value = fuelcardNumber;
                     }
-                    //TODO check why it's underlinded
+
                     if (!string.IsNullOrWhiteSpace(license))
                     {
                         command.Parameters.Add(new SqlParameter("@licenses", SqlDbType.NVarChar));
