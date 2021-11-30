@@ -50,11 +50,20 @@ namespace BusinessLayer.Managers
 
         public void InsertCar(string vin, string licenseplate, string make, string model, string vehicleType, string fueltypes, string doors, string colour)
         {
-            //todo: check voor dubbels
             try
             {
-                _repo.InsertCar(vin, licenseplate, make, model, vehicleType, fueltypes, doors, colour);
-            } catch (Exception e)
+                if (!_repo.Exists(car))
+                {
+                    _repo.InsertCar(car);
+                }
+                else
+                {
+                    throw new CarmanagerException("Car already existed");
+
+                }
+                
+            }
+            catch (Exception e)
             {
                 throw new CarmanagerException("couldn't insert car", e);
             }
@@ -64,8 +73,17 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                _repo.DeleteCar(car);
-            } catch (Exception e)
+                if (_repo.Exists(car))
+                {
+                    _repo.DeleteCar(car);
+                }
+                else
+                {
+                    throw new CarmanagerException("Car didn't exist");
+                }
+                
+            }
+            catch(Exception e)
             {
                 throw new CarmanagerException("couldn't delete car", e);
             }
@@ -75,9 +93,17 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                //todo: check if exists
-                _repo.UpdateCar(oldCarInfo, newCarInfo);
-            } catch (Exception e)
+                if (_repo.Exists(car))
+                {
+                    _repo.UpdateCar(car);
+                }
+                else
+                {
+                    throw new CarmanagerException("Car does not exist");
+                }
+
+            }
+            catch (Exception e)
             {
                 throw new CarmanagerException("can't update car", e);
             }

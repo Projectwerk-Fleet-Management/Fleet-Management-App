@@ -18,9 +18,11 @@ namespace BusinessLayer
         private FuelcardNumberValidator validator = new FuelcardNumberValidator();
 
         #region Constructors
-        public Fuelcard(int fuelcardId ,string cardnumber, DateTime expiryDate, bool isActive = true)
+
+        public Fuelcard(int fuelcardId, string cardnumber, DateTime expiryDate, bool isActive = true)
             : this(fuelcardId, cardnumber, expiryDate, null, null, null, isActive)
-        {           
+        {
+
         }
 
         public Fuelcard(int fuelcardId, string cardnumber, DateTime expiryDate, int? pincode, bool isActive = true)
@@ -34,7 +36,9 @@ namespace BusinessLayer
         }
 
         public Fuelcard(int fuelcardId, string cardnumber, DateTime expiryDate, Driver driver, bool isActive = true)
-            : this(fuelcardId, cardnumber, expiryDate, null, null, driver,isActive)
+
+            : this(fuelcardId, cardnumber, expiryDate, null, null, driver, isActive)
+
         {
         }
 
@@ -48,7 +52,9 @@ namespace BusinessLayer
         {
         }
 
-        public Fuelcard(int fuelcardId, string cardnumber, DateTime expiryDate, List<Fuel> fueltypeList, Driver driver,bool isActive = true)
+
+        public Fuelcard(int fuelcardId, string cardnumber, DateTime expiryDate, List<Fuel> fueltypeList, Driver driver, bool isActive = true)
+
             : this(fuelcardId, cardnumber, expiryDate, null, fueltypeList, driver, isActive)
         {
         }
@@ -89,10 +95,11 @@ namespace BusinessLayer
         public void SetExpiryDate(DateTime expiryDate)
         {
             if (DateTime.Compare(DateTime.Now, expiryDate) > 0)
+
             {
                 throw new FuelcardException("This card is already expired");
             }
-
+          
             this.ExpiryDate = expiryDate;
         }
         public void SetPincode(int? pincode)

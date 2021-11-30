@@ -142,9 +142,8 @@ namespace BusinessLayer
         public void SetDriver(Driver driver)
         {
             if (driver == null) throw new CarException("Driver cannot be null");
-            driver.SetCar(this);
-            //check of het al heeft
-            this.Driver = driver;
+            if(driver.AssignedCar != this) driver.SetCar(this);
+            if (this.Driver != driver) Driver = driver;
             //TODO onpropertychanged uit buslaag 
             OnPropertyChanged("Driver");
         }
@@ -190,8 +189,11 @@ namespace BusinessLayer
 
         #region Remove methodes
         public void RemoveDriver()
-        {
-            Driver.RemoveCar();
+        {  
+            if (Driver.AssignedCar != null)
+            {
+                Driver.RemoveCar();
+            }
             this.Driver = null;
         }
         #endregion

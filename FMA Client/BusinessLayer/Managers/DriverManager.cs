@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Exceptions;
+using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,6 @@ using System.Linq;
 
 namespace BusinessLayer.Managers
 {
-    //todo: check voor dubbels
 
     public class DriverManager
     {
@@ -55,8 +54,17 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                _repo.InsertDriver(firstName, lastName, dateOfBirth, nationalIdentificationNumber, licenses);
-            } catch
+                if (!_repo.Exists(driver))
+                {
+                    _repo.InsertDriver(driver);
+                }
+                else
+                {
+                    throw new DriverManagerException("Driver already existed");
+                }
+
+            }
+            catch
             {
                 throw new DriverManagerException("Failed to insert driver");
             }
@@ -66,8 +74,17 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                _repo.DeleteDriver(driver);
-            } catch
+                if (_repo.Exists(driver))
+                {
+                    _repo.DeleteDriver(driver);
+                }
+                else
+                {
+                    throw new DriverManagerException("Did not contain driver to be deleted");
+                }
+                
+            }
+            catch
             {
 
                 throw new DriverManagerException("Could not delete driver");
@@ -78,8 +95,17 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                _repo.UpdateDriver(oldDriverInfo, newDriverInfo);
-            } catch (Exception e)
+                if (_repo.Exists(driver))
+                {
+                    _repo.UpdateDriver(driver);
+                }
+                else
+                {
+                    throw new DriverManagerException("Did not contain driver");
+                }
+                
+            }
+            catch (Exception e)
             {
                 throw new DriverManagerException("Could not update driver", e);
             }
