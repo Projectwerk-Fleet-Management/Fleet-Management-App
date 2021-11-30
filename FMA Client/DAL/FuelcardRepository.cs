@@ -429,7 +429,7 @@ namespace DAL
                     command.CommandText = query;
 
                     command.Parameters.AddWithValue("@Cardnumber", cardnumber);
-                    command.Parameters.AddWithValue("@ExpiryDate", expiryDate);                   
+                    command.Parameters.AddWithValue("@ExpiryDate", expiryDate);
                     command.Parameters.AddWithValue("@IsActive", isActive);
 
                     #region Null Checking
@@ -481,16 +481,159 @@ namespace DAL
             }
         }
 
-        //Priority 1
+        //Done
         public void DeleteFuelcard(Fuelcard fuelcard)
         {
-            throw new NotImplementedException();
+            //Only need to delete based on fuelcardId actually but we can use the cardnumber as a sort of protection
+            SqlConnection connection = getConnection();
+            string query = "Delete FROM [dbo].[Fuelcard] WHERE FuelcardId = @Id AND Cardnumber = @Cardnumber";
+
+            using SqlCommand command = new(query, connection);
+            try
+            {
+                connection.Open();
+                #region Add values to the search terms
+                command.Parameters.AddWithValue("@Id", fuelcard.FuelcardId);
+                command.Parameters.AddWithValue("@Cardnumber", fuelcard.Cardnumber);
+                #endregion
+
+                command.ExecuteNonQuery();
+
+            } catch (Exception ex)
+            {
+                throw new AddressRepositoryException("DeleteFuelcard failed - " + ex.Message);
+            } finally
+            {
+                connection.Close();
+            }
         }
 
         //Priority 1
         public void UpdateFuelcard(Fuelcard oldFuelcard, Fuelcard newFuelcard)
         {
-            throw new NotImplementedException();
+            bool Comma = false;
+
+            #region Check if there is a difference with the old address (The old address is already retrieved from the database
+            bool CardnumberDifferent = oldFuelcard.Cardnumber != newFuelcard.Cardnumber;
+            bool ExpiryDateDifferent = oldFuelcard.ExpiryDate != newFuelcard.ExpiryDate;
+            bool PincodeDifferent = oldFuelcard.Pincode != newFuelcard.Pincode;
+            bool FueltypesDifferent = oldFuelcard.FueltypeList != newFuelcard.FueltypeList;
+            bool IsActiveDifferent = oldFuelcard.isActive != newFuelcard.isActive;
+            #endregion
+
+            if (CardnumberDifferent || ExpiryDateDifferent || PincodeDifferent || FueltypesDifferent || IsActiveDifferent)
+            {
+                SqlConnection connection = getConnection();
+                string query = "UPDATE dbo.Fuelcard SET ";
+
+                #region For each thing different add it into the query and at the end add the where
+                if (CardnumberDifferent)
+                {
+                    query += "[Cardnumber] = @Cardnumber ";
+                    Comma = true;
+                }
+                if (ExpiryDateDifferent)
+                {
+                    if (Comma == true)
+                    {
+                        query += ",[ExpiryDate] = @ExpiryDate ";
+                    } else
+                    {
+                        query += "[ExpiryDate] = @ExpiryDate ";
+                        Comma = true;
+                    }
+                }
+                if (PincodeDifferent)
+                {
+                    if (Comma == true)
+                    {
+                        query += ",[Pincode] = @Pincode ";
+                    } else
+                    {
+                        query += "[Pincode] = @Pincode ";
+                        Comma = true;
+                    }
+                }
+                if (FueltypesDifferent)
+                {
+                    if (Comma == true)
+                    {
+                        query += ",[Fueltypes] = @Fueltypes ";
+                    } else
+                    {
+                        query += "[Fueltypes] = @Fueltypes ";
+                        Comma = true;
+                    }
+                }
+                if (IsActiveDifferent)
+                {
+                    if (Comma == true)
+                    {
+                        query += ",[IsActive] = @IsActive ";
+                    } else
+                    {
+                        query += "[IsActive] = @IsActive ";
+                    }
+                }
+
+                query += "WHERE [FuelcardId] = @OldFuelcardId AND [Cardnumber] = @OldCardnumber";
+                #endregion
+
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    try
+                    {
+                        connection.Open();
+                        command.CommandText = query;
+
+                        #region Add values of the new address if there is a difference
+                        if (CardnumberDifferent) command.Parameters.AddWithValue("@Cardnumber", newFuelcard.Cardnumber);
+                        if (ExpiryDateDifferent) command.Parameters.AddWithValue("@ExpiryDate", newFuelcard.ExpiryDate.ToString("yyyy/MM/dd"));
+                        if (PincodeDifferent) command.Parameters.AddWithValue("@Pincode", newFuelcard.Pincode);
+                        if (FueltypesDifferent)
+                        {
+                            string fueltypesString = "";
+                            bool first = true;
+
+                            foreach (var f in newFuelcard.FueltypeList)
+                            {
+                                if (f == Fuel.Benzine)
+                                {
+                                    if (first) { fueltypesString += "Benzine"; first = false; } else { fueltypesString += ", Benzine"; }
+
+                                }
+                                if (f == Fuel.Diesel)
+                                {
+                                    if (first) { fueltypesString += "Diesel"; first = false; } else { fueltypesString += ", Diesel"; }
+                                }
+                                if (f == Fuel.Electrisch)
+                                {
+                                    if (first) { fueltypesString += "Electrisch"; first = false; } else { fueltypesString += ", Electrisch"; }
+                                }
+                            }
+
+                            command.Parameters.AddWithValue("@Fueltypes", fueltypesString);
+                        }
+                        if (IsActiveDifferent) command.Parameters.AddWithValue("@Postalcode", newFuelcard.isActive);
+
+                        #endregion
+                        #region Add values of the old address in the where
+                        command.Parameters.AddWithValue("@OldFuelcardId", oldFuelcard.FuelcardId);
+                        command.Parameters.AddWithValue("@OldCardnumber", oldFuelcard.Cardnumber);
+                        #endregion
+
+                        command.ExecuteNonQuery();
+
+
+                    } catch (Exception ex)
+                    {
+                        throw new AddressRepositoryException("UpdateFuelcard failed - " + ex.Message);
+                    } finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
         }
     }
 }

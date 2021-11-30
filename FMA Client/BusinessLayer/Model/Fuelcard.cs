@@ -88,8 +88,7 @@ namespace BusinessLayer
         }
         public void SetExpiryDate(DateTime expiryDate)
         {
-            
-            if (expiryDate < DateTime.Now)
+            if (DateTime.Compare(DateTime.Now, expiryDate) > 0)
             {
                 throw new FuelcardException("This card is already expired");
             }
