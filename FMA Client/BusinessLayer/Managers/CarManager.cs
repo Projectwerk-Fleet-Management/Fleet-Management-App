@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BusinessLayer.Exceptions;
+﻿using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace BusinessLayer.Managers
 {
@@ -14,58 +13,42 @@ namespace BusinessLayer.Managers
             _repo = repo;
         }
 
-        public IReadOnlyList<Car>GetCars()
+        public IReadOnlyList<Car> GetCars()
         {
             try
             {
-                return _repo.GetCars();
-            }
-            catch (Exception e)
+                return _repo.GetAllCars();
+            } catch (Exception e)
             {
                 throw new CarmanagerException("couldn't get all cars", e);
             }
         }
 
-        public IReadOnlyList<Car> GetCars(string? vin, string? make, string? model, string? licensePlate, string? fuelType, string? colour, string? doors, string? driverId, string? vehicleType, bool strikt = true)
+        public IReadOnlyList<Car> GetCars(int? carId, string vin, string licenseplate, string make, string model, string vehicleType, string fueltypes, string doors, string colour)
         {
             try
             {
-                return _repo.GetCars(vin, make, model, licensePlate, fuelType, colour, doors, driverId, vehicleType, true);
+                return _repo.GetCars(carId, vin, licenseplate, make, model, vehicleType, fueltypes, doors, colour);
 
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 throw new CarmanagerException("couldn't get cars", e);
             }
         }
 
-        public Car GetCarByVin(string vin)
+        public bool Exists(int? carId, string vin, string licenseplate, string make, string model, string vehicleType, string fueltypes, string doors, string colour)
         {
             try
             {
-                IReadOnlyList < Car > carbyid = _repo.GetCars(vin, null, null, null, null, null, null, null, null, true);
-                return carbyid.First();
-            }
-            catch (Exception e)
-            {
-                throw new CarmanagerException("couldn't get car by id", e);
-            }
-        }
-
-        public bool Exists(Car car)
-        {
-            try
-            {
-                return _repo.Exists(car);
-            }
-            catch (Exception e)
+                return _repo.Exists(carId, vin, licenseplate, make, model, vehicleType, fueltypes, doors, colour);
+            } catch (Exception e)
             {
 
                 throw new CarmanagerException("couldn't execute if exists", e);
             }
         }
 
-        public void InsertCar(Car car)
+        public void InsertCar(string vin, string licenseplate, string make, string model, string vehicleType, string fueltypes, string doors, string colour)
         {
             try
             {
@@ -106,7 +89,7 @@ namespace BusinessLayer.Managers
             }
         }
 
-        public void UpdateCar(Car car)
+        public void UpdateCar(Car oldCarInfo, Car newCarInfo)
         {
             try
             {

@@ -322,48 +322,6 @@ namespace DAL
         }
 
         //Done
-        public void DeleteAddress(Address address)
-        {
-            #region Check if at least street, housenumber and city has been given, is this actually needed?
-            if (string.IsNullOrWhiteSpace(address.Street)) throw new AddressRepositoryException("DeleteAddress - Street cannot be empty");
-            if (string.IsNullOrWhiteSpace(address.Housenumber)) throw new AddressRepositoryException("DeleteAddress - Housenumber cannot be empty");
-            if (string.IsNullOrWhiteSpace(address.City)) throw new AddressRepositoryException("DeleteAddress - City cannot be empty");
-            #endregion
-
-            SqlConnection connection = getConnection();
-            string query = "Delete FROM [dbo].[Address] WHERE AddressId = @Id AND Street = @Street AND" +
-                " Housenumber = @Housenumber AND City = @City AND Postalcode = @Postalcode";
-
-            if (!string.IsNullOrWhiteSpace(address.Addendum)) query +=" AND Addendum = @Addendum";
-
-            using SqlCommand command = new(query, connection);
-            try
-            {
-                connection.Open();
-                #region Add values to the search terms
-                command.Parameters.AddWithValue("@Id", address.AddressId);
-                command.Parameters.AddWithValue("@Street", address.Street);
-                command.Parameters.AddWithValue("@Housenumber", address.Housenumber);
-                command.Parameters.AddWithValue("@City", address.City);
-                command.Parameters.AddWithValue("@Postalcode", address.Postalcode);
-                if (!string.IsNullOrWhiteSpace(address.Addendum))
-                {
-                    command.Parameters.AddWithValue("@Addendum", address.Addendum);
-                }
-                #endregion
-
-                command.ExecuteNonQuery();
-
-            } catch (Exception ex)
-            {
-                throw new AddressRepositoryException("DeleteAddress failed - " + ex.Message);
-            } finally
-            {
-                connection.Close();
-            }
-        }
-
-        //Done
         public void InsertAddress(string street, string housenumber, string addendum, string city, int postalcode)
         {
             #region Check if given variables aren't empty or invalid
@@ -426,134 +384,160 @@ namespace DAL
         }
 
         //Done
+        public void DeleteAddress(Address address)
+        {
+            //Answer: Not needed since you'll be deleting using the UI and this will be retrieved from the database (thus it can't be empty)
+            //#region Check if at least street, housenumber and city has been given, is this actually needed?
+            //if (string.IsNullOrWhiteSpace(address.Street)) throw new AddressRepositoryException("DeleteAddress - Street cannot be empty");
+            //if (string.IsNullOrWhiteSpace(address.Housenumber)) throw new AddressRepositoryException("DeleteAddress - Housenumber cannot be empty");
+            //if (string.IsNullOrWhiteSpace(address.City)) throw new AddressRepositoryException("DeleteAddress - City cannot be empty");
+            //#endregion
+
+            SqlConnection connection = getConnection();
+            string query = "Delete FROM [dbo].[Address] WHERE AddressId = @Id AND Street = @Street AND" +
+                " Housenumber = @Housenumber AND City = @City AND Postalcode = @Postalcode";
+
+            if (!string.IsNullOrWhiteSpace(address.Addendum)) query += " AND Addendum = @Addendum";
+
+            using SqlCommand command = new(query, connection);
+            try
+            {
+                connection.Open();
+                #region Add values to the search terms
+                command.Parameters.AddWithValue("@Id", address.AddressId);
+                command.Parameters.AddWithValue("@Street", address.Street);
+                command.Parameters.AddWithValue("@Housenumber", address.Housenumber);
+                command.Parameters.AddWithValue("@City", address.City);
+                command.Parameters.AddWithValue("@Postalcode", address.Postalcode);
+                if (!string.IsNullOrWhiteSpace(address.Addendum))
+                {
+                    command.Parameters.AddWithValue("@Addendum", address.Addendum);
+                }
+                #endregion
+
+                command.ExecuteNonQuery();
+
+            } catch (Exception ex)
+            {
+                throw new AddressRepositoryException("DeleteAddress failed - " + ex.Message);
+            } finally
+            {
+                connection.Close();
+            }
+        }
+
+        //Done
         public void UpdateAddress(Address oldAddressInfo, Address newAddressInfo)
         {
-            #region Check if given variables aren't empty or invalid of the new address (Old one should already be correct)
-            if (string.IsNullOrWhiteSpace(newAddressInfo.Street))
-            {
-                throw new AddressRepositoryException("UpdateDriver - Street cannot be empty");
-            }
-            if (string.IsNullOrWhiteSpace(newAddressInfo.Housenumber))
-            {
-                throw new AddressRepositoryException("UpdateDriver - Housenumber cannot be empty");
-            }
-            if (string.IsNullOrWhiteSpace(newAddressInfo.City))
-            {
-                throw new AddressRepositoryException("UpdateDriver - City cannot be empty");
-            }
-            if (newAddressInfo.Postalcode < 1000 || newAddressInfo.Postalcode > 9992)
-            {
-                throw new AddressRepositoryException("UpdateDriver - Postalcode is not a valid number");
-            }
-            #endregion
-
             bool Comma = false;
 
-            #region Check if there is a difference with the old address
+            #region Check if there is a difference with the old address (The old address is already retrieved from the database
             bool StreetDifferent = oldAddressInfo.Street.ToUpper() != newAddressInfo.Street.ToUpper();
             bool HousenumberDifferent = oldAddressInfo.Housenumber.ToUpper() != newAddressInfo.Housenumber.ToUpper();
             bool AddendumDifferent = oldAddressInfo.Addendum != newAddressInfo.Addendum;
             bool CityDifferent = oldAddressInfo.City.ToUpper() != newAddressInfo.City.ToUpper();
             bool PostalcodeDifferent = oldAddressInfo.Postalcode != newAddressInfo.Postalcode;
             #endregion
-
-            SqlConnection connection = getConnection();
-            string query = "UPDATE dbo.Address SET ";
-
-            #region For each thing different add it into the query and at the end add the where
-            if (StreetDifferent)
+            if(StreetDifferent || HousenumberDifferent || AddendumDifferent || CityDifferent || PostalcodeDifferent)
             {
-                query += "[Street] = @Street ";
-                Comma = true;
-            }
-            if (HousenumberDifferent)
-            {
-                if (Comma == true)
+                SqlConnection connection = getConnection();
+                string query = "UPDATE dbo.Address SET ";
+
+                #region For each thing different add it into the query and at the end add the where
+                if (StreetDifferent)
                 {
-                    query += ",[Housenumber] = @Housenumber ";
-                } else
-                {
-                    query += "[Housenumber] = @Housenumber ";
+                    query += "[Street] = @Street ";
                     Comma = true;
                 }
-            }
-            if (AddendumDifferent)
-            {
-                if (Comma == true)
+                if (HousenumberDifferent)
                 {
-                    query += ",[Addendum] = @Addendum ";
-                } else
-                {
-                    query += "[Addendum] = @Addendum ";
-                    Comma = true;
-                }               
-            }
-            if (CityDifferent)
-            {
-                if (Comma == true)
-                {
-                    query += ",[City] = @City ";
-                } else
-                {
-                    query += "[City] = @City ";
-                    Comma = true;
-                }           
-            }
-            if (PostalcodeDifferent)
-            {
-                if (Comma == true)
-                {
-                    query += ",[Postalcode] = @Postalcode ";
-                } else
-                {
-                    query += "[Postalcode] = @Postalcode ";
-                }                              
-            }
-
-            query += "WHERE [Street] = @OldStreet AND [Housenumber] = @OldHousenumber AND [City] = @OldCity";
-            if (!string.IsNullOrWhiteSpace(oldAddressInfo.Addendum)) query += " AND [Addendum] = @OldAddendum";
-            #endregion
-
-            using (SqlCommand command = connection.CreateCommand())
-            {
-                try
-                {
-                    connection.Open();
-                    command.CommandText = query;
-
-                    #region Add values of the new address if there is a difference
-                    if (StreetDifferent) command.Parameters.AddWithValue("@Street", newAddressInfo.Street);
-                    if (HousenumberDifferent) command.Parameters.AddWithValue("@Housenumber", newAddressInfo.Housenumber);
-                    if (CityDifferent) command.Parameters.AddWithValue("@City", newAddressInfo.City);
-                    if (PostalcodeDifferent) command.Parameters.AddWithValue("@Postalcode", newAddressInfo.Postalcode);
-                    if (AddendumDifferent)
+                    if (Comma == true)
                     {
-                        if (!string.IsNullOrWhiteSpace(newAddressInfo.Addendum))
-                        {
-                            command.Parameters.AddWithValue("@Addendum", newAddressInfo.Addendum);
-                        } else
-                        {
-                            command.Parameters.AddWithValue("@Addendum", DBNull.Value);
-                        }
+                        query += ",[Housenumber] = @Housenumber ";
+                    } else
+                    {
+                        query += "[Housenumber] = @Housenumber ";
+                        Comma = true;
                     }
-                    #endregion
-                    #region Add values of the old address in the where
-                    command.Parameters.AddWithValue("@OldStreet", oldAddressInfo.Street);
-                    command.Parameters.AddWithValue("@OldHousenumber", oldAddressInfo.Housenumber);
-                    if (!string.IsNullOrWhiteSpace(oldAddressInfo.Addendum)) command.Parameters.AddWithValue("@OldAddendum", oldAddressInfo.Addendum);
-                    command.Parameters.AddWithValue("@OldCity", oldAddressInfo.City);
-                    #endregion
-
-                    command.ExecuteNonQuery();
-
-                } catch (Exception ex)
-                {
-                    throw new AddressRepositoryException("UpdateAddress failed - " + ex.Message);
-                } finally
-                {
-                    connection.Close();
                 }
-            }
+                if (AddendumDifferent)
+                {
+                    if (Comma == true)
+                    {
+                        query += ",[Addendum] = @Addendum ";
+                    } else
+                    {
+                        query += "[Addendum] = @Addendum ";
+                        Comma = true;
+                    }
+                }
+                if (CityDifferent)
+                {
+                    if (Comma == true)
+                    {
+                        query += ",[City] = @City ";
+                    } else
+                    {
+                        query += "[City] = @City ";
+                        Comma = true;
+                    }
+                }
+                if (PostalcodeDifferent)
+                {
+                    if (Comma == true)
+                    {
+                        query += ",[Postalcode] = @Postalcode ";
+                    } else
+                    {
+                        query += "[Postalcode] = @Postalcode ";
+                    }
+                }
+
+                query += "WHERE [Street] = @OldStreet AND [Housenumber] = @OldHousenumber AND [City] = @OldCity";
+                if (!string.IsNullOrWhiteSpace(oldAddressInfo.Addendum)) query += " AND [Addendum] = @OldAddendum";
+                #endregion
+
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    try
+                    {
+                        connection.Open();
+                        command.CommandText = query;
+
+                        #region Add values of the new address if there is a difference
+                        if (StreetDifferent) command.Parameters.AddWithValue("@Street", newAddressInfo.Street);
+                        if (HousenumberDifferent) command.Parameters.AddWithValue("@Housenumber", newAddressInfo.Housenumber);
+                        if (CityDifferent) command.Parameters.AddWithValue("@City", newAddressInfo.City);
+                        if (PostalcodeDifferent) command.Parameters.AddWithValue("@Postalcode", newAddressInfo.Postalcode);
+                        if (AddendumDifferent)
+                        {
+                            if (!string.IsNullOrWhiteSpace(newAddressInfo.Addendum))
+                            {
+                                command.Parameters.AddWithValue("@Addendum", newAddressInfo.Addendum);
+                            } else
+                            {
+                                command.Parameters.AddWithValue("@Addendum", DBNull.Value);
+                            }
+                        }
+                        #endregion
+                        #region Add values of the old address in the where
+                        command.Parameters.AddWithValue("@OldStreet", oldAddressInfo.Street);
+                        command.Parameters.AddWithValue("@OldHousenumber", oldAddressInfo.Housenumber);
+                        if (!string.IsNullOrWhiteSpace(oldAddressInfo.Addendum)) command.Parameters.AddWithValue("@OldAddendum", oldAddressInfo.Addendum);
+                        command.Parameters.AddWithValue("@OldCity", oldAddressInfo.City);
+                        #endregion
+
+                        command.ExecuteNonQuery();
+
+                    } catch (Exception ex)
+                    {
+                        throw new AddressRepositoryException("UpdateAddress failed - " + ex.Message);
+                    } finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }           
         }
     }
 }
