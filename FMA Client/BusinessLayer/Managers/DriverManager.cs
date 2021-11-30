@@ -9,7 +9,6 @@ using BusinessLayer.Model;
 
 namespace BusinessLayer.Managers
 {
-    //todo: check voor dubbels
 
     public class DriverManager
     {
@@ -74,7 +73,15 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                _repo.InsertDriver(driver);
+                if (!_repo.Exists(driver))
+                {
+                    _repo.InsertDriver(driver);
+                }
+                else
+                {
+                    throw new DriverManagerException("Driver already existed");
+                }
+
             }
             catch
             {
@@ -86,7 +93,15 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                _repo.DeleteDriver(driver);
+                if (_repo.Exists(driver))
+                {
+                    _repo.DeleteDriver(driver);
+                }
+                else
+                {
+                    throw new DriverManagerException("Did not contain driver to be deleted");
+                }
+                
             }
             catch
             {
@@ -99,7 +114,15 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                _repo.UpdateDriver(driver);
+                if (_repo.Exists(driver))
+                {
+                    _repo.UpdateDriver(driver);
+                }
+                else
+                {
+                    throw new DriverManagerException("Did not contain driver");
+                }
+                
             }
             catch (Exception e)
             {

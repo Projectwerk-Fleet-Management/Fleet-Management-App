@@ -67,10 +67,18 @@ namespace BusinessLayer.Managers
 
         public void InsertCar(Car car)
         {
-            //todo: check voor dubbels
             try
             {
-                _repo.InsertCar(car);
+                if (!_repo.Exists(car))
+                {
+                    _repo.InsertCar(car);
+                }
+                else
+                {
+                    throw new CarmanagerException("Car already existed");
+
+                }
+                
             }
             catch (Exception e)
             {
@@ -82,7 +90,15 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                _repo.DeleteCar(car);
+                if (_repo.Exists(car))
+                {
+                    _repo.DeleteCar(car);
+                }
+                else
+                {
+                    throw new CarmanagerException("Car didn't exist");
+                }
+                
             }
             catch(Exception e)
             {
@@ -94,8 +110,15 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                //todo: check if exists
-                _repo.UpdateCar(car);
+                if (_repo.Exists(car))
+                {
+                    _repo.UpdateCar(car);
+                }
+                else
+                {
+                    throw new CarmanagerException("Car does not exist");
+                }
+
             }
             catch (Exception e)
             {

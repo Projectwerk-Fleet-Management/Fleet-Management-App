@@ -7,7 +7,6 @@ namespace BusinessLayer.Managers
 {
     public class FuelcardManager
     {
-        //todo: check voor dubbels
         private IFuelcardRepository _repo;
 
         public FuelcardManager(IFuelcardRepository repo)
@@ -15,18 +14,17 @@ namespace BusinessLayer.Managers
             _repo = repo;
         }
 
-        public IReadOnlyList<Fuelcard> GetCars()
+        public IReadOnlyList<Fuelcard> GetCards()
         {
             try
             {
-
+                return _repo.GetFuelcards();
             }
             catch(Exception exception)
             {
                 throw new FuelcardException("", exception);
 
             }
-            return _repo.GetFuelcards();
         }
 
     }

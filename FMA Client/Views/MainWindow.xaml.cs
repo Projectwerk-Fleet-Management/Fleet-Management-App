@@ -24,8 +24,7 @@ namespace Views
     /// </summary>
     public partial class MainWindow
     {
-        public MainWindow()
-        {
+        public MainWindow() {
             DataContext = this;
             InitializeComponent();
 
