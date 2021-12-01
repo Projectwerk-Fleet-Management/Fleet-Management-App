@@ -18,7 +18,7 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                return _repo.GetFuelcards();
+                return _repo.GetAllFuelcards();
             }
             catch(Exception exception)
             {

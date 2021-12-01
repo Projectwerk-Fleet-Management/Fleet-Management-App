@@ -1,6 +1,7 @@
 ﻿using BusinessLayer;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
+using BusinessLayer.Validators;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -10,6 +11,7 @@ namespace DAL
     public class FuelcardRepository : IFuelcardRepository
     {
         private string _connectionString;
+        private FuelcardNumberValidator fuelcardValidator = new();
 
         public FuelcardRepository(string connectionString)
         {
@@ -104,11 +106,11 @@ namespace DAL
         {
             bool AND = false;
             SqlConnection connection = getConnection();
-            string query = "SELECT * FROM [dbo].[Fuelcard] WHERE ";
+            string query = "SELECT * FROM [dbo].[Fuelcard] ";
             #region Add to the query for search function
             if (fuelcardId != null)
             {
-                query += "FuelcardId = @Id ";
+                query += "WHERE FuelcardId = @Id ";
                 AND = true;
             }
             if (!string.IsNullOrWhiteSpace(cardnumber))
@@ -118,7 +120,7 @@ namespace DAL
                     query += "AND Cardnumber = @Cardnumber ";
                 } else
                 {
-                    query += "Cardnumber = @Cardnumber ";
+                    query += "WHERE Cardnumber = @Cardnumber ";
                     AND = true;
                 }
             }
@@ -129,7 +131,7 @@ namespace DAL
                     query += "AND ExpiryDate = @ExpiryDate ";
                 } else
                 {
-                    query += "ExpiryDate = @ExpiryDate ";
+                    query += "WHERE ExpiryDate = @ExpiryDate ";
                     AND = true;
                 }
             }
@@ -140,7 +142,7 @@ namespace DAL
                     query += "AND Fueltypes = @Fueltypes ";
                 } else
                 {
-                    query += "Fueltypes = @Fueltypes ";
+                    query += "WHERE Fueltypes = @Fueltypes ";
                     AND = true;
                 }
             }
@@ -151,7 +153,7 @@ namespace DAL
                     query += "AND IsActive = @IsActive ";
                 } else
                 {
-                    query += "IsActive = @IsActive ";
+                    query += "WHERE IsActive = @IsActive ";
                     AND = true;
                 }
             }
@@ -254,7 +256,7 @@ namespace DAL
                 return fuelcards;
             } catch (Exception ex)
             {
-                throw new FuelcardRepositoryException("Exists failed" + ex.Message);
+                throw new FuelcardRepositoryException("GetFuelcard failed" + ex.Message);
             } finally
             {
                 connection.Close();
@@ -395,6 +397,10 @@ namespace DAL
             {
                 throw new FuelcardRepositoryException("InsertFuelcard - Cardnumber cannot be empty");
             }
+            if (fuelcardValidator.isValid(cardnumber));
+            {
+                throw new FuelcardRepositoryException("InsertFuelcard - Cardnumber is not valid");
+            }
             if (string.IsNullOrWhiteSpace(expiryDate))
             {
                 throw new FuelcardRepositoryException("InsertFuelcard - Expiry date cannot be empty");
@@ -407,7 +413,6 @@ namespace DAL
             {
                 throw new FuelcardRepositoryException("InsertFuelcard - Pincode is not valid, it needs to be between 4 and 6 numbers");
             }
-
             #endregion
 
             #region Check if given variables aren't already in the database
@@ -508,7 +513,7 @@ namespace DAL
             }
         }
 
-        //Priority 1
+        //Done
         public void UpdateFuelcard(Fuelcard oldFuelcard, Fuelcard newFuelcard)
         {
             bool Comma = false;

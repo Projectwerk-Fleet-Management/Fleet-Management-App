@@ -7,7 +7,7 @@ namespace BusinessLayerTests.Model
 {
     public class CarTests
     {
-        private Car car = new Car(1, "Citroen", "Berlingo", "1J4FA24127L200905", "1xxx000", "Bestelwagen", Fuel.Diesel);
+        private Car car = new Car(1, "Citroen", "Berlingo", "1J4FA24127L200905", "1xxx000", "Bestelwagen", fuelType: Fuel.Diesel);
 
         [Fact]
         public void HandleCorrectCar()
@@ -32,42 +32,42 @@ namespace BusinessLayerTests.Model
         [Fact]
         public void HandleIncorrectCar_id()
         {
-            Action a = () => new Car(-1, "Citroen", "Berlingo", "1J4FA24127L200905", "1xxx000", "Bestelwagen", Fuel.Diesel);
+            Action a = () => new Car(-1, "Citroen", "Berlingo", "1J4FA24127L200905", "1xxx000", "Bestelwagen", fuelType: Fuel.Diesel);
             Assert.Throws<CarException>(a);
         }
 
         [Fact]
         public void HandleIncorrectCar_make()
         {
-            Action a = () => new Car(1, "", "Berlingo", "1J4FA24127L200905", "1xxx000", "Bestelwagen", Fuel.Diesel);
+            Action a = () => new Car(1, "", "Berlingo", "1J4FA24127L200905", "1xxx000", "Bestelwagen", fuelType: Fuel.Diesel);
             Assert.Throws<CarException>(a);
         }
 
         [Fact]
         public void HandleIncorrectCar_model()
         {
-            Action a = () => new Car(1, "Citroen", null, "1J4FA24127L200905", "1xxx000", "Bestelwagen", Fuel.Diesel);
+            Action a = () => new Car(1, "Citroen", null, "1J4FA24127L200905", "1xxx000", "Bestelwagen", fuelType: Fuel.Diesel);
             Assert.Throws<CarException>(a);
         }
 
         [Fact]
         public void HandleIncorrectCar_vin()
         {
-            Action a = () => new Car(1, "Citroen", "Berlingo", "1G2ZG57@984137853", "1xxx000", "Bestelwagen", Fuel.Diesel);
+            Action a = () => new Car(1, "Citroen", "Berlingo", "1G2ZG57@984137853", "1xxx000", "Bestelwagen", fuelType: Fuel.Diesel);
             Assert.Throws<VINValidatorException>(a);
         }
 
         [Fact]
         public void HandleIncorrectCar_licenseplate()
         {
-            Action a = () => new Car(1, "Citroen", "Berlingo", "1J4FA24127L200905", "1xx0x00", "Bestelwagen", Fuel.Diesel);
+            Action a = () => new Car(1, "Citroen", "Berlingo", "1J4FA24127L200905", "1xx0x00", "Bestelwagen", fuelType: Fuel.Diesel);
             Assert.Throws<CarException>(a);
         }
 
         [Fact]
         public void HandleIncorrectCar_type()
         {
-            Action a = () => new Car(1, "Citroen", "Berlingo", "1J4FA24127L200905", "1xxx000", "", Fuel.Diesel);
+            Action a = () => new Car(1, "Citroen", "Berlingo", "1J4FA24127L200905", "1xxx000", "", fuelType: Fuel.Diesel);
             Assert.Throws<CarException>(a);
         }
     }

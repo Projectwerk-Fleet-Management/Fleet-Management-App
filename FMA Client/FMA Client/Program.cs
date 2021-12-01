@@ -63,7 +63,7 @@ namespace FMA_Client
             #region FuelcardRepository Testing
             //FuelcardRepository f = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
-            #region GetAllFuelcards and GetFuelcard Checking
+            #region GetAllFuelcards and GetFuelcard Testing
             //var fList = f.GetAllFuelcards();
 
             //var fList2 = f.GetFuelcard(null, null, "2022-06-25", null, false);
@@ -76,6 +76,7 @@ namespace FMA_Client
             //fTypes2.Add(Fuel.Benzine);
             //fTypes2.Add(Fuel.Electrisch);
 
+            //var tst = f.Exists(25, null, null, null, null);
             //Console.WriteLine(f.Exists(8, "189349996715246875", "2022-06-25", fTypes1, false));
             //Console.WriteLine(f.Exists(9, "189349996715246847", "2022-06-25", fTypes2, false));
             #endregion
@@ -110,6 +111,33 @@ namespace FMA_Client
             #endregion
             #endregion
             #region CarRepository Testing
+            //CarRepository c = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+
+            #region GetAllCars and GetCars Testing
+            //var allCars = c.GetAllCars();
+
+            //var someCars = c.GetCars(null, null, null, null, "rav 4", null, null, null, null);
+            #endregion
+
+            #region Exists Testing
+            //var carExists = c.Exists(null, null, null, null, "rav", null, null, null, null);
+            #endregion
+
+            #region InsertCar Testing
+            //c.InsertCar("1G2ZG57N984137853", "1-xxx-015", "Peugeot", "308", "Family Wagon", new List<Fuel> { Fuel.Benzine}, "4", "Grey");
+            #endregion
+
+            #region UpdateCar Testing
+            //Car oldCarInfo = new(9, "Peugeot", "308", "1G2ZG57N984137853", "1-xxx-015", "Family Wagon", new List<Fuel> {Fuel.Benzine }, "Grey", "4");
+            //Car newCarInfo = new(9, "Peugeot", "308", "1G2ZG57N984137853", "1-xxx-017", "Family Wagon", new List<Fuel> { Fuel.Benzine, Fuel.Electrisch }, "Blue", "4");
+
+            //c.UpdateCar(oldCarInfo, newCarInfo);
+            #endregion
+
+            #region DeleteCar Testing
+            //Car carToDelete = new(9, "Peugeot", "308", "1G2ZG57N984137853", "1-xxx-017", "Family Wagon", new List<Fuel> { Fuel.Benzine }, "Blue", "4");
+            //c.DeleteCar(carToDelete);
+            #endregion
 
             #endregion
             #region DriverRepository testing
