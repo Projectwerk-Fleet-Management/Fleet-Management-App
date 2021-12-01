@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Runtime.InteropServices;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
-using BusinessLayer.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLayer.Managers
 {
-
+    //Ik heb redelijk wat moeten veranderen dat niet echt klopt denk ik
+    //Deze manager zal ik wel overpakken
     public class DriverManager
     {
         private IDriverRepository _repo;
@@ -19,63 +17,47 @@ namespace BusinessLayer.Managers
             _repo = repo;
         }
 
-        public IReadOnlyList<Driver> DriverList()
+        public IReadOnlyList<Driver> GetAllDrivers()
         {
             try
             {
                 return _repo.GetAllDrivers();
-            }
-            catch
+            } catch
             {
                 throw new DriverManagerException("Getting driver list failed");
             }
         }
 
 
-        public IReadOnlyList<Driver> DriverList(string? id, string? firstName, string? lastName, DateTime? dateOfBirth, string? nationalIdentificationNumber, string? vin, string? fuelcardNumber, string? license, bool strikt = true)
+        public IReadOnlyList<Driver> GetDrivers(int? driverId, string firstName, string lastName, string dateOfBirth, string nationalIdentificationNumber, string licenses)
         {
             try
             {
-                return _repo.GetDrivers(id, firstName, lastName, dateOfBirth, nationalIdentificationNumber, vin, fuelcardNumber, license, strikt);
-            }
-            catch
+                return _repo.GetDrivers(driverId, firstName, lastName, dateOfBirth, nationalIdentificationNumber, licenses);
+            } catch
             {
                 throw new DriverManagerException("Failed getting driver list with specific arguments");
             }
         }
 
-        public Driver DriverByID(string id)
+        public bool Exists(int? driverId, string firstName, string lastName, string dateOfBirth, int? nationalIdentificationNumber, string licenses)
         {
             try
             {
-                IReadOnlyList<Driver> driverByID = _repo.GetDrivers(id, null, null, null, null, null, null, null, true);
-                return driverByID.First();
-            }
-            catch
-            {
-                throw new DriverManagerException($"Failed getting driver list with ID {id}");
-            }
-        }
-
-        public bool Exists(Driver driver)
-        {
-            try
-            {
-                return _repo.Exists(driver);
-            }
-            catch
+                return _repo.Exists(driverId, firstName, lastName, dateOfBirth, nationalIdentificationNumber, licenses);
+            } catch
             {
                 throw new DriverManagerException("Could complete operation 'exists'");
             }
         }
 
-        public void InsertDriver(Driver driver)
+        public void InsertDriver(string firstName, string lastName, string dateOfBirth, int? nationalIdentificationNumber, string licenses)
         {
             try
             {
-                if (!_repo.Exists(driver))
+                if (!_repo.Exists(null, null, null, null, nationalIdentificationNumber, null))
                 {
-                    _repo.InsertDriver(driver);
+                    _repo.InsertDriver(firstName, lastName, dateOfBirth, nationalIdentificationNumber.ToString(), licenses);
                 }
                 else
                 {
@@ -93,7 +75,7 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                if (_repo.Exists(driver))
+                if (_repo.Exists(driver.DriverId, null, null, null, null, null))
                 {
                     _repo.DeleteDriver(driver);
                 }
@@ -110,13 +92,13 @@ namespace BusinessLayer.Managers
             }
         }
 
-        public void UpdateDriver(Driver driver)
+        public void UpdateDriver(Driver oldDriverInfo, Driver newDriverInfo)
         {
             try
             {
-                if (_repo.Exists(driver))
+                if (_repo.Exists(oldDriverInfo.DriverId, null, null, null, null, null))
                 {
-                    _repo.UpdateDriver(driver);
+                    _repo.UpdateDriver(oldDriverInfo, newDriverInfo);
                 }
                 else
                 {

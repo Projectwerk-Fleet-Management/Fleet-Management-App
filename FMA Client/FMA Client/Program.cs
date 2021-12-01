@@ -21,7 +21,7 @@ namespace FMA_Client
 
             //Address test2 = new(1, "Steenbakkerij", "21", "a", "Geraardsbergen", 9500);
             //Console.WriteLine(testt.AddressId.ToString() + testt.Street + testt.Housenumber + testt.Addendum + testt.City + testt.Postalcode.ToString());
-            #endregion         
+            #endregion
             #region AddressRepository Testing
             //AddressRepository p = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
@@ -29,7 +29,7 @@ namespace FMA_Client
             //p.InsertAddress("Steenbakkerij", "21", null, "Geraardsbergen", 9500);
             //p.InsertAddress("Steenbakkerij", "20", null, "Geraardsbergen", 9500);
             //p.InsertAddress("Hogeweg", "15", "A", "Geraardsbergen", 9500);
-            #endregion   
+            #endregion
 
             #region GetAddress and GetAllAddresses
             /*
@@ -60,18 +60,13 @@ namespace FMA_Client
             #endregion
 
             #endregion
-            #region DriverRepository testing
-            //DriverRepository y = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+            #region FuelcardRepository Testing
+            //FuelcardRepository f = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
-            //y.GetAllDrivers();
-            #endregion
-            #region FuelcardRepository testing
-            FuelcardRepository f = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+            #region GetAllFuelcards and GetFuelcard Testing
+            //var fList = f.GetAllFuelcards();
 
-            #region GetAllFuelcards and GetFuelcard Checking
-            var fList = f.GetAllFuelcards();
-
-            var fList2 = f.GetFuelcard(null, null, "2022-06-25", null, false);
+            //var fList2 = f.GetFuelcard(null, null, "2022-06-25", null, false);
             #endregion
 
             #region Exists Testing
@@ -81,9 +76,74 @@ namespace FMA_Client
             //fTypes2.Add(Fuel.Benzine);
             //fTypes2.Add(Fuel.Electrisch);
 
+            //var tst = f.Exists(25, null, null, null, null);
             //Console.WriteLine(f.Exists(8, "189349996715246875", "2022-06-25", fTypes1, false));
             //Console.WriteLine(f.Exists(9, "189349996715246847", "2022-06-25", fTypes2, false));
             #endregion
+
+            #region Insert Testing
+            //List<Fuel> fuels = new();
+            //fuels.Add(Fuel.Benzine);
+
+            //f.InsertFuelcard("269349996715257874", "2022-06-25", fuels, 1256799, true);
+            #endregion
+
+            #region Delete Testing
+            //List<Fuel> fuels = new();
+            //fuels.Add(Fuel.Benzine);
+            //Fuelcard fuelcard = new(14, "269349996715246875", new DateTime(2022,06,25), 4865, fuels, true);
+
+            //f.DeleteFuelcard(fuelcard);
+            #endregion
+
+            #region Update Testing
+            //List<Fuel> oldFuels = new();
+            //oldFuels.Add(Fuel.Benzine);
+
+            //List<Fuel> newFuels = new();
+            //newFuels.Add(Fuel.Benzine);
+            //newFuels.Add(Fuel.Electrisch);
+
+            //Fuelcard oldFuelcard = new(15, "269349996715246874", new DateTime(2022, 06, 30), 1486, newFuels, true);
+            //Fuelcard newFuelcard = new(15, "269349996715246874", new DateTime(2022, 06, 30), 1487, newFuels, true);
+
+            //f.UpdateFuelcard(oldFuelcard, newFuelcard);
+            #endregion
+            #endregion
+            #region CarRepository Testing
+            //CarRepository c = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+
+            #region GetAllCars and GetCars Testing
+            //var allCars = c.GetAllCars();
+
+            //var someCars = c.GetCars(null, null, null, null, "rav 4", null, null, null, null);
+            #endregion
+
+            #region Exists Testing
+            //var carExists = c.Exists(null, null, null, null, "rav", null, null, null, null);
+            #endregion
+
+            #region InsertCar Testing
+            //c.InsertCar("1G2ZG57N984137853", "1-xxx-015", "Peugeot", "308", "Family Wagon", new List<Fuel> { Fuel.Benzine}, "4", "Grey");
+            #endregion
+
+            #region UpdateCar Testing
+            //Car oldCarInfo = new(9, "Peugeot", "308", "1G2ZG57N984137853", "1-xxx-015", "Family Wagon", new List<Fuel> {Fuel.Benzine }, "Grey", "4");
+            //Car newCarInfo = new(9, "Peugeot", "308", "1G2ZG57N984137853", "1-xxx-017", "Family Wagon", new List<Fuel> { Fuel.Benzine, Fuel.Electrisch }, "Blue", "4");
+
+            //c.UpdateCar(oldCarInfo, newCarInfo);
+            #endregion
+
+            #region DeleteCar Testing
+            //Car carToDelete = new(9, "Peugeot", "308", "1G2ZG57N984137853", "1-xxx-017", "Family Wagon", new List<Fuel> { Fuel.Benzine }, "Blue", "4");
+            //c.DeleteCar(carToDelete);
+            #endregion
+
+            #endregion
+            #region DriverRepository testing
+            //DriverRepository y = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+
+            //y.GetAllDrivers();
             #endregion
             #region NINValidatior
             //NINValidator x = new NINValidator();
