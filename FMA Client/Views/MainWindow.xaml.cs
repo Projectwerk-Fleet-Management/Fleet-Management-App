@@ -38,5 +38,10 @@ namespace Views
         {
             System.Windows.Application.Current.Shutdown();
         }
+
+        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.ChangedButton == MouseButton.Left) this.DragMove();
+        }
     }
 }
