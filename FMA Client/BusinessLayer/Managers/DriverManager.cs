@@ -6,7 +6,8 @@ using System.Linq;
 
 namespace BusinessLayer.Managers
 {
-
+    //Ik heb redelijk wat moeten veranderen dat niet echt klopt denk ik
+    //Deze manager zal ik wel overpakken
     public class DriverManager
     {
         private IDriverRepository _repo;
@@ -28,7 +29,7 @@ namespace BusinessLayer.Managers
         }
 
 
-        public IReadOnlyList<Driver> GetDrivers(int? driverId, string firstName, string lastName, string dateOfBirth, int? nationalIdentificationNumber, string licenses)
+        public IReadOnlyList<Driver> GetDrivers(int? driverId, string firstName, string lastName, string dateOfBirth, string nationalIdentificationNumber, string licenses)
         {
             try
             {
@@ -50,13 +51,13 @@ namespace BusinessLayer.Managers
             }
         }
 
-        public void InsertDriver(string firstName, string lastName, string dateOfBirth, int nationalIdentificationNumber, string licenses)
+        public void InsertDriver(string firstName, string lastName, string dateOfBirth, int? nationalIdentificationNumber, string licenses)
         {
             try
             {
-                if (!_repo.Exists(driver))
+                if (!_repo.Exists(null, null, null, null, nationalIdentificationNumber, null))
                 {
-                    _repo.InsertDriver(driver);
+                    _repo.InsertDriver(firstName, lastName, dateOfBirth, nationalIdentificationNumber.ToString(), licenses);
                 }
                 else
                 {
@@ -74,7 +75,7 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                if (_repo.Exists(driver))
+                if (_repo.Exists(driver.DriverId, null, null, null, null, null))
                 {
                     _repo.DeleteDriver(driver);
                 }
@@ -95,9 +96,9 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                if (_repo.Exists(driver))
+                if (_repo.Exists(oldDriverInfo.DriverId, null, null, null, null, null))
                 {
-                    _repo.UpdateDriver(driver);
+                    _repo.UpdateDriver(oldDriverInfo, newDriverInfo);
                 }
                 else
                 {

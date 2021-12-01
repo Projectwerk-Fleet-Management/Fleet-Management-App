@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Validators;
@@ -7,8 +8,7 @@ namespace BusinessLayer
 {
     public class Car : INotifyPropertyChanged
     {
-        //test
-        public int carId { private set; get; }
+        public int CarId { private set; get; }
         public string Make { private set; get; }
         public string Model { private set; get; }
         public string Vin { private set; get; }
@@ -17,96 +17,69 @@ namespace BusinessLayer
         public string Doors { private set; get; }
         public Driver Driver { private set; get; }
         public string Type { private set; get; }
-        public Fuel FuelType { private set; get; }
+        public List<Fuel> FuelType { private set; get; }
 
-#region ctors 
+        #region ctors 
+        public Car(int carId, string make, string model, string vin, string licenseplate, string type, List<Fuel> fuelType)
+            : this(carId, make, model, vin, licenseplate, type, fuelType, null, null, null)
+        {
+
+        }
+        public Car(int carId, string make, string model, string vin, string licenseplate, string type, List<Fuel> fuelType, Driver driver)
+            : this(carId, make, model, vin, licenseplate, type, fuelType, driver, null, null)
+        {
+
+        }
+        public Car(int carId, string make, string model, string vin, string licenseplate, string type, List<Fuel> fuelType, string colour)
+            : this(carId, make, model, vin, licenseplate, type, fuelType, null, colour, null)
+        {
+
+        }
+        //Signature is different on this one
+        public Car(int carId, string make, string model, string vin, string licenseplate, string type, string doors, List<Fuel> fuelType)
+            : this(carId, make, model, vin, licenseplate, type, fuelType, null, null, doors)
+        {
+
+        }
+        public Car(int carId, string make, string model, string vin, string licenseplate, string type, List<Fuel> fuelType, Driver driver, string colour)
+            : this(carId, make, model, vin, licenseplate, type, fuelType, driver, colour, null)
+        {
+
+        }
+        //Signature is different on this one
+        public Car(int carId, string make, string model, string vin, string licenseplate, string type, List<Fuel> fuelType, string doors, Driver driver)
+            : this(carId, make, model, vin, licenseplate, type, fuelType, driver, null, doors)
+        {
+
+        }
+        public Car(int carId, string make, string model, string vin, string licenseplate, string type, List<Fuel> fuelType, string colour, string doors)
+            : this(carId, make, model, vin, licenseplate, type, fuelType, null, colour, doors)
+        {
+
+        }
+
         //Everything
-        public Car(int carId, string Make, string Model, string Vin, string Licenseplate, string Colour, string Doors,
-            Driver Driver, string Type, Fuel FuelType)
+        public Car(int carId, string make, string model, string vin, string licenseplate, string type, List<Fuel> fuelType,
+            Driver driver, string colour, string doors)
         {
             SetCarId(carId);
-            SetMake(Make);
-            SetModel(Model);
-            SetVIN(Vin);
-            SetLicenseplate(Licenseplate);
-            SetColour(Colour);
-            SetDoors(Doors);
-            SetDriver(Driver);
-            SetType(Type);
-            SetFueltype(FuelType);
-        }
+            SetMake(make);
+            SetModel(model);
+            SetVIN(vin);
+            SetLicenseplate(licenseplate);
+            SetType(type);
+            SetFueltype(fuelType);
+            if (driver != null) SetDriver(driver);
+            if (!string.IsNullOrWhiteSpace(colour)) SetColour(colour);
+            if (!string.IsNullOrWhiteSpace(doors)) SetDoors(doors);            
+        }       
+        #endregion
 
-        //Without colour, doors and driver
-        public Car(int carId, string Make, string Model, string Vin, string Licenseplate, string Type, Fuel FuelType)
-        {
-            SetCarId(carId);
-            SetMake(Make);
-            SetModel(Model);
-            SetVIN(Vin);
-            SetLicenseplate(Licenseplate);
-            SetType(Type);
-            SetFueltype(FuelType);
-        }
-
-        //Without doors and driver
-        public Car(int carId, string Make, string Model, string Vin, string Licenseplate, string Colour, string Type, Fuel FuelType)
-        {
-            SetCarId(carId);
-            SetMake(Make);
-            SetModel(Model);
-            SetVIN(Vin);
-            SetLicenseplate(Licenseplate);
-            SetColour(Colour);
-            SetType(Type);
-            SetFueltype(FuelType);
-        }
-
-        //Without driver
-        public Car(int carId, string Make, string Model, string Vin, string Licenseplate, string Colour, string Doors, string Type, Fuel FuelType)
-        {
-            SetCarId(carId);
-            SetMake(Make);
-            SetModel(Model);
-            SetVIN(Vin);
-            SetLicenseplate(Licenseplate);
-            SetColour(Colour);
-            SetDoors(Doors);
-            SetType(Type);
-            SetFueltype(FuelType);
-        }
-
-        //Without colour and doors
-        public Car(int carId, string Make, string Model, string Vin, string Licenseplate, Driver Driver, string Type, Fuel FuelType)
-        {
-            SetCarId(carId);
-            SetMake(Make);
-            SetModel(Model);
-            SetVIN(Vin);
-            SetLicenseplate(Licenseplate);
-            SetDriver(Driver);
-            SetType(Type);
-            SetFueltype(FuelType);
-        }
-
-        //Without colour
-        public Car(int carId, string Make, string Model, string Vin, string Licenseplate, string Doors, Driver Driver, string Type, Fuel FuelType)
-        {
-            SetCarId(carId);
-            SetMake(Make);
-            SetModel(Model);
-            SetVIN(Vin);
-            SetLicenseplate(Licenseplate);
-            SetDoors(Doors);
-            SetDriver(Driver);
-            SetType(Type);
-            SetFueltype(FuelType);
-        }
-#endregion
         #region Set methodes
         public void SetCarId(int carId)
         {
             if (carId <= 0) throw new CarException("CarId cannot be lower or equal to zero");
-            this.carId = carId;
+            this.CarId = carId;
             OnPropertyChanged("carId");
         }
         public void SetMake(string make)
@@ -173,7 +146,7 @@ namespace BusinessLayer
             this.Type = type;
             OnPropertyChanged("Type");
         }
-        public void SetFueltype(Fuel fueltype)
+        public void SetFueltype(List<Fuel> fueltype)
         {
             try
             {

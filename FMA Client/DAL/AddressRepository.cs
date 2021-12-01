@@ -76,11 +76,11 @@ namespace DAL
             List<Address> addresses = new();
             bool AND = false;
             SqlConnection connection = getConnection();
-            string query = "SELECT * FROM [dbo].[Address] WHERE ";
+            string query = "SELECT * FROM [dbo].[Address] ";
             #region Add to the query for search function
             if (id != null)
             {
-                query += "AddressId = @Id ";
+                query += "WHERE AddressId = @Id ";
                 AND = true;
             }
             if (!string.IsNullOrWhiteSpace(street))
@@ -90,7 +90,7 @@ namespace DAL
                     query += "AND Street = @Street ";
                 } else
                 {
-                    query += "Street = @Street ";
+                    query += "WHERE Street = @Street ";
                     AND = true;
                 }
             }
@@ -101,7 +101,7 @@ namespace DAL
                     query += "AND Housenumber = @Housenumber ";
                 } else
                 {
-                    query += "Housenumber = @Housenumber ";
+                    query += "WHERE Housenumber = @Housenumber ";
                     AND = true;
                 }
             }
@@ -112,7 +112,7 @@ namespace DAL
                     query += "AND Addendum = @Addendum ";
                 } else
                 {
-                    query += "Addendum = @Addendum ";
+                    query += "WHERE Addendum = @Addendum ";
                     AND = true;
                 }
             }
@@ -123,7 +123,7 @@ namespace DAL
                     query += "AND City = @City ";
                 } else
                 {
-                    query += "City = @City ";
+                    query += "WHERE City = @City ";
                     AND = true;
                 }
             }
@@ -134,7 +134,7 @@ namespace DAL
                     query += "AND Postalcode = @Postalcode ";
                 } else
                 {
-                    query += "Postalcode = @Postalcode ";
+                    query += "WHERE Postalcode = @Postalcode ";
                     AND = true;
                 }
             }

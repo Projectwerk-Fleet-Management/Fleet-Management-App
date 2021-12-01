@@ -24,7 +24,7 @@ namespace BusinessLayer.Managers
             }
         }
 
-        public IReadOnlyList<Car> GetCars(int? carId, string vin, string licenseplate, string make, string model, string vehicleType, string fueltypes, string doors, string colour)
+        public IReadOnlyList<Car> GetCars(int? carId, string vin, string licenseplate, string make, string model, string vehicleType, List<Fuel> fueltypes, string doors, string colour)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace BusinessLayer.Managers
             }
         }
 
-        public bool Exists(int? carId, string vin, string licenseplate, string make, string model, string vehicleType, string fueltypes, string doors, string colour)
+        public bool Exists(int? carId, string vin, string licenseplate, string make, string model, string vehicleType, List<Fuel> fueltypes, string doors, string colour)
         {
             try
             {
@@ -48,13 +48,13 @@ namespace BusinessLayer.Managers
             }
         }
 
-        public void InsertCar(string vin, string licenseplate, string make, string model, string vehicleType, string fueltypes, string doors, string colour)
+        public void InsertCar(string vin, string licenseplate, string make, string model, string vehicleType, List<Fuel> fueltypes, string doors, string colour)
         {
             try
             {
-                if (!_repo.Exists(car))
+                if (!_repo.Exists(null, vin, licenseplate, null, null, null, null, null, null))
                 {
-                    _repo.InsertCar(car);
+                    _repo.InsertCar(vin, licenseplate, make, model, vehicleType, fueltypes, doors, colour);
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                if (_repo.Exists(car))
+                if (_repo.Exists(car.CarId, car.Vin, car.Licenseplate, null, null, null, null, null, null))
                 {
                     _repo.DeleteCar(car);
                 }
@@ -93,9 +93,9 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                if (_repo.Exists(car))
+                if (_repo.Exists(oldCarInfo.CarId, oldCarInfo.Vin, oldCarInfo.Licenseplate, null, null, null, null, null, null))
                 {
-                    _repo.UpdateCar(car);
+                    _repo.UpdateCar(oldCarInfo, newCarInfo);
                 }
                 else
                 {
