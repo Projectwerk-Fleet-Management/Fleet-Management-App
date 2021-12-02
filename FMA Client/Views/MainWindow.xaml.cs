@@ -24,6 +24,8 @@ namespace Views
     /// </summary>
     public partial class MainWindow
     {
+
+
         public MainWindow() {
             DataContext = this;
             InitializeComponent();
@@ -42,6 +44,11 @@ namespace Views
         private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if(e.ChangedButton == MouseButton.Left) this.DragMove();
+        }
+
+        private void DriverBtn_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DriverBtn.Background = new SolidColorBrush(Colors.Yellow);
         }
     }
 }
