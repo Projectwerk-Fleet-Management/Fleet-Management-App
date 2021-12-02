@@ -82,7 +82,8 @@ namespace Views
 
         private void FilterButton_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            filterscreen popFilterscreen = new filterscreen();
+            popFilterscreen.Show();
         }
         private void DriverBtn_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

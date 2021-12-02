@@ -13,13 +13,13 @@ namespace BusinessLayerTests.Model
         public void HandleCorrectCar()
         {
             if (
-                car.carId == 1 &&
+                car.CarId == 1 &&
                 car.Make ==  "Citroen" &&
                 car.Model == "Berlingo" &&
                 car.Vin == "1J4FA24127L200905" &&
                 car.Licenseplate == "1xxx000" &&
                 car.Type == "Bestelwagen" &&
-                car.FuelType == Fuel.Diesel)
+                car.FuelType.Fuel.Diesel)
             {
                 Assert.True(true);
             }
