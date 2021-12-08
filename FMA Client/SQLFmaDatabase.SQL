@@ -6,11 +6,11 @@ GO
 
 CREATE TABLE Fuelcard(
     FuelcardId INT IDENTITY(1,1) PRIMARY KEY,
-	Cardnumber VARCHAR(255) NOT NULL,
+	Cardnumber VARCHAR(255) NOT NULL UNIQUE,
 	ExpiryDate DATE NOT NULL,
 	Pincode INT NULL,
 	Fueltypes VARCHAR(255) NULL,
-	IsActive BIT NULL,
+	IsActive BIT NOT NULL,
 );
 
 CREATE TABLE Address(
@@ -24,8 +24,8 @@ CREATE TABLE Address(
 
 CREATE TABLE Car(
 	CarId INT IDENTITY(1,1) PRIMARY KEY,
-	Vin VARCHAR(18) NOT NULL,
-	Licenseplate VARCHAR(15) NOT NULL,
+	Vin VARCHAR(18) NOT NULL UNIQUE,
+	Licenseplate VARCHAR(15) NOT NULL UNIQUE,
 	Make VARCHAR(255) NOT NULL,
 	Model VARCHAR(255) NOT NULL,
 	VehicleType VARCHAR(255) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE Driver(
 	FirstName VARCHAR(255) NOT NULL,
 	LastName VARChaR(255) NOT NULL,
 	DateOfBirth DATE NOT NULL,
-	NationalIdentificationNumber INT NOT NULL,
+	NationalIdentificationNumber VARCHAR(255) NOT NULL UNIQUE,
 	Licenses VARCHAR(255) NULL,
 	AddressId INT NULL,
 	FuelcardId INT NULL,

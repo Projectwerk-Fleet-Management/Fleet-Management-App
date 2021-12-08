@@ -3,6 +3,7 @@ using BusinessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BusinessLayer.Model;
 
 namespace BusinessLayer.Managers
 {
@@ -29,7 +30,7 @@ namespace BusinessLayer.Managers
         }
 
 
-        public IReadOnlyList<Driver> GetDrivers(int? driverId, string firstName, string lastName, string dateOfBirth, string nationalIdentificationNumber, string licenses)
+        public IReadOnlyList<Driver> GetDrivers(int? driverId, string firstName, string lastName, string dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses)
         {
             try
             {
@@ -40,7 +41,7 @@ namespace BusinessLayer.Managers
             }
         }
 
-        public bool Exists(int? driverId, string firstName, string lastName, string dateOfBirth, int? nationalIdentificationNumber, string licenses)
+        public bool Exists(int? driverId, string firstName, string lastName, string dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses)
         {
             try
             {
@@ -51,13 +52,14 @@ namespace BusinessLayer.Managers
             }
         }
 
-        public void InsertDriver(string firstName, string lastName, string dateOfBirth, int? nationalIdentificationNumber, string licenses)
+        public void InsertDriver(string firstName, string lastName, string dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses
+            , int? addressId, int? fuelcardId, int? carId)
         {
             try
             {
                 if (!_repo.Exists(null, null, null, null, nationalIdentificationNumber, null))
                 {
-                    _repo.InsertDriver(firstName, lastName, dateOfBirth, nationalIdentificationNumber.ToString(), licenses);
+                    _repo.InsertDriver(firstName, lastName, dateOfBirth, nationalIdentificationNumber, licenses, addressId, fuelcardId, carId);
                 }
                 else
                 {

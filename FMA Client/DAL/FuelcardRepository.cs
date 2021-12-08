@@ -24,7 +24,7 @@ namespace DAL
             return connection;
         }
 
-        //Done
+        //Done -> Driver kunnen bijverkrijgen 
         public IReadOnlyList<Fuelcard> GetAllFuelcards()
         {
             List<Fuelcard> fuelcards = new();
@@ -164,18 +164,9 @@ namespace DAL
             {
                 connection.Open();
                 #region Add values to the search terms
-                if (fuelcardId != null)
-                {
-                    command.Parameters.AddWithValue("@Id", fuelcardId);
-                }
-                if (!string.IsNullOrWhiteSpace(cardnumber))
-                {
-                    command.Parameters.AddWithValue("@Cardnumber", cardnumber);
-                }
-                if (!string.IsNullOrWhiteSpace(expiryDate))
-                {
-                    command.Parameters.AddWithValue("@ExpiryDate", expiryDate);
-                }
+                if (fuelcardId != null) command.Parameters.AddWithValue("@Id", fuelcardId);
+                if (!string.IsNullOrWhiteSpace(cardnumber)) command.Parameters.AddWithValue("@Cardnumber", cardnumber);
+                if (!string.IsNullOrWhiteSpace(expiryDate)) command.Parameters.AddWithValue("@ExpiryDate", expiryDate);
                 if (fueltypes != null)
                 {
                     //Here we need to transform the fueltype from an enum to a string seeing as that's how it's stored in the Db
@@ -397,7 +388,7 @@ namespace DAL
             {
                 throw new FuelcardRepositoryException("InsertFuelcard - Cardnumber cannot be empty");
             }
-            if (fuelcardValidator.isValid(cardnumber));
+            if (!fuelcardValidator.isValid(cardnumber))
             {
                 throw new FuelcardRepositoryException("InsertFuelcard - Cardnumber is not valid");
             }
@@ -513,7 +504,7 @@ namespace DAL
             }
         }
 
-        //Done
+        //Done -> Driver veranderen, Transacties gebruiken
         public void UpdateFuelcard(Fuelcard oldFuelcard, Fuelcard newFuelcard)
         {
             bool Comma = false;
