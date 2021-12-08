@@ -24,19 +24,81 @@ namespace Views
     /// </summary>
     public partial class MainWindow
     {
+
+        private string _activePage;
+
         public MainWindow() {
             DataContext = this;
             InitializeComponent();
+            SetActive("driverPage");
 
-            List<LicenseType> licenses = new List<LicenseType>();
-            licenses.Add(LicenseType.B);
-            DataContext = new Driver(1, "Batselier", "Bryan", new DateTime(1993, 11, 23), "93.11.23-283.87", null,null,null,null);
+        }
+
+        private void SetActive(string toset)
+        {
+            _activePage = toset;
+            var converter = new BrushConverter();
+
+            if (_activePage == "driverPage")
+            {
+                DriverBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#adadad"));
+                CarBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
+                FuelcardBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
+                pageName.Text = "Driver";
+            }
+            else if (_activePage == "carPage")
+            {
+                DriverBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
+                CarBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#adadad"));
+                FuelcardBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
+                pageName.Text = "Car";
+            }
+            else if (_activePage == "fuelcardPage")
+            {
+                DriverBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
+                CarBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
+                FuelcardBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#adadad"));
+                pageName.Text = "Fuelcard";
+            }
 
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void menubardrag_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.ChangedButton == MouseButton.Left) this.DragMove();
+        }
+
+
+
+        private void SearchButton_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void FilterButton_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            filterscreen popFilterscreen = new filterscreen();
+            popFilterscreen.Show();
+        }
+        private void DriverBtn_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SetActive("driverPage");
+        }
+
+        private void FuelcardBtn_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SetActive("fuelcardPage");
+        }
+
+        
+        private void CarBtn_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SetActive("carPage");
         }
     }
 }
