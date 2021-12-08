@@ -25,7 +25,7 @@ namespace DAL
             return connection;
         }
 
-        //Done
+        //Done -> Driver kunnen bijverkrijgen 
         public IReadOnlyList<Car> GetAllCars()
         {
             List<Car> cars = new();

@@ -85,7 +85,7 @@ namespace FMA_Client
             //List<Fuel> fuels = new();
             //fuels.Add(Fuel.Benzine);
 
-            //f.InsertFuelcard("269349996715257874", "2022-06-25", fuels, 1256799, true);
+            //f.InsertFuelcard("269349996715257874", "2022-06-25", fuels, 1256, true);
             #endregion
 
             #region Delete Testing
@@ -141,9 +141,42 @@ namespace FMA_Client
 
             #endregion
             #region DriverRepository testing
-            //DriverRepository y = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+            DriverRepository d = new(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
-            //y.GetAllDrivers();
+            #region GetAllDrivers and GetDrivers Testing
+            //var allDrivers = d.GetAllDrivers();
+
+            //foreach (var item in allDrivers)
+            //{
+            //    Console.WriteLine($"{item.DriverId}, {item.FirstName}, {item.LastName}");
+            //}
+
+            //var someDrivers = d.GetDrivers(4, "Bryan", "Batselier", "2002-06-29", "93.11.23-283.87", null);
+            #endregion
+
+            #region Exists Testing
+            //var existsTrue = d.Exists(4, "Bryan", "Batselier", "2002-06-29", "93.11.23-283.87", null);
+
+            //var existsFalse = d.Exists(5, "Bryan", "Batselier", "2002-06-29", "93.11.23-283.87", null);
+            #endregion
+
+            #region Insert Testing
+            //d.InsertDriver("Bryan", "Batselier", "2002-06-29", "93.11.23-283.87", null, 1, 1, 1);
+            #endregion
+
+            #region Delete Testing
+            //Driver driverToDelete = new(4, "Bryan", "Batselier", new DateTime(2002,06,29), "93.11.23-283.87");
+
+            //d.DeleteDriver(driverToDelete);
+            #endregion
+
+            #region Update Testing
+            //Driver driverToUpdate = new(3, "Marnick", "De Graeve", new DateTime(2002, 06, 29), "00.01.25.567-77", new List<LicenseType> { LicenseType.B});
+            //Driver newValues = new(3, "Marnick", "De Graeve", new DateTime(2002, 06, 29), "00.01.25.567-77", new List<LicenseType> { LicenseType.B, LicenseType.A});
+
+            //d.UpdateDriver(driverToUpdate, newValues);
+            #endregion
+
             #endregion
             #region NINValidatior
             //NINValidator x = new NINValidator();
