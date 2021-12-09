@@ -148,6 +148,9 @@ namespace BusinessLayer
         public void SetCar(Car car)
         {
             if (car == null) throw new DriverException("Car cannot be null");
+
+            if (car.Driver != this) car.SetDriver(this);
+
             AssignedCar = car;
             OnPropertyChanged("AssignedCar");
         }

@@ -115,10 +115,9 @@ namespace BusinessLayer
         public void SetDriver(Driver driver)
         {
             if (driver == null) throw new CarException("Driver cannot be null");
-            if(driver.AssignedCar != this) driver.SetCar(this);
-            if (this.Driver != driver) Driver = driver;
-            //TODO onpropertychanged uit buslaag 
-            OnPropertyChanged("Driver");
+            if (Driver != null) throw new CarException("Driver is already assigned");
+            this.Driver = driver;
+            if (driver.AssignedCar != this) driver.SetCar(this);
         }
         public void SetColour(string colour)
         {

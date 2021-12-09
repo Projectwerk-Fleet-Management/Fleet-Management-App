@@ -30,7 +30,7 @@ namespace Views
 
             List<LicenseType> licenses = new List<LicenseType>();
             licenses.Add(LicenseType.B);
-            DataContext = new Driver(1, "Batselier", "Bryan", new DateTime(1993, 11, 23), "93.11.23-283.87", null,null,null,null);
+            DataContext = new Driver(1, "Batselier", "Bryan", null, new DateTime(1993, 11, 23), "93.11.23-283.87", null,null,null);
 
         }
 

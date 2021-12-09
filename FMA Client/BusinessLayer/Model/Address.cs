@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using BusinessLayer.Exceptions;
 
 namespace BusinessLayer
@@ -11,18 +12,26 @@ namespace BusinessLayer
         public string Addendum { get; private set; }
         public string City { get; private set; }
         public int Postalcode { get; private set; }
+        public Driver Driver { get; private set; }
 
 
         //(Constructor chaining)
 
         //-> https://codecompiled.com/constructor-chaining-c
         //-> https://stackoverflow.com/questions/10377888/how-can-i-use-multiple-constructors-to-remove-duplicated-code-while-maintaining
-        public Address(int addressId, string street, string housenumber, string city, int postalcode) : this(addressId, street, housenumber, null, city, postalcode)
+        public Address(int addressId, string street, string housenumber, string city, int postalcode)
+            : this(addressId, street, housenumber, null, city, postalcode, null)
         {
 
         }
 
-        public Address(int addressId, string street, string housenumber, string addendum, string city, int postalcode)
+        public Address(int addressId, string street, string housenumber, string city, int postalcode, Driver driver)
+            : this(addressId, street, housenumber, null, city, postalcode, driver)
+        {
+
+        }
+
+        public Address(int addressId, string street, string housenumber, string addendum, string city, int postalcode, Driver driver)
         {
             SetAddressId(addressId);
             SetStreet(street);
@@ -30,7 +39,16 @@ namespace BusinessLayer
             if (!string.IsNullOrWhiteSpace(addendum)) { SetAddendum(addendum); }; 
             SetCity(city);
             SetPostalcode(postalcode);
-        }        
+            if (driver != null) SetDriver(driver);
+        }
+
+        private void SetDriver(Driver driver)
+        {
+            if (Driver != null) throw new FuelcardException("Driver is already assigned");
+            if (driver == null) throw new FuelcardException("Driver cannot be null");
+            this.Driver = driver;
+            driver.SetAddress(this);
+        }
 
         #region Setting of variables
         public void SetAddressId(int addressId)

@@ -13,7 +13,7 @@ namespace BusinessLayer
         public int Pincode { private set; get; }
         public List<Fuel> FueltypeList { private set; get; }
         public Driver Driver { private set; get; }
-        public bool isActive { private set; get; }
+        public bool IsActive { private set; get; }
 
         private FuelcardNumberValidator validator = new FuelcardNumberValidator();
 
@@ -123,7 +123,7 @@ namespace BusinessLayer
         }
         public void SetIsActive(bool isActive)
         {
-            this.isActive = isActive;
+            this.IsActive = isActive;
         }
         #endregion
 
@@ -165,7 +165,7 @@ namespace BusinessLayer
         #region Block Methods
         public void BlockFuelcard()
         {
-            isActive = false;
+            IsActive = false;
         }
         #endregion
     }

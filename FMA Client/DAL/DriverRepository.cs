@@ -142,7 +142,7 @@ namespace DAL
                             }
                             int postalcode = (int)datareader["Postalcode"];
                             string city = (string)datareader["City"];
-                            address = new(addressId, street, housenumber, addendum, city, postalcode);
+                            address = new(addressId, street, housenumber, addendum, city, postalcode, null);
                         }
                         if (DBNull.Value != datareader["CarId"])
                         {
@@ -189,7 +189,8 @@ namespace DAL
 
                             car = new(carId, make, model, vin, licenseplate, vehicleType, fueltypesList, colour, doors);
                         }
-                        if (DBNull.Value != datareader["FuelcardId"]){
+                        if (DBNull.Value != datareader["FuelcardId"])
+                        {
 
                             int fuelcardId = (int)datareader["FuelcardId"];
                             string cardnumber = (string)datareader["Cardnumber"];
@@ -261,7 +262,7 @@ namespace DAL
             bool AND = false;
             List<Driver> drivers = new();
             SqlConnection connection = getConnection();
-            string query = "SELECT *, C.Fueltypes AS carFueltypes, F.Fueltypes AS fuelcardFueltypes FROM dbo.Driver AS D "+
+            string query = "SELECT *, C.Fueltypes AS carFueltypes, F.Fueltypes AS fuelcardFueltypes FROM dbo.Driver AS D " +
                             " LEFT JOIN dbo.Address AS A ON D.AddressId = A.AddressId" +
                             " LEFT JOIN dbo.Car AS C ON D.CarId = C.CarId" +
                             " LEFT JOIN dbo.Fuelcard AS F ON D.FuelcardId = F.FuelcardId ";
@@ -269,17 +270,17 @@ namespace DAL
             #region Add to the query for search function
             if (driverId != null)
             {
-                query += "WHERE DriverId = @Id ";
+                query += "WHERE D.DriverId = @Id ";
                 AND = true;
             }
             if (!string.IsNullOrWhiteSpace(firstName))
             {
                 if (AND == true)
                 {
-                    query += "AND FirstName = @FirstName ";
+                    query += "AND D.FirstName = @FirstName ";
                 } else
                 {
-                    query += "WHERE FirstName = @FirstName ";
+                    query += "WHERE D.FirstName = @FirstName ";
                     AND = true;
                 }
             }
@@ -287,10 +288,10 @@ namespace DAL
             {
                 if (AND == true)
                 {
-                    query += "AND LastName = @LastName ";
+                    query += "AND D.LastName = @LastName ";
                 } else
                 {
-                    query += "WHERE LastName = @LastName ";
+                    query += "WHERE D.LastName = @LastName ";
                     AND = true;
                 }
             }
@@ -298,10 +299,10 @@ namespace DAL
             {
                 if (AND == true)
                 {
-                    query += "AND DateOfBirth = @DateOfBirth ";
+                    query += "AND D.DateOfBirth = @DateOfBirth ";
                 } else
                 {
-                    query += "WHERE DateOfBirth = @DateOfBirth ";
+                    query += "WHERE D.DateOfBirth = @DateOfBirth ";
                     AND = true;
                 }
             }
@@ -309,10 +310,10 @@ namespace DAL
             {
                 if (AND == true)
                 {
-                    query += "AND NationalIdentificationNumber = @NationalIdentificationNumber ";
+                    query += "AND D.NationalIdentificationNumber = @NationalIdentificationNumber ";
                 } else
                 {
-                    query += "WHERE NationalIdentificationNumber = @NationalIdentificationNumber ";
+                    query += "WHERE D.NationalIdentificationNumber = @NationalIdentificationNumber ";
                     AND = true;
                 }
             }
@@ -320,13 +321,13 @@ namespace DAL
             {
                 if (AND == true)
                 {
-                    query += "AND Licenses = @Licenses ";
+                    query += "AND D.Licenses = @Licenses ";
                 } else
                 {
-                    query += "WHERE Licenses = @Licenses ";
+                    query += "WHERE D.Licenses = @Licenses ";
                     AND = true;
                 }
-            }          
+            }
             #endregion
 
 
@@ -514,7 +515,7 @@ namespace DAL
                             }
                             int postalcode = (int)datareader["Postalcode"];
                             string city = (string)datareader["City"];
-                            address = new(addressId, street, housenumber, addendum, city, postalcode);
+                            address = new(addressId, street, housenumber, addendum, city, postalcode, null);
                         }
                         if (DBNull.Value != datareader["CarId"])
                         {
@@ -940,16 +941,181 @@ namespace DAL
             }
         }
 
-        //TODO
+        //Done
         public void UpdateDriver(Driver oldDriverInfo, Driver newDriverInfo)
         {
-            throw new NotImplementedException();
+            bool Comma = false;
+
+            #region Check if there is a difference with the old driver (The old driver is already retrieved from the database)
+            bool firstNameDifferent = oldDriverInfo.FirstName != newDriverInfo.FirstName;
+            bool lastNameDifferent = oldDriverInfo.LastName != newDriverInfo.LastName;
+            bool addressDifferent = oldDriverInfo.Address != newDriverInfo.Address;
+            bool licensesDifferent = oldDriverInfo.Licenses != newDriverInfo.Licenses;
+            bool carDifferent = oldDriverInfo.AssignedCar != newDriverInfo.AssignedCar;
+            bool fuelcardDifferent = oldDriverInfo.AssignedFuelcard != newDriverInfo.AssignedFuelcard;
+            #endregion
+
+            if (firstNameDifferent || lastNameDifferent || addressDifferent || licensesDifferent || carDifferent || fuelcardDifferent)
+            {
+                SqlConnection connection = getConnection();
+                string query = "UPDATE dbo.Driver SET ";
+
+                #region For each thing different add it into the query and at the end add the where
+                if (firstNameDifferent)
+                {
+                    query += "[FirstName] = @Cardnumber ";
+                    Comma = true;
+                }
+                if (lastNameDifferent)
+                {
+                    if (Comma == true)
+                    {
+                        query += ",[LastName] = @LastName ";
+                    } else
+                    {
+                        query += "[LastName] = @LastName ";
+                        Comma = true;
+                    }
+                }
+                if (licensesDifferent)
+                {
+                    if (Comma == true)
+                    {
+                        query += ",[Licenses] = @Licenses ";
+                    } else
+                    {
+                        query += "[Licenses] = @Licenses ";
+                        Comma = true;
+                    }
+                }
+                if (addressDifferent)
+                {
+                    if (Comma == true)
+                    {
+                        query += ",[AddressId] = @AddressId ";
+                    } else
+                    {
+                        query += "[AddressId] = @AddressId ";
+                        Comma = true;
+                    }
+                }
+                if (carDifferent)
+                {
+                    if (Comma == true)
+                    {
+                        query += ",[CarId] = @CarId ";
+                    } else
+                    {
+                        query += "[CarId] = @CarId ";
+                        Comma = true;
+                    }
+                }
+                if (fuelcardDifferent)
+                {
+                    if (Comma == true)
+                    {
+                        query += ",[FuelcardId] = @FuelcardId ";
+                    } else
+                    {
+                        query += "[FuelcardId] = @FuelcardId ";
+                    }
+                }
+
+                query += "WHERE [DriverId] = @DriverId";
+                #endregion
+
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    try
+                    {
+                        connection.Open();
+                        command.CommandText = query;
+
+                        #region Add values of the new address if there is a difference
+                        if (firstNameDifferent) command.Parameters.AddWithValue("@FirstName", newDriverInfo.FirstName);
+                        if (lastNameDifferent) command.Parameters.AddWithValue("@LastName", newDriverInfo.LastName);
+                        if (addressDifferent) command.Parameters.AddWithValue("@AddressId", newDriverInfo.Address.AddressId);
+                        if (licensesDifferent)
+                        {
+                            if (newDriverInfo.Licenses == null)
+                            {
+                                command.Parameters.AddWithValue("@Licenses", DBNull.Value);
+                            } else
+                            {
+                                string licensesString = "";
+                                bool first = true;
+                                foreach (var l in newDriverInfo.Licenses)
+                                {
+                                    if (first) { licensesString += licensesString += l.ToString(); ; first = false; } else { licensesString += ", " + l.ToString(); }
+                                }
+
+                                command.Parameters.AddWithValue("@Licenses", licensesString);
+                            }
+                        }
+                        if (carDifferent)
+                        {
+                            if (newDriverInfo.AssignedCar == null)
+                            {
+                                command.Parameters.AddWithValue("@CarId", DBNull.Value);
+                            } else
+                            {
+                                command.Parameters.AddWithValue("@CarId", newDriverInfo.AssignedCar.CarId);
+                            }                           
+                        }
+                        if (fuelcardDifferent)
+                        {
+                            if (newDriverInfo.AssignedFuelcard == null)
+                            {
+                                command.Parameters.AddWithValue("@FuelcardId", DBNull.Value);
+                            } else
+                            {
+                                command.Parameters.AddWithValue("@FuelcardId", newDriverInfo.AssignedFuelcard.FuelcardId);
+                            }
+                        }
+                        #endregion
+
+                        #region Add values of the old address in the where
+                        command.Parameters.AddWithValue("@DriverId", oldDriverInfo.DriverId);
+                        #endregion
+
+                        command.ExecuteNonQuery();
+
+
+                    } catch (Exception ex)
+                    {
+                        throw new AddressRepositoryException("UpdateDriver failed - " + ex.Message);
+                    } finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
         }
 
-        //TODO
+        //Done
         public void DeleteDriver(Driver driver)
         {
-            throw new NotImplementedException();
+            SqlConnection connection = getConnection();
+            string query = "Delete FROM [dbo].[Driver] WHERE DriverId = @Id AND NationalIdentificationNumber = @NationalIdentificationNumber";
+
+            using SqlCommand command = new(query, connection);
+            try
+            {
+                connection.Open();
+                #region Add values to the search terms
+                command.Parameters.AddWithValue("@Id", driver.DriverId);
+                command.Parameters.AddWithValue("@NationalIdentificationNumber", driver.NationalIdentificationNumber);
+                #endregion
+
+                command.ExecuteNonQuery();
+
+            } catch (Exception ex)
+            {
+                throw new AddressRepositoryException("DeleteDriver failed - " + ex.Message);
+            } finally
+            {
+                connection.Close();
+            }
         }
     }
 }
