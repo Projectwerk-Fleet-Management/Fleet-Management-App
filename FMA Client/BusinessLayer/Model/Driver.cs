@@ -20,82 +20,93 @@ namespace BusinessLayer
         public Fuelcard AssignedFuelcard { get; private set; }
         private static NINValidator NINValidator = new NINValidator();
 
-        ////Constructor without car, fuelcard, address and licenses
-        //public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber)
-        //{
-        //    SetDriverId(driverId);
-        //    SetLastName(lastName);
-        //    SetFirstName(firstName);
-        //    SetDateOfBirth(dateOfBirth);
-        //    SetNationalIdentificationNumber(nationalIdentificationNumber);
-        //}
-
-        //Constructor without car, fuelcard and address
-        public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType>? licenses, Address? address, Car? assignedCar, Fuelcard? assignedFuelcard)
+        #region Constructors
+        public Driver(int driverId, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentificationNumber)
+            :this(driverId, firstName, lastName, null, dateOfBirth, nationalIdentificationNumber, null, null, null)
         {
-            SetDriverId(driverId);
-            SetLastName(lastName);
-            SetFirstName(firstName);
-            SetDateOfBirth(dateOfBirth);
-            SetNationalIdentificationNumber(nationalIdentificationNumber);
-            if (licenses != null) { SetLicenses(licenses); } 
-            if (address != null) { SetAddress(address); }
-            if (assignedCar != null) { SetCar(assignedCar); }
-            if (assignedFuelcard != null) { SetFuelcard(assignedFuelcard); }
+
         }
 
-        ////Constructor without car and fuelcard
-        //public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses, Address address)
-        //{
-        //    SetDriverId(driverId);
-        //    SetLastName(lastName);
-        //    SetFirstName(firstName);
-        //    SetDateOfBirth(dateOfBirth);
-        //    SetNationalIdentificationNumber(nationalIdentificationNumber);
-        //    SetLicenses(licenses);
-        //    SetAddress(address);
-        //}
+        public Driver(int driverId, string firstName, string lastName, Address address, DateTime dateOfBirth, string nationalIdentificationNumber)
+            : this(driverId, firstName, lastName, address, dateOfBirth, nationalIdentificationNumber, null, null, null)
+        {
 
-        ////Constructor with car and without fuelcard
-        //public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses, Car assignedCar, Address address)
-        //{
-        //    SetDriverId(driverId);
-        //    SetLastName(lastName);
-        //    SetFirstName(firstName);
-        //    SetDateOfBirth(dateOfBirth);
-        //    SetNationalIdentificationNumber(nationalIdentificationNumber);
-        //    SetLicenses(licenses);
-        //    SetCar(assignedCar);
-        //    SetAddress(address);
-        //}
+        }
 
-        ////Constructor without car and with fuelcard
-        //public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses, Fuelcard assignedFuelcard, Address address)
-        //{
-        //    SetDriverId(driverId);
-        //    SetLastName(lastName);
-        //    SetFirstName(firstName);
-        //    SetDateOfBirth(dateOfBirth);
-        //    SetNationalIdentificationNumber(nationalIdentificationNumber);
-        //    SetLicenses(licenses);
-        //    SetFuelcard(assignedFuelcard);
-        //    SetAddress(address);
-        //}
+        public Driver(int driverId, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses)
+            : this(driverId, firstName, lastName, null, dateOfBirth, nationalIdentificationNumber, licenses, null, null)
+        {
 
+        }
 
-        ////Constructor with car and fuelcard
-        //public Driver(int driverId, string lastName, string firstName, DateTime dateOfBirth, string nationalIdentificationNumber, List<LicenseType> licenses, Car assignedCar, Fuelcard assignedFuelcard, Address address)
-        //{
-        //    SetDriverId(driverId);
-        //    SetLastName(lastName);
-        //    SetFirstName(firstName);
-        //    SetDateOfBirth(dateOfBirth);
-        //    SetNationalIdentificationNumber(nationalIdentificationNumber);
-        //    SetLicenses(licenses);
-        //    SetCar(assignedCar);
-        //    SetFuelcard(assignedFuelcard);
-        //    SetAddress(address);
-        //}
+        public Driver(int driverId, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentificationNumber, Car car)
+            : this(driverId, firstName, lastName, null, dateOfBirth, nationalIdentificationNumber, null, car, null)
+        {
+
+        }
+
+        public Driver(int driverId, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentificationNumber, Fuelcard fuelcard)
+            : this(driverId, firstName, lastName, null, dateOfBirth, nationalIdentificationNumber, null, null, fuelcard)
+        {
+
+        }
+
+        public Driver(int driverId, string firstName, string lastName, Address address, DateTime dateOfBirth, string nationalIdentificationNumber,
+            List<LicenseType> licenses)
+            : this(driverId, firstName, lastName, address, dateOfBirth, nationalIdentificationNumber, licenses, null, null)
+        {
+
+        }
+
+        public Driver(int driverId, string firstName, string lastName, Address address, DateTime dateOfBirth, string nationalIdentificationNumber,
+            Car car)
+            : this(driverId, firstName, lastName, address, dateOfBirth, nationalIdentificationNumber, null, car, null)
+        {
+
+        }
+
+        public Driver(int driverId, string firstName, string lastName, Address address, DateTime dateOfBirth, string nationalIdentificationNumber,
+            Fuelcard fuelcard)
+            : this(driverId, firstName, lastName, address, dateOfBirth, nationalIdentificationNumber, null, null, fuelcard)
+        {
+
+        }
+
+        public Driver(int driverId, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentificationNumber,
+            List<LicenseType> licenses, Car car)
+            : this(driverId, firstName, lastName, null, dateOfBirth, nationalIdentificationNumber, licenses, car, null)
+        {
+
+        }
+
+        public Driver(int driverId, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentificationNumber,
+            List<LicenseType> licenses, Fuelcard fuelcard)
+            : this(driverId, firstName, lastName, null, dateOfBirth, nationalIdentificationNumber, licenses, null, fuelcard)
+        {
+
+        }
+
+        public Driver(int driverId, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentificationNumber,
+            Car car, Fuelcard fuelcard)
+            : this(driverId, firstName, lastName, null, dateOfBirth, nationalIdentificationNumber, null, car, fuelcard)
+        {
+
+        }
+
+        public Driver(int driverId, string firstName, string lastName, Address address, DateTime dateOfBirth, string nationalIdentificationNumber,
+            List<LicenseType> licenses, Car car, Fuelcard fuelcard)
+        {
+            SetDriverId(driverId);
+            SetFirstName(firstName);
+            SetLastName(lastName);
+            SetDateOfBirth(dateOfBirth);
+            SetNationalIdentificationNumber(nationalIdentificationNumber);
+            if (licenses != null) SetLicenses(licenses);
+            if (address != null) SetAddress(address);
+            if (car != null) SetCar(car);
+            if (fuelcard != null) SetFuelcard(fuelcard);
+        }
+        #endregion
 
         #region Setting of variables
         public void SetDriverId(int driverId)
