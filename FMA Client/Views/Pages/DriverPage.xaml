@@ -20,7 +20,7 @@
             </TextBlock>
             <StackPanel Name="search" Orientation="Horizontal">
 
-                <TextBox Width="210" Height="26" Margin="35,0,0,0">
+                <TextBox Width="210" Height="26" Name="userInputDriverPage" Margin="35,0,0,0">
                     <TextBox.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="7"/>
@@ -28,12 +28,12 @@
                     </TextBox.Resources>
                 </TextBox>
 
-                <Image Source="../Images/search.png" Height="20" Width="25" x:Name="searchButton" Cursor="Hand" />
+                <Image Source="../Images/search.png" Height="20" Width="25" x:Name="searchButtonDriver" Cursor="Hand" MouseLeftButtonUp="SearchButtonDriver_OnMouseLeftButtonUp"/>
                 <Image Source="../Images/filter.png" Height="18" Width="21" Margin="10,0,0,0" x:Name="filterButton" Cursor="Hand"/>
 
             </StackPanel>
             <StackPanel Margin="0 10, 0, 0" Width="332" HorizontalAlignment="Left">
-                <ListBox Background="#e8e8e8" Height="342" Width="262">
+                <ListBox Name="DriverList" Background="#e8e8e8" Height="342" Width="262" SelectionChanged="DriverList_OnSelectionChanged">
                     <ListBox.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="7"/>
@@ -48,6 +48,11 @@
 
 
         <StackPanel x:Name="SelectedItemContent" Background="Crimson" Margin="300,73,0,35" Height="342" Width="350" >
+            <Label Name="voornaam"  Content="voornaam"/>
+            <Label Name="achternaam"  Content="achternaam"/>
+            <Label Name="RRN"  Content="RRN"/>
+
+
         </StackPanel>
 
     </Grid>

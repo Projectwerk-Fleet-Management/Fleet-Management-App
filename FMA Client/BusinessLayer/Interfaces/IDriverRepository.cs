@@ -16,5 +16,6 @@ namespace BusinessLayer.Interfaces
             , int? addressId, int? fuelcardId, int? carId);
         void DeleteDriver(Driver driver);
         void UpdateDriver(Driver oldDriverInfo, Driver newDriverInfo);
+        IReadOnlyList<Driver> Search(string x);
     }
 }

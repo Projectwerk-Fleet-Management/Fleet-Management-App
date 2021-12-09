@@ -14,6 +14,8 @@ namespace FMA_Client
             #region Connectionstrings
             //connection string marnick: Data Source=PROTOBEAR\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True
             //connection string Bryan: Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True
+
+            //con string marnick desktop: Data Source=PROTOBEAR\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True
             #endregion
 
             #region Address testing
@@ -25,10 +27,11 @@ namespace FMA_Client
             #endregion
 
             #region AddressRepository Testing
-            //AddressRepository p = new(@"Data Source=LAPTOP-DGE32LN4\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+            //AddressRepository p = new(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
             #region InsertAddress
             //p.InsertAddress("Steenbakkerij", "21", null, "Geraardsbergen", 9500);
+            //p.InsertAddress("Kloosterstraat", "138", "1", "Bornem", 2880);
             //p.InsertAddress("Steenbakkerij", "20", null, "Geraardsbergen", 9500);
             //p.InsertAddress("Hogeweg", "15", "A", "Geraardsbergen", 9500);
             #endregion
@@ -169,16 +172,21 @@ namespace FMA_Client
             #endregion
 
             #region Insert Testing
-            //d.InsertDriver("Bryan", "Batselier", "2002-06-29", "93.11.23-283.87", null, 1, 1, 1);
+
+            //d.InsertDriver("Bryan", "Batselier", "2002-06-29", "00.01.25.567-77", null, 1, null, null);
+            //d.InsertDriver("Marnick", "De Grave", "1993-11-23", "93.11.23-283.87", null, 2, null, null);
             #endregion
 
             #region Delete Testing
+
             //Driver driverToDelete = new(6, "Bryan", "Batselier", new DateTime(2002,06,29), "93.11.23-283.87");
 
             //d.DeleteDriver(driverToDelete);
+
             #endregion
 
             #region Update Testing
+
             //Address address = new(1, "Steenbakkerij", "21", null, "Geraardsbergen", 9500);
             //Car car = new(1, "Peugeot", "308", "1G2ZG57N984137853", "1-xxx-015", "Family Wagon", new List<Fuel> { Fuel.Benzine }, "4", "Grey");
             //Car car2 = new(1, "Peugeot", "308", "1G2ZG57N984137853", "1-xxx-015", "Family Wagon", new List<Fuel> { Fuel.Benzine }, "4", "Grey");
@@ -189,11 +197,13 @@ namespace FMA_Client
             //Driver newValues = new(1, "Bryan", "Batselier", address, new DateTime(2002, 06, 29), "93.11.23-283.87", new List<LicenseType> {LicenseType.A, LicenseType.A2 }, car2, fuelcard2);
 
             //d.UpdateDriver(driverToUpdate, newValues);
+
             #endregion
 
             #endregion
 
             #region NINValidatior
+
             //NINValidator x = new NINValidator();
             //bool test = x.isValid("93.11.23-283.87");
 
@@ -209,6 +219,7 @@ namespace FMA_Client
             //Console.WriteLine(x.IsValid("1M8GDM9A_KP042798"));
             //Console.WriteLine(x.IsValid("1M8GDM9AXKP042788"));
             //Console.WriteLine(x.IsValid("WAUZZZ8V5KA106598"));
+
             #endregion
         }
     }

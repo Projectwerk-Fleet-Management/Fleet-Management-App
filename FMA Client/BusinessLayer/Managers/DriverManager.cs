@@ -113,5 +113,17 @@ namespace BusinessLayer.Managers
                 throw new DriverManagerException("Could not update driver", e);
             }
         }
+
+        public IReadOnlyList<Driver> Search(string x)
+        {
+            try
+            {
+                return _repo.Search(x);
+            }
+            catch
+            {
+                throw new DriverManagerException("Failed getting driver list with specific arguments");
+            }
+        }
     }
 }
