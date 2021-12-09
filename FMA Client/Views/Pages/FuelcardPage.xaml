@@ -1,0 +1,54 @@
+﻿<Page x:Class="Views.Pages.FuelcardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Views.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="FuelcardPage">
+
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="0,0,0,0" Background="White">
+            <TextBlock
+                Text="Fuelcard"
+                Foreground="Black"
+                FontSize="20"
+                FontWeight="Medium"
+                HorizontalAlignment="Left"
+                Margin="35,0,0,10">
+            </TextBlock>
+            <StackPanel Name="search" Orientation="Horizontal">
+
+                <TextBox Width="210" Height="26" Margin="35,0,0,0">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="7"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+
+                <Image Source="../Images/search.png" Height="20" Width="25" x:Name="searchButton" Cursor="Hand" />
+                <Image Source="../Images/filter.png" Height="18" Width="21" Margin="10,0,0,0" x:Name="filterButton" Cursor="Hand"/>
+
+            </StackPanel>
+            <StackPanel Margin="0 10, 0, 0" Width="332" HorizontalAlignment="Left">
+                <ListBox Background="#e8e8e8" Height="342" Width="262">
+                    <ListBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="7"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Style>
+                    </ListBox.Resources>
+                </ListBox>
+            </StackPanel>
+
+        </StackPanel>
+
+
+
+        <StackPanel x:Name="SelectedItemContent" Background="Crimson" Margin="300,73,0,35" Height="342" Width="350" >
+        </StackPanel>
+
+    </Grid>
+</Page>

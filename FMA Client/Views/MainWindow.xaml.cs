@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BusinessLayer;
 using BusinessLayer.Model;
+using Views.Pages;
 
 namespace Views
 {
@@ -43,21 +44,23 @@ namespace Views
                 DriverBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#adadad"));
                 CarBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
                 FuelcardBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
-                pageName.Text = "Driver";
+                Main.Content = new DriverPage();
+
             }
             else if (_activePage == "carPage")
             {
                 DriverBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
                 CarBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#adadad"));
                 FuelcardBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
-                pageName.Text = "Car";
+                Main.Content = new CarPage();
+
             }
             else if (_activePage == "fuelcardPage")
             {
                 DriverBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
                 CarBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
                 FuelcardBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#adadad"));
-                pageName.Text = "Fuelcard";
+                Main.Content = new FuelcardPage();
             }
 
 

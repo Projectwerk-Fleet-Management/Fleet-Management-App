@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
+    <ProjectReference Include="..\DAL\DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +25,10 @@
     <Resource Include="Images\filter.png" />
     <Resource Include="Images\search.png" />
     <Resource Include="Images\user.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PageData\" />
   </ItemGroup>
 
 </Project>
