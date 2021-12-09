@@ -42,8 +42,8 @@ CREATE TABLE Driver(
 	NationalIdentificationNumber VARCHAR(255) NOT NULL UNIQUE,
 	Licenses VARCHAR(255) NULL,
 	AddressId INT NULL,
-	FuelcardId INT NULL,
-	CarId INT NULL
+	FuelcardId INT NULL UNIQUE,
+	CarId INT NULL UNIQUE
 );
 
 ALTER TABLE Driver ADD CONSTRAINT FK_AddressIdDriver FOREIGN KEY (AddressId) REFERENCES Address(AddressId);
