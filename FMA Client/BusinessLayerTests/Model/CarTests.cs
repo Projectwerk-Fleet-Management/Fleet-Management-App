@@ -7,6 +7,7 @@ namespace BusinessLayerTests.Model
 {
     public class CarTests
     {
+       /*
         private Car car = new Car(1, "Citroen", "Berlingo", "1J4FA24127L200905", "1xxx000", "Bestelwagen", fuelType: Fuel.Diesel);
 
         [Fact]
@@ -70,5 +71,6 @@ namespace BusinessLayerTests.Model
             Action a = () => new Car(1, "Citroen", "Berlingo", "1J4FA24127L200905", "1xxx000", "", fuelType: Fuel.Diesel);
             Assert.Throws<CarException>(a);
         }
+       */
     }
 }
