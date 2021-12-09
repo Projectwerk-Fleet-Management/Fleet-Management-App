@@ -31,7 +31,6 @@ namespace Views
             DataContext = this;
             InitializeComponent();
             SetActive("driverPage");
-
         }
 
         private void SetActive(string toset)
@@ -60,6 +59,7 @@ namespace Views
                 FuelcardBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#adadad"));
                 pageName.Text = "Fuelcard";
             }
+
 
         }
 

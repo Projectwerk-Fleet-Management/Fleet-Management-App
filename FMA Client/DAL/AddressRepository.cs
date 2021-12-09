@@ -1,6 +1,7 @@
 ﻿using BusinessLayer;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
+using BusinessLayer.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -27,7 +28,10 @@ namespace DAL
         {
             List<Address> addresses = new();
             SqlConnection connection = getConnection();
-            string query = "SELECT * FROM dbo.Address";
+            string query = "SELECT *, C.Fueltypes AS carFueltypes, F.Fueltypes AS fuelcardFueltypes FROM dbo.Address AS A" +
+                " LEFT JOIN dbo.Driver AS D ON A.AddressId = D.AddressId" +
+                " LEFT JOIN dbo.Car AS C ON D.CarId = C.CarId" +
+                " LEFT JOIN dbo.Fuelcard AS F ON D.FuelcardId = F.FuelcardId";
 
             using (SqlCommand command = connection.CreateCommand())
             {
@@ -44,15 +48,198 @@ namespace DAL
                         int postalcode = (int)datareader["Postalcode"];
                         string city = (string)datareader["City"];
                         string addendum = "";
-
+                        Driver driver = null;
+                        
                         #region Null checking
                         if (DBNull.Value != datareader["Addendum"])
                         {
                             addendum = (string)datareader["Addendum"];
                         }
+                        if (DBNull.Value != datareader["DriverId"])
+                        {
+                            int driverId = (int)datareader["DriverId"];
+                            string firstName = (string)datareader["FirstName"];
+                            string lastName = (string)datareader["LastName"];
+                            DateTime dateOfBirth = (DateTime)datareader["DateOfBirth"];
+                            string nationalIdentificationNumber = (string)datareader["NationalIdentificationNumber"];
+                            List<LicenseType> licensesList = new();
+                            Car car = null;
+                            Fuelcard fuelcard = null;
+                            #region Null checking
+                            if (DBNull.Value != datareader["Licenses"])
+                            {
+                                #region Db licenses to program
+                                //In the database the licenses are put in as a string with a "," seperating each type.
+                                //This basically turns it into a list for us to use
+                                //We're also making the licenses all upper case in the array to eliminate the case sensitivity
+                                string licensesString = (string)datareader["Licenses"];
+                                licensesString = licensesString.Replace(" ", "");
+                                string[] licensesArray = licensesString.ToUpper().Split(",");
+
+                                foreach (var l in licensesArray)
+                                {
+                                    if (string.IsNullOrWhiteSpace(l)) { continue; }
+                                    if (l == LicenseType.A.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.A);
+                                    }
+                                    if (l == LicenseType.A1.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.A1);
+                                    }
+                                    if (l == LicenseType.A2.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.A2);
+                                    }
+                                    if (l == LicenseType.AM.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.AM);
+                                    }
+                                    if (l == LicenseType.B.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.B);
+                                    }
+                                    if (l == LicenseType.BE.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.BE);
+                                    }
+                                    if (l == LicenseType.C.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.C);
+                                    }
+                                    if (l == LicenseType.CE.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.CE);
+                                    }
+                                    if (l == LicenseType.C1.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.C1);
+                                    }
+                                    if (l == LicenseType.C1E.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.C1E);
+                                    }
+                                    if (l == LicenseType.D.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.D);
+                                    }
+                                    if (l == LicenseType.DE.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.DE);
+                                    }
+                                    if (l == LicenseType.D1.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.D1);
+                                    }
+                                    if (l == LicenseType.D1E.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.D1E);
+                                    }
+                                    if (l == LicenseType.G.ToString().ToUpper())
+                                    {
+                                        licensesList.Add(LicenseType.G);
+                                    }
+                                }
+                                #endregion
+                            }
+                            if (DBNull.Value != datareader["CarId"])
+                            {
+                                int carId = (int)datareader["CarId"];
+                                string make = (string)datareader["Make"];
+                                string model = (string)datareader["Model"];
+                                string vin = (string)datareader["Vin"];
+                                string licenseplate = (string)datareader["Licenseplate"];
+                                string vehicleType = (string)datareader["VehicleType"];
+                                string fueltypesString = (string)datareader["carFueltypes"];
+                                string doors = "";
+                                string colour = "";
+                                if (DBNull.Value != datareader["Doors"])
+                                {
+                                    doors = (string)datareader["Doors"];
+                                }
+                                if (DBNull.Value != datareader["Colour"])
+                                {
+                                    colour = (string)datareader["Colour"];
+                                }
+
+                                #region Fueltypes from string (db) to a list
+                                List<Fuel> fueltypesList = new();
+                                fueltypesString = fueltypesString.Replace(" ", "");
+                                string[] fueltypesArray = fueltypesString.ToUpper().Split(",");
+
+                                foreach (var f in fueltypesArray)
+                                {
+                                    if (string.IsNullOrWhiteSpace(f)) { continue; }
+                                    if (f == Fuel.Benzine.ToString().ToUpper())
+                                    {
+                                        fueltypesList.Add(Fuel.Benzine);
+                                    }
+                                    if (f == Fuel.Diesel.ToString().ToUpper())
+                                    {
+                                        fueltypesList.Add(Fuel.Diesel);
+                                    }
+                                    if (f == Fuel.Electrisch.ToString().ToUpper())
+                                    {
+                                        fueltypesList.Add(Fuel.Electrisch);
+                                    }
+                                }
+                                #endregion
+
+                                car = new(carId, make, model, vin, licenseplate, vehicleType, fueltypesList, colour, doors);
+                            }
+                            if (DBNull.Value != datareader["FuelcardId"])
+                            {
+
+                                int fuelcardId = (int)datareader["FuelcardId"];
+                                string cardnumber = (string)datareader["Cardnumber"];
+                                DateTime expiryDate = (DateTime)datareader["ExpiryDate"];
+                                bool isActive = (bool)datareader["IsActive"];
+                                List<Fuel> fueltypesList = new();
+
+                                if (DBNull.Value != datareader["fuelcardFueltypes"])
+                                {
+                                    #region Db fueltype to program
+                                    //In the database the fueltypes are put in as a string with a "," seperating each type.
+                                    //This basically turns it into a list for us to use
+                                    //We're also making the fueltypes all upper case in the array to eliminate the case sensitivity
+                                    string fueltypesString = (string)datareader["fuelcardFueltypes"];
+                                    fueltypesString = fueltypesString.Replace(" ", "");
+                                    string[] fueltypesArray = fueltypesString.ToUpper().Split(",");
+
+                                    foreach (var f in fueltypesArray)
+                                    {
+                                        if (string.IsNullOrWhiteSpace(f)) { continue; }
+                                        if (f == Fuel.Benzine.ToString().ToUpper())
+                                        {
+                                            fueltypesList.Add(Fuel.Benzine);
+                                        }
+                                        if (f == Fuel.Diesel.ToString().ToUpper())
+                                        {
+                                            fueltypesList.Add(Fuel.Diesel);
+                                        }
+                                        if (f == Fuel.Electrisch.ToString().ToUpper())
+                                        {
+                                            fueltypesList.Add(Fuel.Electrisch);
+                                        }
+                                    }
+                                    #endregion
+                                }
+                                /* Pincode is not enabled to be retrieved from the database because of course why would it be? 
+                                if (DBNull.Value != datareader["Pincode"])
+                                {
+                                    int pincode = (int)datareader["Pincode"];
+                                }
+                                */
+
+                                fuelcard = new(fuelcardId, cardnumber, expiryDate, /*pincode,*/ fueltypesList, isActive);
+                            }
+                            #endregion
+
+                            driver = new(driverId, firstName, lastName, null, dateOfBirth, nationalIdentificationNumber, licensesList, car, fuelcard);
+                        }
                         #endregion
 
-                        Address address = new(addressId, street, housenumber, addendum, city, postalcode);
+                        Address address = new(addressId, street, housenumber, addendum, city, postalcode, driver);
 
                         addresses.Add(address);
                     }
@@ -76,21 +263,24 @@ namespace DAL
             List<Address> addresses = new();
             bool AND = false;
             SqlConnection connection = getConnection();
-            string query = "SELECT * FROM [dbo].[Address] ";
+            string query = "SELECT *, C.Fueltypes AS carFueltypes, F.Fueltypes AS fuelcardFueltypes FROM dbo.Address AS A" +
+                 " LEFT JOIN dbo.Driver AS D ON A.AddressId = D.AddressId" +
+                 " LEFT JOIN dbo.Car AS C ON D.CarId = C.CarId" +
+                 " LEFT JOIN dbo.Fuelcard AS F ON D.FuelcardId = F.FuelcardId ";
             #region Add to the query for search function
             if (id != null)
             {
-                query += "WHERE AddressId = @Id ";
+                query += "WHERE A.AddressId = @Id ";
                 AND = true;
             }
             if (!string.IsNullOrWhiteSpace(street))
             {
                 if (AND == true)
                 {
-                    query += "AND Street = @Street ";
+                    query += "AND A.Street = @Street ";
                 } else
                 {
-                    query += "WHERE Street = @Street ";
+                    query += "WHERE A.Street = @Street ";
                     AND = true;
                 }
             }
@@ -98,10 +288,10 @@ namespace DAL
             {
                 if (AND == true)
                 {
-                    query += "AND Housenumber = @Housenumber ";
+                    query += "AND A.Housenumber = @Housenumber ";
                 } else
                 {
-                    query += "WHERE Housenumber = @Housenumber ";
+                    query += "WHERE A.Housenumber = @Housenumber ";
                     AND = true;
                 }
             }
@@ -109,10 +299,10 @@ namespace DAL
             {
                 if (AND == true)
                 {
-                    query += "AND Addendum = @Addendum ";
+                    query += "AND A.Addendum = @Addendum ";
                 } else
                 {
-                    query += "WHERE Addendum = @Addendum ";
+                    query += "WHERE A.Addendum = @Addendum ";
                     AND = true;
                 }
             }
@@ -120,10 +310,10 @@ namespace DAL
             {
                 if (AND == true)
                 {
-                    query += "AND City = @City ";
+                    query += "AND A.City = @City ";
                 } else
                 {
-                    query += "WHERE City = @City ";
+                    query += "WHERE A.City = @City ";
                     AND = true;
                 }
             }
@@ -131,10 +321,10 @@ namespace DAL
             {
                 if (AND == true)
                 {
-                    query += "AND Postalcode = @Postalcode ";
+                    query += "AND A.Postalcode = @Postalcode ";
                 } else
                 {
-                    query += "WHERE Postalcode = @Postalcode ";
+                    query += "WHERE A.Postalcode = @Postalcode ";
                     AND = true;
                 }
             }
@@ -181,16 +371,198 @@ namespace DAL
                     int postalcodeDb = (int)datareader["Postalcode"];
                     string cityDb = (string)datareader["City"];
                     string addendumDb = "";
+                    Driver driver = null;
 
                     #region Null checking
                     if (DBNull.Value != datareader["Addendum"])
                     {
-                        addendumDb = (string)datareader["Addendum"];
+                        addendum = (string)datareader["Addendum"];
+                    }
+                    if (DBNull.Value != datareader["DriverId"])
+                    {
+                        int driverId = (int)datareader["DriverId"];
+                        string firstName = (string)datareader["FirstName"];
+                        string lastName = (string)datareader["LastName"];
+                        DateTime dateOfBirth = (DateTime)datareader["DateOfBirth"];
+                        string nationalIdentificationNumber = (string)datareader["NationalIdentificationNumber"];
+                        List<LicenseType> licensesList = new();
+                        Car car = null;
+                        Fuelcard fuelcard = null;
+                        #region Null checking
+                        if (DBNull.Value != datareader["Licenses"])
+                        {
+                            #region Db licenses to program
+                            //In the database the licenses are put in as a string with a "," seperating each type.
+                            //This basically turns it into a list for us to use
+                            //We're also making the licenses all upper case in the array to eliminate the case sensitivity
+                            string licensesString = (string)datareader["Licenses"];
+                            licensesString = licensesString.Replace(" ", "");
+                            string[] licensesArray = licensesString.ToUpper().Split(",");
+
+                            foreach (var l in licensesArray)
+                            {
+                                if (string.IsNullOrWhiteSpace(l)) { continue; }
+                                if (l == LicenseType.A.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.A);
+                                }
+                                if (l == LicenseType.A1.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.A1);
+                                }
+                                if (l == LicenseType.A2.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.A2);
+                                }
+                                if (l == LicenseType.AM.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.AM);
+                                }
+                                if (l == LicenseType.B.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.B);
+                                }
+                                if (l == LicenseType.BE.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.BE);
+                                }
+                                if (l == LicenseType.C.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.C);
+                                }
+                                if (l == LicenseType.CE.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.CE);
+                                }
+                                if (l == LicenseType.C1.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.C1);
+                                }
+                                if (l == LicenseType.C1E.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.C1E);
+                                }
+                                if (l == LicenseType.D.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.D);
+                                }
+                                if (l == LicenseType.DE.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.DE);
+                                }
+                                if (l == LicenseType.D1.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.D1);
+                                }
+                                if (l == LicenseType.D1E.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.D1E);
+                                }
+                                if (l == LicenseType.G.ToString().ToUpper())
+                                {
+                                    licensesList.Add(LicenseType.G);
+                                }
+                            }
+                            #endregion
+                        }
+                        if (DBNull.Value != datareader["CarId"])
+                        {
+                            int carId = (int)datareader["CarId"];
+                            string make = (string)datareader["Make"];
+                            string model = (string)datareader["Model"];
+                            string vin = (string)datareader["Vin"];
+                            string licenseplate = (string)datareader["Licenseplate"];
+                            string vehicleType = (string)datareader["VehicleType"];
+                            string fueltypesString = (string)datareader["carFueltypes"];
+                            string doors = "";
+                            string colour = "";
+                            if (DBNull.Value != datareader["Doors"])
+                            {
+                                doors = (string)datareader["Doors"];
+                            }
+                            if (DBNull.Value != datareader["Colour"])
+                            {
+                                colour = (string)datareader["Colour"];
+                            }
+
+                            #region Fueltypes from string (db) to a list
+                            List<Fuel> fueltypesList = new();
+                            fueltypesString = fueltypesString.Replace(" ", "");
+                            string[] fueltypesArray = fueltypesString.ToUpper().Split(",");
+
+                            foreach (var f in fueltypesArray)
+                            {
+                                if (string.IsNullOrWhiteSpace(f)) { continue; }
+                                if (f == Fuel.Benzine.ToString().ToUpper())
+                                {
+                                    fueltypesList.Add(Fuel.Benzine);
+                                }
+                                if (f == Fuel.Diesel.ToString().ToUpper())
+                                {
+                                    fueltypesList.Add(Fuel.Diesel);
+                                }
+                                if (f == Fuel.Electrisch.ToString().ToUpper())
+                                {
+                                    fueltypesList.Add(Fuel.Electrisch);
+                                }
+                            }
+                            #endregion
+
+                            car = new(carId, make, model, vin, licenseplate, vehicleType, fueltypesList, colour, doors);
+                        }
+                        if (DBNull.Value != datareader["FuelcardId"])
+                        {
+
+                            int fuelcardId = (int)datareader["FuelcardId"];
+                            string cardnumber = (string)datareader["Cardnumber"];
+                            DateTime expiryDate = (DateTime)datareader["ExpiryDate"];
+                            bool isActive = (bool)datareader["IsActive"];
+                            List<Fuel> fueltypesList = new();
+
+                            if (DBNull.Value != datareader["fuelcardFueltypes"])
+                            {
+                                #region Db fueltype to program
+                                //In the database the fueltypes are put in as a string with a "," seperating each type.
+                                //This basically turns it into a list for us to use
+                                //We're also making the fueltypes all upper case in the array to eliminate the case sensitivity
+                                string fueltypesString = (string)datareader["fuelcardFueltypes"];
+                                fueltypesString = fueltypesString.Replace(" ", "");
+                                string[] fueltypesArray = fueltypesString.ToUpper().Split(",");
+
+                                foreach (var f in fueltypesArray)
+                                {
+                                    if (string.IsNullOrWhiteSpace(f)) { continue; }
+                                    if (f == Fuel.Benzine.ToString().ToUpper())
+                                    {
+                                        fueltypesList.Add(Fuel.Benzine);
+                                    }
+                                    if (f == Fuel.Diesel.ToString().ToUpper())
+                                    {
+                                        fueltypesList.Add(Fuel.Diesel);
+                                    }
+                                    if (f == Fuel.Electrisch.ToString().ToUpper())
+                                    {
+                                        fueltypesList.Add(Fuel.Electrisch);
+                                    }
+                                }
+                                #endregion
+                            }
+                            /* Pincode is not enabled to be retrieved from the database because of course why would it be? 
+                            if (DBNull.Value != datareader["Pincode"])
+                            {
+                                int pincode = (int)datareader["Pincode"];
+                            }
+                            */
+
+                            fuelcard = new(fuelcardId, cardnumber, expiryDate, /*pincode,*/ fueltypesList, isActive);
+                        }
+                        #endregion
+
+                        driver = new(driverId, firstName, lastName, null, dateOfBirth, nationalIdentificationNumber, licensesList, car, fuelcard);
                     }
                     #endregion
                     #endregion
-
-                    Address address = new(addressIdDb, streetDb, housenumberDb, addendumDb, cityDb, postalcodeDb);
+                    Address address = new(addressIdDb, streetDb, housenumberDb, addendumDb, cityDb, postalcodeDb, driver);
 
                     addresses.Add(address);
                 }

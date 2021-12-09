@@ -15,7 +15,7 @@ namespace BusinessLayerTests.Model
         public void handleCorrectAddress()
         {
 
-            Address address = new Address(1, "Buizerdlaan", "4", null, "Bornem", 2880);
+            Address address = new Address(1, "Buizerdlaan", "4", null, "Bornem", 2880, null);
             if (
                 address.AddressId == 1 &&
                 address.Street == "Buizerdlaan" &&
