@@ -8,6 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DriverPage">
 
+
     <Grid>
         <StackPanel Orientation="Vertical" Margin="0,0,0,0" Background="White">
             <TextBlock
@@ -20,7 +21,7 @@
             </TextBlock>
             <StackPanel Name="search" Orientation="Horizontal">
 
-                <TextBox Width="210" Height="26" Name="userInputDriverPage" Margin="35,0,0,0">
+                <TextBox Width="210" Height="26" Name="userInputDriverPage" Margin="35,0,0,0" KeyDown="UserInputDriverPage_OnKeyDown">
                     <TextBox.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="7"/>
@@ -33,27 +34,76 @@
 
             </StackPanel>
             <StackPanel Margin="0 10, 0, 0" Width="332" HorizontalAlignment="Left">
-                <ListBox Name="DriverList" Background="#e8e8e8" Height="342" Width="262" SelectionChanged="DriverList_OnSelectionChanged">
+                <ListBox Name="DriverList" Background="#e8e8e8" Height="342" Width="262" SelectionChanged="DriverList_OnSelectionChanged" BorderThickness="0">
                     <ListBox.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="7"/>
                             <Setter Property="BorderThickness" Value="0"/>
                         </Style>
                     </ListBox.Resources>
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                                    <Setter Property="Padding" Value="5,10,0,10"></Setter>
+                                    <Setter Property="BorderThickness" Value="0"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
                 </ListBox>
             </StackPanel>
- 
+
+        </StackPanel>
+
+        
+            <StackPanel x:Name="SelectedItemContent" Margin="300,73,0,35" Height="342" Width="350" >
+            <Border BorderBrush="Red" BorderThickness="0" CornerRadius="7" Height="342" Width="350" Background="#e8e8e8">
+                <Grid Margin="10,5,0,0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Voornaam" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Name="voornaamField" Grid.Row="0" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="Achternaam" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Name="achternaamField" Grid.Row="1" Grid.Column="1" Text=" " FontSize="15"  VerticalAlignment="Center"/>
+                    <Label Grid.Row="2" Grid.Column="0" Content="Geboortedatum" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Name="geboortedatumField" Grid.Row="2" Grid.Column="1" Text=" "  FontSize="15" VerticalAlignment="Center"/>
+                    <Label Grid.Row="3" Grid.Column="0" Content="Rijksregisternummer" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Name="rijksregisternummerField" Grid.Row="3" Grid.Column="1" Text=" " FontSize="15" VerticalAlignment="Center"/>
+                    <Label Grid.Row="4" Grid.Column="0" Content="Rijbewijzen" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Name="rijbewijzenField" Grid.Row="4" Grid.Column="1" Text=" " FontSize="15" VerticalAlignment="Center"/>
+                    <Label Grid.Row="5" Grid.Column="0" Content="Adres" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock TextWrapping="Wrap" Name="adresField" Grid.Row="5" Grid.Column="1" Text=" " FontSize="15" VerticalAlignment="Center"/>
+                    <Label Grid.Row="6" Grid.Column="0" Content="Tankkaart" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Name="tankkaartField" Grid.Row="6" Grid.Column="1" Text=" " FontSize="15" VerticalAlignment="Center"/>
+                    <Label Grid.Row="7" Grid.Column="0" Content="Auto" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Name="autoField" Grid.Row="7" Grid.Column="1" Text=" " FontSize="15" VerticalAlignment="Center"/>
+
+
+            </Grid>
+                </Border>
         </StackPanel>
         
-
-
-        <StackPanel x:Name="SelectedItemContent" Background="Crimson" Margin="300,73,0,35" Height="342" Width="350" >
-            <Label Name="voornaam"  Content="voornaam"/>
-            <Label Name="achternaam"  Content="achternaam"/>
-            <Label Name="RRN"  Content="RRN"/>
-
-
-        </StackPanel>
-
     </Grid>
+
+
 </Page>
+
+    
