@@ -100,7 +100,7 @@
             </StackPanel>
 
         </StackPanel>
-        <StackPanel Grid.Row="1" Background="Aqua" Grid.ColumnSpan="2" Margin="72,0,0,0">
+        <StackPanel Grid.Row="1" Background="White" Grid.ColumnSpan="2" Margin="72,0,0,0">
             <Frame x:Name="Main" NavigationUIVisibility="Hidden"></Frame>
         </StackPanel>
     </Grid>

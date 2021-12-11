@@ -30,7 +30,7 @@
                 </TextBox>
 
                 <Image Source="../Images/search.png" Height="20" Width="25" x:Name="searchButtonDriver" Cursor="Hand" MouseLeftButtonUp="SearchButtonDriver_OnMouseLeftButtonUp"/>
-                <Image Source="../Images/filter.png" Height="18" Width="21" Margin="10,0,0,0" x:Name="filterButton" Cursor="Hand"/>
+                <Image Source="../Images/filter.png" Height="18" Width="21" Margin="10,0,0,0" x:Name="filterButton" Cursor="Hand" MouseLeftButtonDown="FilterButton_OnMouseLeftButtonDown"/>
 
             </StackPanel>
             <StackPanel Margin="0 10, 0, 0" Width="332" HorizontalAlignment="Left">
@@ -59,27 +59,27 @@
 
         </StackPanel>
 
-        
-            <StackPanel x:Name="SelectedItemContent" Margin="300,73,0,35" Height="342" Width="350" >
+
+        <StackPanel x:Name="SelectedItemContent" Margin="300,73,0,35" Height="342" Width="350" >
             <Border BorderBrush="Red" BorderThickness="0" CornerRadius="7" Height="342" Width="350" Background="#e8e8e8">
-                <Grid Margin="10,5,0,0" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="160"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                <Grid Margin="10,5,10,5" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="Voornaam" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Voornaam" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <TextBlock Name="voornaamField" Grid.Row="0" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
                     <Label Grid.Row="1" Grid.Column="0" Content="Achternaam" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <TextBlock Name="achternaamField" Grid.Row="1" Grid.Column="1" Text=" " FontSize="15"  VerticalAlignment="Center"/>
@@ -95,12 +95,31 @@
                     <TextBlock Name="tankkaartField" Grid.Row="6" Grid.Column="1" Text=" " FontSize="15" VerticalAlignment="Center"/>
                     <Label Grid.Row="7" Grid.Column="0" Content="Auto" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <TextBlock Name="autoField" Grid.Row="7" Grid.Column="1" Text=" " FontSize="15" VerticalAlignment="Center"/>
+                    <Button x:Name="bewerkButton" Grid.Row="9" Grid.Column="0" Content="Bewerken" Background="#FF96D6FB" BorderThickness="0" Width="140">
+
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="7"/>
+                            </Style>
+                        </Button.Resources>
+
+                    </Button>
+                    <Button x:Name="verwijderButton" Grid.Row="9" Grid.Column="1" Content="Verwijderen" BorderThickness="0" Width="140">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="7"/>
+                            </Style>
+                        </Button.Resources>
+                        <Button.Background>
+                            <SolidColorBrush Color="#FFFF4545"/>
+                        </Button.Background>
+                    </Button>
 
 
-            </Grid>
-                </Border>
+                </Grid>
+            </Border>
         </StackPanel>
-        
+
     </Grid>
 
 

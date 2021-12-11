@@ -10,19 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Views.Pages
+namespace Views.FilterWindows
 {
     /// <summary>
-    /// Interaction logic for FilterPage.xaml
+    /// Interaction logic for DriverFilter.xaml
     /// </summary>
-    public partial class FilterPage : Page
+    public partial class DriverFilter : Window
     {
-        public FilterPage()
+        public DriverFilter()
         {
             InitializeComponent();
+        }
+
+        private void menubardrag_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left) this.DragMove();
         }
     }
 }
