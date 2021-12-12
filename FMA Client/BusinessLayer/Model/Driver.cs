@@ -20,6 +20,12 @@ namespace BusinessLayer
         public Fuelcard AssignedFuelcard { get; private set; }
         private static NINValidator NINValidator = new NINValidator();
 
+
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName}";
+        }
+
         #region Constructors
         public Driver(int driverId, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentificationNumber)
             :this(driverId, firstName, lastName, null, dateOfBirth, nationalIdentificationNumber, null, null, null)
