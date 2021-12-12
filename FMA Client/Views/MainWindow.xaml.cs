@@ -1,21 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using BusinessLayer;
-using BusinessLayer.Model;
 using Views.Pages;
 
 namespace Views
@@ -28,7 +14,8 @@ namespace Views
 
         private string _activePage;
 
-        public MainWindow() {
+        public MainWindow()
+        {
             DataContext = this;
             InitializeComponent();
             SetActive("driverPage");
@@ -41,29 +28,27 @@ namespace Views
 
             if (_activePage == "driverPage")
             {
-                DriverBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#adadad"));
-                CarBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
-                FuelcardBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
+                DriverBtn.Background = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#adadad"));
+                CarBtn.Background = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#dbdbdb"));
+                FuelcardBtn.Background = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#dbdbdb"));
                 Main.Content = new DriverPage();
 
             }
             else if (_activePage == "carPage")
             {
-                DriverBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
-                CarBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#adadad"));
-                FuelcardBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
+                DriverBtn.Background = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#dbdbdb"));
+                CarBtn.Background = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#adadad"));
+                FuelcardBtn.Background = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#dbdbdb"));
                 Main.Content = new CarPage();
 
             }
             else if (_activePage == "fuelcardPage")
             {
-                DriverBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
-                CarBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dbdbdb"));
-                FuelcardBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#adadad"));
+                DriverBtn.Background = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#dbdbdb"));
+                CarBtn.Background = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#dbdbdb"));
+                FuelcardBtn.Background = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#adadad"));
                 Main.Content = new FuelcardPage();
             }
-
-
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -73,7 +58,7 @@ namespace Views
 
         private void menubardrag_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(e.ChangedButton == MouseButton.Left) this.DragMove();
+            if (e.ChangedButton == MouseButton.Left) this.DragMove();
         }
 
 
@@ -88,6 +73,7 @@ namespace Views
             filterscreen popFilterscreen = new filterscreen();
             popFilterscreen.Show();
         }
+
         private void DriverBtn_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SetActive("driverPage");
@@ -98,7 +84,7 @@ namespace Views
             SetActive("fuelcardPage");
         }
 
-        
+
         private void CarBtn_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SetActive("carPage");

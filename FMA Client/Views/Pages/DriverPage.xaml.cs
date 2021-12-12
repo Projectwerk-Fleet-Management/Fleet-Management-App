@@ -7,6 +7,7 @@ using BusinessLayer.Interfaces;
 using BusinessLayer.Managers;
 using DAL;
 using Views.FilterWindows;
+using Views.NewWindows;
 
 
 namespace Views.Pages
@@ -14,7 +15,8 @@ namespace Views.Pages
 
     public partial class DriverPage : Page
     {
-        private IDriverRepository dr = new DriverRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+        private IDriverRepository dr =
+            new DriverRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
         public DriverPage()
         {
@@ -30,7 +32,8 @@ namespace Views.Pages
             DriverList.UnselectAll();
             SelectedItemContent.IsEnabled = false;
             string x = userInputDriverPage.Text;
-            IDriverRepository dr = new DriverRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+            IDriverRepository dr =
+                new DriverRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
             DriverManager d = new DriverManager(dr);
             var drlist = d.Search(x);
             DriverList.ItemsSource = new ObservableCollection<Driver>(drlist);
@@ -43,7 +46,7 @@ namespace Views.Pages
             var item = DriverList.SelectedItem;
             if (item != null)
             {
-                Driver driverDetails = (Driver)item;
+                Driver driverDetails = (Driver) item;
                 voornaamField.Text = driverDetails.FirstName;
                 achternaamField.Text = driverDetails.LastName;
                 geboortedatumField.Text = driverDetails.DateOfBirth.ToShortDateString(); //.ToString();
@@ -90,6 +93,7 @@ namespace Views.Pages
 
             }
         }
+
         private void UserInputDriverPage_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
@@ -102,6 +106,14 @@ namespace Views.Pages
         {
             DriverFilter df = new DriverFilter();
             df.Show();
+        }
+
+        private void NieuwButton_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DriverFilter df = new DriverFilter();
+            df.Show();
+            //NewDriverWindow ndw = new NewDriverWindow();
+            //ndw.Show();
         }
     }
 }
