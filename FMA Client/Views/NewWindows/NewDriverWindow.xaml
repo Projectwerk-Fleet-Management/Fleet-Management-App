@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Views.NewWindows"
         mc:Ignorable="d"
-        Title="New Driver" Height="450" Width="800"
+        Title="New Driver" Height="428" Width="1021"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="#ffffff">
-    <Grid>
+    <Grid Margin="0,0,31,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition/>
@@ -59,5 +59,150 @@
 
 
         </Grid>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,20,497,0" Grid.ColumnSpan="2">
+            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="360" Width="494" Background="#e8e8e8">
+                <Grid Margin="10,5,10,5" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Voornaam" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBox x:Name="voornaamField" Grid.Row="0" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="Achternaam" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBox x:Name="achternaamField" Grid.Row="1" Grid.Column="1" Text=" " FontSize="15"  VerticalAlignment="Center"/>
+                    <Label Grid.Row="2" Grid.Column="0" Content="Geboortedatum" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <DatePicker x:Name="geboortedatumField" Grid.Row="2" Grid.Column="1" Text=" "  FontSize="15" VerticalAlignment="Center"/>
+                    <Label Grid.Row="3" Grid.Column="0" Content="Rijksregisternummer" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBox x:Name="rijksregisternummerField" Grid.Row="3" Grid.Column="1" Text=" " FontSize="15" VerticalAlignment="Center"/>
+                    <Label Grid.Row="4" Grid.Column="0" Content="Rijbewijzen" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="4" Grid.Column="1" Margin="0,0,10,19" Grid.RowSpan="3">
+                        <Grid Grid.Row="4" Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" Content="AM"/>
+                            <CheckBox Grid.Column="1" Content="A"/>
+                            <CheckBox Grid.Column="2" Content="A1"/>
+                        </Grid>
+                        <Grid Grid.Row="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" Content="A2"/>
+                            <CheckBox Grid.Column="1" Content="B"/>
+                            <CheckBox Grid.Column="2" Content="BE"/>
+                        </Grid>
+                        <Grid Grid.Row="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" Content="C"/>
+                            <CheckBox Grid.Column="1" Content="CE"/>
+                            <CheckBox Grid.Column="2" Content="C1"/>
+                        </Grid>
+                        <Grid Grid.Row="7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" Content="C1E"/>
+                            <CheckBox Grid.Column="1" Content="D"/>
+                            <CheckBox Grid.Column="2" Content="DE"/>
+                        </Grid>
+                        <Grid Grid.Row="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" Content="D1"/>
+                            <CheckBox Grid.Column="1" Content="D1E"/>
+                            <CheckBox Grid.Column="2" Content="G"/>
+                        </Grid>
+
+                    </StackPanel>
+
+                    <Button x:Name="opslaanButton" Grid.Row="9" Grid.Column="0" Content="Opslaan" Background="GreenYellow" BorderThickness="0" Width="140" Margin="10,0,10,0">
+
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="7"/>
+                            </Style>
+                        </Button.Resources>
+
+                    </Button>
+                    <Button x:Name="cancelButton" Grid.Row="9" Grid.Column="1" Content="annuleren" Background="Red" BorderThickness="0" Width="140" Margin="10,0,10,0" Click="CancelButton_OnClick">
+
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="7"/>
+                            </Style>
+                        </Button.Resources>
+
+                    </Button>
+
+
+                </Grid>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Background="Transparent" Margin="504,20,0,0" Grid.ColumnSpan="2">
+            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="362" Width="478" Background="#e8e8e8">
+                <Grid Margin="10,5,10,5" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="Straatnaam" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBox x:Name="straatnaamField" Grid.Row="0" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="Huisnummer" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBox x:Name="housenumberField" Grid.Row="1" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
+                    <Label Grid.Row="2" Grid.Column="0" Content="Bijvoegsel" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBox x:Name="addendumField" Grid.Row="2" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
+                    <Label Grid.Row="3" Grid.Column="0" Content="Postcode" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBox x:Name="postalcodeField" Grid.Row="3" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
+                    <Label Grid.Row="4" Grid.Column="0" Content="Stad" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBox x:Name="cityField" Grid.Row="4" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
+
+
+                </Grid>
+            </Border>
+        </StackPanel>
+
+
     </Grid>
+
 </Window>
