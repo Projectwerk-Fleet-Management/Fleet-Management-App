@@ -95,9 +95,9 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" Content="AM"/>
-                            <CheckBox Grid.Column="1" Content="A"/>
-                            <CheckBox Grid.Column="2" Content="A1"/>
+                            <CheckBox Grid.Column="0" Name="AM" Content="AM"/>
+                            <CheckBox Grid.Column="1" Name="A" Content="A"/>
+                            <CheckBox Grid.Column="2" Name="A1" Content="A1"/>
                         </Grid>
                         <Grid Grid.Row="5">
                             <Grid.ColumnDefinitions>
@@ -105,9 +105,9 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" Content="A2"/>
-                            <CheckBox Grid.Column="1" Content="B"/>
-                            <CheckBox Grid.Column="2" Content="BE"/>
+                            <CheckBox Grid.Column="0" Name="A2" Content="A2"/>
+                            <CheckBox Grid.Column="1" Name="B" Content="B"/>
+                            <CheckBox Grid.Column="2" Name="BE" Content="BE"/>
                         </Grid>
                         <Grid Grid.Row="6">
                             <Grid.ColumnDefinitions>
@@ -115,9 +115,9 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" Content="C"/>
-                            <CheckBox Grid.Column="1" Content="CE"/>
-                            <CheckBox Grid.Column="2" Content="C1"/>
+                            <CheckBox Grid.Column="0" Name="C" Content="C"/>
+                            <CheckBox Grid.Column="1" Name="CE" Content="CE"/>
+                            <CheckBox Grid.Column="2" Name="C1" Content="C1"/>
                         </Grid>
                         <Grid Grid.Row="7">
                             <Grid.ColumnDefinitions>
@@ -125,9 +125,9 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" Content="C1E"/>
-                            <CheckBox Grid.Column="1" Content="D"/>
-                            <CheckBox Grid.Column="2" Content="DE"/>
+                            <CheckBox Grid.Column="0" Name="C1E" Content="C1E"/>
+                            <CheckBox Grid.Column="1" Name="D" Content="D"/>
+                            <CheckBox Grid.Column="2" Name="DE" Content="DE"/>
                         </Grid>
                         <Grid Grid.Row="8">
                             <Grid.ColumnDefinitions>
@@ -135,9 +135,9 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" Content="D1"/>
-                            <CheckBox Grid.Column="1" Content="D1E"/>
-                            <CheckBox Grid.Column="2" Content="G"/>
+                            <CheckBox Grid.Column="0" Name="D1" Content="D1"/>
+                            <CheckBox Grid.Column="1" Name="D1E" Content="D1E"/>
+                            <CheckBox Grid.Column="2" Name="G" Content="G"/>
                         </Grid>
 
                     </StackPanel>
