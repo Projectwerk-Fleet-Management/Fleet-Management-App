@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Views.NewWindows"
         mc:Ignorable="d"
-        Title="New Driver" Height="428" Width="1021"
+        Title="New Driver" Height="459" Width="1084"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="#ffffff">
@@ -60,8 +60,8 @@
 
         </Grid>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,20,497,0" Grid.ColumnSpan="2">
-            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="360" Width="494" Background="#e8e8e8">
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10,20,497,0" Grid.ColumnSpan="2">
+            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="379" Width="503" Background="#e8e8e8">
                 <Grid Margin="10,5,10,5" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="160"/>
@@ -166,8 +166,8 @@
             </Border>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Background="Transparent" Margin="504,20,0,0" Grid.ColumnSpan="2">
-            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="362" Width="478" Background="#e8e8e8">
+        <StackPanel Grid.Row="1" Background="Transparent" Margin="520,20,0,0" Grid.ColumnSpan="2">
+            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="377" Width="478" Background="#e8e8e8">
                 <Grid Margin="10,5,10,5" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="160"/>
