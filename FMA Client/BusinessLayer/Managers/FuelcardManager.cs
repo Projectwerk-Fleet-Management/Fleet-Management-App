@@ -14,18 +14,23 @@ namespace BusinessLayer.Managers
             _repo = repo;
         }
 
-        public IReadOnlyList<Fuelcard> GetCards()
+        public IReadOnlyList<Fuelcard> GetAllFuelcards()
         {
             try
             {
                 return _repo.GetAllFuelcards();
-            }
-            catch(Exception exception)
+            } catch
             {
-                throw new FuelcardException("", exception);
-
+                throw new DriverManagerException("Getting fuelcard list failed");
             }
         }
+
+
+        //IReadOnlyList<Fuelcard> GetFuelcard(int? fuelcardId, string cardnumber, string expiryDate, List<Fuel> fueltypes, bool? isActive);
+        //bool Exists(int? fuelcardId, string cardnumber, string expiryDate, List<Fuel> fueltypes, bool? isActive);
+        //void InsertFuelcard(string cardnumber, string expiryDate, List<Fuel> fueltypes, int? pincode, bool? isActive);
+        //void DeleteFuelcard(Fuelcard fuelcard);
+        //void UpdateFuelcard(Fuelcard oldFuelcard, Fuelcard newFuelcard);
 
     }
 }
