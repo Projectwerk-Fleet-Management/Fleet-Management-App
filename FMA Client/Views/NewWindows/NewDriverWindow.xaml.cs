@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BusinessLayer.Model;
 
 namespace Views.NewWindows
 {
@@ -42,6 +44,15 @@ namespace Views.NewWindows
         private void OpslaanButton_OnClick(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        private void createDriverLicenseList()
+        {
+            List<LicenseType> drlList = new List<LicenseType>();
+            if (A1.IsChecked == true)
+            {
+                drlList.Add(LicenseType.A1);
+            }
         }
     }
 }
