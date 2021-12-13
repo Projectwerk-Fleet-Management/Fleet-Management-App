@@ -26,11 +26,11 @@ namespace BusinessLayer.Managers
             }
         }
 
-        public IReadOnlyList<Address> GetAddress(Address a)
+        public IReadOnlyList<Address> GetAddress(int? id, string street, string housenumber, string addendum, string city, int postalcode)
         {
             try
             {
-                return _repo.GetAddress(a.AddressId, a.Street, a.Housenumber, a.Addendum, a.City, a.Postalcode);
+                return _repo.GetAddress(null, street,housenumber,addendum,city,postalcode);
             }
             catch (Exception e)
             {
@@ -38,11 +38,11 @@ namespace BusinessLayer.Managers
             }
         }
 
-        public bool Exists(Address a)
+        public bool Exists(int? id, string street, string housenumber, string addendum, string city, int postalcode)
         {
             try
             {
-                return _repo.Exists(a.AddressId, a.Street, a.Housenumber, a.Addendum, a.City, a.Postalcode);
+                return _repo.Exists(id,street,housenumber,addendum,city,postalcode);
             }
             catch (Exception e)
             {
@@ -51,11 +51,11 @@ namespace BusinessLayer.Managers
             }
         }
 
-        public void Insert(Address a)
+        public void Insert(string street, string housenumber, string addendum, string city, int postalcode)
         {
             try
             {
-                if(!Exists(a)) _repo.InsertAddress(a.Street, a.Housenumber, a.Addendum, a.City, a.Postalcode);
+                if(!Exists(null, street, housenumber,addendum,city,postalcode)) _repo.InsertAddress(street, housenumber, addendum, city, postalcode);
             }
             catch (Exception e)
             {
@@ -67,7 +67,7 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                if(Exists(a)) _repo.DeleteAddress(a);
+                if(Exists(a.AddressId, a.Street, a.Housenumber,a.Addendum,a.City,a.Postalcode)) _repo.DeleteAddress(a);
             }
             catch (Exception e)
             {
@@ -79,7 +79,7 @@ namespace BusinessLayer.Managers
         {
             try
             {
-                if(Exists(oldAddress)) _repo.UpdateAddress(oldAddress, newAddress);
+                if(Exists(oldAddress.AddressId, oldAddress.Street,oldAddress.Housenumber,oldAddress.Addendum,oldAddress.City,oldAddress.Postalcode)) _repo.UpdateAddress(oldAddress, newAddress);
             }
             catch (Exception e)
             {

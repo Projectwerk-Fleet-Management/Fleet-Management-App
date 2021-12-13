@@ -13,7 +13,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BusinessLayer;
+using BusinessLayer.Exceptions;
+using BusinessLayer.Interfaces;
+using BusinessLayer.Managers;
 using BusinessLayer.Model;
+using DAL;
 
 namespace Views.NewWindows
 {
@@ -22,6 +26,15 @@ namespace Views.NewWindows
     /// </summary>
     public partial class NewDriverWindow : Window
     {
+        private Address address;
+        private static IAddressRepository addressRepository = new AddressRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+        private static IDriverRepository driverRepository = new DriverRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+
+        private AddressManager am = new AddressManager(addressRepository);
+        private DriverManager dm = new DriverManager(driverRepository);
+        private IReadOnlyList<Address> a;
+
+
         public NewDriverWindow()
         {
             InitializeComponent();
@@ -45,6 +58,14 @@ namespace Views.NewWindows
         private void OpslaanButton_OnClick(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        private void CreateDriver()
+        {
+            List <LicenseType> driverslicense  = createDriverLicenseList();
+            DateTime dt = geboortedatumField.SelectedDate.Value;
+
+            dm.InsertDriver(voornaamField.Text, achternaamField.Text, dt, rijksregisternummerField.Text, createDriverLicenseList(), address.AddressId, null, null);
         }
 
         private List<LicenseType> createDriverLicenseList()
@@ -131,8 +152,16 @@ namespace Views.NewWindows
 
         private void createDriverAddress()
         {
-            Address driverAddress = new Address(null, straatnaamField, housenumberField, addendumField, cityField,
-                postalcodeField, null);
+            am.Insert(straatnaamField.Text, housenumberField.Text, addendumField.Text, cityField.Text, int.Parse(postalcodeField.Text));
+            if(!am.Exists(null,straatnaamField.Text, housenumberField.Text, addendumField.Text, cityField.Text, int.Parse(postalcodeField.Text)))
+            {
+                throw new UserInterfaceException("Failed to create address in newdriverwindow");
+            }
+            else
+            {
+                a = am.GetAddress(null, straatnaamField.Text, housenumberField.Text, addendumField.Text, cityField.Text,
+                    int.Parse(postalcodeField.Text));
+            }
         }
     }
 }

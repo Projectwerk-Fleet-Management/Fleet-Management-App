@@ -101,7 +101,7 @@ namespace BusinessLayer.Managers
                 {
                     throw new CarmanagerException("Car does not exist");
                 }
-                e
+                
             }
             catch (Exception e)
             {
