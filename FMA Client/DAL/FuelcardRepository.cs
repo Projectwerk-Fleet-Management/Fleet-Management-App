@@ -48,6 +48,7 @@ namespace DAL
                         string cardnumber = (string)datareader["Cardnumber"];
                         DateTime expiryDate = (DateTime)datareader["ExpiryDate"];
                         bool isActive = (bool)datareader["IsActive"];
+                        int pincode = 0;
                         List<Fuel> fueltypesList = new();
                         Driver driver = null;
 
@@ -175,7 +176,6 @@ namespace DAL
                                 int postalcode = (int)datareader["Postalcode"];
                                 string city = (string)datareader["City"];
                                 string addendum = "";
-
                                 #region Null checking
                                 if (DBNull.Value != datareader["Addendum"])
                                 {
@@ -235,16 +235,14 @@ namespace DAL
 
                             driver = new(driverId, firstName, lastName, address, dateOfBirth, nationalIdentificationNumber, licensesList, car, null);
                         }
-                        /* Pincode is not enabled to be retrieved from the database because of course why would it be? 
                         if (DBNull.Value != datareader["Pincode"])
                         {
-                            int pincode = (int)datareader["Pincode"];
+                            pincode = (int)datareader["Pincode"];
                         }
-                        */
                         #endregion
                         #endregion
 
-                        Fuelcard fuelcard = new(fuelcardId, cardnumber, expiryDate, /*pincode,*/ fueltypesList, driver, isActive);
+                        Fuelcard fuelcard = new(fuelcardId, cardnumber, expiryDate, pincode, fueltypesList, driver, isActive);
 
                         fuelcards.Add(fuelcard);
                     }
@@ -375,6 +373,7 @@ namespace DAL
                     string cardnumberDb = (string)datareader["Cardnumber"];
                     DateTime expiryDateDb = (DateTime)datareader["ExpiryDate"];
                     bool isActiveDb = (bool)datareader["IsActive"];
+                    int pincode = 0;
                     List<Fuel> fueltypesList = new();
                     Driver driver = null;
 
@@ -562,16 +561,14 @@ namespace DAL
 
                         driver = new(driverId, firstName, lastName, address, dateOfBirth, nationalIdentificationNumber, licensesList, car, null);
                     }
-                    /* Pincode is not enabled to be retrieved from the database because of course why would it be? 
                     if (DBNull.Value != datareader["Pincode"])
                     {
-                        int pincode = (int)datareader["Pincode"];
+                        pincode = (int)datareader["Pincode"];
                     }
-                    */
                     #endregion
                     #endregion
 
-                    Fuelcard fuelcard = new(fuelcardIdDb, cardnumberDb, expiryDateDb, /*pincode,*/ fueltypesList, driver, isActiveDb);
+                    Fuelcard fuelcard = new(fuelcardIdDb, cardnumberDb, expiryDateDb, pincode, fueltypesList, driver, isActiveDb);
 
                     fuelcards.Add(fuelcard);
                 }

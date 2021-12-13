@@ -13,7 +13,7 @@ namespace BusinessLayer.Managers
             _repo = repo;
         }
 
-        public IReadOnlyList<Car> GetCars()
+        public IReadOnlyList<Car> GetAllCars()
         {
             try
             {
