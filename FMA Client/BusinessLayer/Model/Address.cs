@@ -6,7 +6,8 @@ namespace BusinessLayer
 {
     public class Address
     {
-        public int AddressId { get; private set; }
+        //AddressId is nullable in the model otherwise we can't make a new address in the DB
+        public int? AddressId { get; private set; }
         public string Street { get; private set; }
         public string Housenumber { get; private set; }
         public string Addendum { get; private set; }
@@ -19,21 +20,21 @@ namespace BusinessLayer
 
         //-> https://codecompiled.com/constructor-chaining-c
         //-> https://stackoverflow.com/questions/10377888/how-can-i-use-multiple-constructors-to-remove-duplicated-code-while-maintaining
-        public Address(int addressId, string street, string housenumber, string city, int postalcode)
+        public Address(int? addressId, string street, string housenumber, string city, int postalcode)
             : this(addressId, street, housenumber, null, city, postalcode, null)
         {
 
         }
 
-        public Address(int addressId, string street, string housenumber, string city, int postalcode, Driver driver)
+        public Address(int? addressId, string street, string housenumber, string city, int postalcode, Driver driver)
             : this(addressId, street, housenumber, null, city, postalcode, driver)
         {
 
         }
 
-        public Address(int addressId, string street, string housenumber, string addendum, string city, int postalcode, Driver driver)
+        public Address(int? addressId, string street, string housenumber, string addendum, string city, int postalcode, Driver driver)
         {
-            SetAddressId(addressId);
+            if(addressId != null) SetAddressId(addressId);
             SetStreet(street);
             SetHousenumber(housenumber);
             if (!string.IsNullOrWhiteSpace(addendum)) { SetAddendum(addendum); }; 
@@ -51,7 +52,7 @@ namespace BusinessLayer
         }
 
         #region Setting of variables
-        public void SetAddressId(int addressId)
+        public void SetAddressId(int? addressId)
         {
             if (addressId <= 0) throw new AddressException("AddressId cannot be lower or equel to zero");
             this.AddressId = addressId;
