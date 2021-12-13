@@ -33,5 +33,15 @@ namespace Views.NewWindows
         {
             System.Windows.Application.Current.Shutdown();
         }
+
+        private void CancelButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void OpslaanButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -110,8 +110,8 @@ namespace Views.Pages
 
         private void NieuwButton_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            DriverFilter df = new DriverFilter();
-            df.Show();
+            NewDriverWindow ndw = new NewDriverWindow();
+            ndw.Show();
             //NewDriverWindow ndw = new NewDriverWindow();
             //ndw.Show();
         }
