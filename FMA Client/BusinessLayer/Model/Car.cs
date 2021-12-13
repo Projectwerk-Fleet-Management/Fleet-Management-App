@@ -170,6 +170,19 @@ namespace BusinessLayer
         }
         #endregion
 
+        public override string ToString()
+        {
+            var x = $"{Vin}, ";
+            if (Driver == null)
+            {
+                return x += "Geen bestuurder";
+            } else
+            {
+                return x += Driver;
+            }
+
+        }
+
         #region INotifypropertychanged members
 
         public event PropertyChangedEventHandler PropertyChanged;

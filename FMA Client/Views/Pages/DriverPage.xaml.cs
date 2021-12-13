@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows.Controls;
-using System.Windows.Input;
-using BusinessLayer;
+﻿using BusinessLayer;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Managers;
 using DAL;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using System.Windows.Input;
 using Views.FilterWindows;
 using Views.NewWindows;
 
@@ -32,8 +32,6 @@ namespace Views.Pages
             DriverList.UnselectAll();
             SelectedItemContent.IsEnabled = false;
             string x = userInputDriverPage.Text;
-            IDriverRepository dr =
-                new DriverRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
             DriverManager d = new DriverManager(dr);
             var drlist = d.Search(x);
             DriverList.ItemsSource = new ObservableCollection<Driver>(drlist);
@@ -46,7 +44,7 @@ namespace Views.Pages
             var item = DriverList.SelectedItem;
             if (item != null)
             {
-                Driver driverDetails = (Driver) item;
+                Driver driverDetails = (Driver)item;
                 voornaamField.Text = driverDetails.FirstName;
                 achternaamField.Text = driverDetails.LastName;
                 geboortedatumField.Text = driverDetails.DateOfBirth.ToShortDateString(); //.ToString();
@@ -55,18 +53,24 @@ namespace Views.Pages
                 if (driverDetails.Licenses.Count != 0)
                 {
                     string x = "";
+                    bool moreThanOne = false;
                     foreach (var license in driverDetails.Licenses)
                     {
-                        x = $"{license}, ";
                         if (license == driverDetails.Licenses[driverDetails.Licenses.Count - 1])
                         {
-                            x += license;
+                            if (moreThanOne == false)
+                            {
+                                x += license;
+                                moreThanOne = true;
+                            } else
+                            {
+                                x = $", {license}";
+                            }
                         }
                     }
 
                     rijbewijzenField.Text = x;
-                }
-                else
+                } else
                 {
                     rijbewijzenField.Text = "Geen rijbewijzen";
                 }
@@ -76,8 +80,7 @@ namespace Views.Pages
                 if (driverDetails.AssignedFuelcard != null)
                 {
                     tankkaartField.Text = driverDetails.AssignedFuelcard.Cardnumber.ToString();
-                }
-                else
+                } else
                 {
                     tankkaartField.Text = "Geen tankkaart";
                 }
@@ -85,8 +88,7 @@ namespace Views.Pages
                 if (driverDetails.AssignedCar != null)
                 {
                     autoField.Text = $"{driverDetails.AssignedCar.Make} {driverDetails.AssignedCar.Model}";
-                }
-                else
+                } else
                 {
                     autoField.Text = "Geen auto";
                 }

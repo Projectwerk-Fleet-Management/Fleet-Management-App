@@ -168,5 +168,18 @@ namespace BusinessLayer
             IsActive = false;
         }
         #endregion
+
+        public override string ToString()
+        {
+            var x = $"{Cardnumber}, ";
+            if (Driver == null)
+            {
+                return x += "Geen bestuurder";
+            } else
+            {
+                return x += Driver;
+            }
+            
+        }
     }
 }
