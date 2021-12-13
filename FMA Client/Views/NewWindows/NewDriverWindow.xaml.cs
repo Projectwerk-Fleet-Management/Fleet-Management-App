@@ -38,5 +38,10 @@ namespace Views.NewWindows
         {
             this.Close();
         }
+
+        private void OpslaanButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

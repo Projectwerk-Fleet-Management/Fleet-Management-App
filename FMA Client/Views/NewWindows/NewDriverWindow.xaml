@@ -142,7 +142,7 @@
 
                     </StackPanel>
 
-                    <Button x:Name="opslaanButton" Grid.Row="9" Grid.Column="0" Content="Opslaan" Background="GreenYellow" BorderThickness="0" Width="140" Margin="10,0,10,0">
+                    <Button x:Name="opslaanButton" Grid.Row="9" Grid.Column="0" Content="Opslaan" Background="GreenYellow" BorderThickness="0" Width="140" Margin="10,0,10,0" Click="OpslaanButton_OnClick">
 
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
