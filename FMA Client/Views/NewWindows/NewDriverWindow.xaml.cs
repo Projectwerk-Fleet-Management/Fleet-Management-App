@@ -26,7 +26,6 @@ namespace Views.NewWindows
     /// </summary>
     public partial class NewDriverWindow : Window
     {
-        private Address address;
         private static IAddressRepository addressRepository = new AddressRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
         private static IDriverRepository driverRepository = new DriverRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
@@ -57,15 +56,31 @@ namespace Views.NewWindows
 
         private void OpslaanButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+           CreateDriver();
         }
 
         private void CreateDriver()
         {
             List <LicenseType> driverslicense  = createDriverLicenseList();
             DateTime dt = geboortedatumField.SelectedDate.Value;
+            createDriverAddress();
+            Address address = a.First();
 
-            dm.InsertDriver(voornaamField.Text, achternaamField.Text, dt, rijksregisternummerField.Text, createDriverLicenseList(), address.AddressId, null, null);
+            dm.InsertDriver(voornaamField.Text, achternaamField.Text, dt.ToString("dd/MM/YYYY"), rijksregisternummerField.Text, createDriverLicenseList(), address.AddressId, null, null);
+            if (!dm.Exists(null, voornaamField.Text, achternaamField.Text, dt.ToString("dd/MM/YYYY"),
+                rijksregisternummerField.Text, createDriverLicenseList()))
+            {
+                throw new UserInterfaceException("Failed to create driver in newdriverwindow");
+            }
+            else
+            {
+                this.Close();
+            }
+        }
+
+        private void endcreate()
+        {
+            MessageBox.Show("Driver is toegevoegd");
         }
 
         private List<LicenseType> createDriverLicenseList()
