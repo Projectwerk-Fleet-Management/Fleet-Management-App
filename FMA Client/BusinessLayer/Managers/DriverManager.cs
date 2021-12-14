@@ -67,9 +67,9 @@ namespace BusinessLayer.Managers
                 }
 
             }
-            catch
+            catch( Exception e)
             {
-                throw new DriverManagerException("Failed to insert driver");
+                throw new DriverManagerException("Failed to insert driver", e);
             }
         }
 
