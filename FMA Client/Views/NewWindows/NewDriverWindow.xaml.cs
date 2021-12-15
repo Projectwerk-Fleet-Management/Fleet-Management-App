@@ -66,14 +66,15 @@ namespace Views.NewWindows
             createDriverAddress();
             Address address = a.First();
 
-            dm.InsertDriver(voornaamField.Text, achternaamField.Text, dt.ToString("dd/MM/YYYY"), rijksregisternummerField.Text, createDriverLicenseList(), address.AddressId, null, null);
-            if (!dm.Exists(null, voornaamField.Text, achternaamField.Text, dt.ToString("dd/MM/YYYY"),
+            dm.InsertDriver(voornaamField.Text, achternaamField.Text, dt.ToString("yyyy-MM-dd"), rijksregisternummerField.Text, createDriverLicenseList(), address.AddressId, null, null);
+            if (!dm.Exists(null, voornaamField.Text, achternaamField.Text, dt.ToString("yyyy/MM/dd"),
                 rijksregisternummerField.Text, createDriverLicenseList()))
             {
                 throw new UserInterfaceException("Failed to create driver in newdriverwindow");
             }
             else
             {
+                MessageBox.Show("Nieuwe Driver is aangemaakt en toegevoegd");
                 this.Close();
             }
         }
