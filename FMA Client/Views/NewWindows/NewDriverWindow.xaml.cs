@@ -12,7 +12,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BusinessLayer;
+using BusinessLayer.Exceptions;
+using BusinessLayer.Interfaces;
+using BusinessLayer.Managers;
 using BusinessLayer.Model;
+using DAL;
 
 namespace Views.NewWindows
 {
@@ -21,6 +26,14 @@ namespace Views.NewWindows
     /// </summary>
     public partial class NewDriverWindow : Window
     {
+        private static IAddressRepository addressRepository = new AddressRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+        private static IDriverRepository driverRepository = new DriverRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+
+        private AddressManager am = new AddressManager(addressRepository);
+        private DriverManager dm = new DriverManager(driverRepository);
+        private IReadOnlyList<Address> a;
+
+
         public NewDriverWindow()
         {
             InitializeComponent();
@@ -43,15 +56,127 @@ namespace Views.NewWindows
 
         private void OpslaanButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+           CreateDriver();
         }
 
-        private void createDriverLicenseList()
+        private void CreateDriver()
+        {
+            List <LicenseType> driverslicense  = createDriverLicenseList();
+            DateTime dt = geboortedatumField.SelectedDate.Value;
+            createDriverAddress();
+            Address address = a.First();
+
+            dm.InsertDriver(voornaamField.Text, achternaamField.Text, dt.ToString("yyyy-MM-dd"), rijksregisternummerField.Text, createDriverLicenseList(), address.AddressId, null, null);
+            if (!dm.Exists(null, voornaamField.Text, achternaamField.Text, dt.ToString("yyyy/MM/dd"),
+                rijksregisternummerField.Text, createDriverLicenseList()))
+            {
+                throw new UserInterfaceException("Failed to create driver in newdriverwindow");
+            }
+            else
+            {
+                MessageBox.Show("Nieuwe Driver is aangemaakt en toegevoegd");
+                this.Close();
+            }
+        }
+
+        private void endcreate()
+        {
+            MessageBox.Show("Driver is toegevoegd");
+        }
+
+        private List<LicenseType> createDriverLicenseList()
         {
             List<LicenseType> drlList = new List<LicenseType>();
+            if (AM.IsChecked == true)
+            {
+                drlList.Add(LicenseType.AM);
+            }
+
+            if (A.IsChecked == true)
+            {
+                drlList.Add(LicenseType.A);
+            }
+
             if (A1.IsChecked == true)
             {
                 drlList.Add(LicenseType.A1);
+            }
+
+            if (A2.IsChecked == true)
+            {
+                drlList.Add(LicenseType.A2);
+            }
+
+            if (B.IsChecked == true)
+            {
+                drlList.Add(LicenseType.B);
+            }
+
+            if (BE.IsChecked == true)
+            {
+                drlList.Add(LicenseType.BE);
+            }
+
+            if (C.IsChecked == true)
+            {
+                drlList.Add(LicenseType.C);
+            }
+
+            if (CE.IsChecked == true)
+            {
+                drlList.Add(LicenseType.CE);
+            }
+
+            if (C1.IsChecked == true)
+            {
+                drlList.Add(LicenseType.C1);
+            }
+
+            if (C1E.IsChecked == true)
+            {
+                drlList.Add(LicenseType.C1E);
+            }
+
+            if (D.IsChecked == true)
+            {
+                drlList.Add(LicenseType.D);
+            }
+
+            if (DE.IsChecked == true)
+            {
+                drlList.Add(LicenseType.DE);
+            }
+
+            if (D1.IsChecked == true)
+            {
+                drlList.Add(LicenseType.D1);
+            }
+
+            if (D1E.IsChecked == true)
+            {
+                drlList.Add(LicenseType.D1E);
+            }
+
+            if (G.IsChecked == true)
+            {
+                drlList.Add(LicenseType.G);
+            }
+
+            return drlList;
+
+        }
+
+        private void createDriverAddress()
+        {
+            am.Insert(straatnaamField.Text, housenumberField.Text, addendumField.Text, cityField.Text, int.Parse(postalcodeField.Text));
+            if(!am.Exists(null,straatnaamField.Text, housenumberField.Text, addendumField.Text, cityField.Text, int.Parse(postalcodeField.Text)))
+            {
+                throw new UserInterfaceException("Failed to create address in newdriverwindow");
+            }
+            else
+            {
+                a = am.GetAddress(null, straatnaamField.Text, housenumberField.Text, addendumField.Text, cityField.Text,
+                    int.Parse(postalcodeField.Text));
             }
         }
     }

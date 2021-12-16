@@ -345,7 +345,7 @@ namespace DAL
                 }
                 if (!string.IsNullOrWhiteSpace(housenumber))
                 {
-                    command.Parameters.AddWithValue("@Housnumber", housenumber);
+                    command.Parameters.AddWithValue("@Housenumber", housenumber);
                 }
                 if (!string.IsNullOrWhiteSpace(addendum))
                 {
