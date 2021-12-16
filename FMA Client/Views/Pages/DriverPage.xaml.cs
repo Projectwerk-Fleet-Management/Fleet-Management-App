@@ -4,6 +4,7 @@ using BusinessLayer.Managers;
 using DAL;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Views.FilterWindows;
@@ -21,6 +22,14 @@ namespace Views.Pages
         public DriverPage()
         {
             InitializeComponent();
+            SelectedItemContent.IsEnabled = false;
+            DriverManager d = new DriverManager(dr);
+            IReadOnlyList<Driver> drlist = d.GetAllDrivers();
+            DriverList.ItemsSource = new ObservableCollection<Driver>(drlist);
+        }
+
+        private void update()
+        {
             SelectedItemContent.IsEnabled = false;
             DriverManager d = new DriverManager(dr);
             IReadOnlyList<Driver> drlist = d.GetAllDrivers();
@@ -62,7 +71,8 @@ namespace Views.Pages
                             {
                                 x += license;
                                 moreThanOne = true;
-                            } else
+                            }
+                            else
                             {
                                 x = $", {license}";
                             }
@@ -70,7 +80,8 @@ namespace Views.Pages
                     }
 
                     rijbewijzenField.Text = x;
-                } else
+                }
+                else
                 {
                     rijbewijzenField.Text = "Geen rijbewijzen";
                 }
@@ -80,7 +91,8 @@ namespace Views.Pages
                 if (driverDetails.AssignedFuelcard != null)
                 {
                     tankkaartField.Text = driverDetails.AssignedFuelcard.Cardnumber.ToString();
-                } else
+                }
+                else
                 {
                     tankkaartField.Text = "Geen tankkaart";
                 }
@@ -88,7 +100,8 @@ namespace Views.Pages
                 if (driverDetails.AssignedCar != null)
                 {
                     autoField.Text = $"{driverDetails.AssignedCar.Make} {driverDetails.AssignedCar.Model}";
-                } else
+                }
+                else
                 {
                     autoField.Text = "Geen auto";
                 }
@@ -116,6 +129,23 @@ namespace Views.Pages
             ndw.Show();
             //NewDriverWindow ndw = new NewDriverWindow();
             //ndw.Show();
+        }
+
+        private void VerwijderButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            DriverManager dm = new DriverManager(dr);
+            MessageBoxResult result = MessageBox.Show($"Ben je zeker dat je {DriverList.SelectedItem} wilt verwijderen?", "Confirmation", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                dm.DeleteDriver((Driver)DriverList.SelectedItem);
+                update();
+            }
+            else if(result == MessageBoxResult.No)
+            {
+                MessageBox.Show("Niets is verwijderd");
+            }
+
+
         }
     }
 }
