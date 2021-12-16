@@ -104,7 +104,7 @@
                         </Button.Resources>
 
                     </Button>
-                    <Button x:Name="verwijderButton" Grid.Row="9" Grid.Column="1" Content="Verwijderen" BorderThickness="0" Width="140">
+                    <Button x:Name="verwijderButton" Grid.Row="9" Grid.Column="1" Content="Verwijderen" BorderThickness="0" Width="140" Click="VerwijderButton_OnClick">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="7"/>
