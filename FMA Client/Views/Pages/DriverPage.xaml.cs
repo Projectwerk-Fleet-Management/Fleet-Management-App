@@ -18,6 +18,8 @@ namespace Views.Pages
     {
         private IDriverRepository dr =
             new DriverRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+        private IAddressRepository AR = new AddressRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+
 
         public DriverPage()
         {
@@ -137,7 +139,7 @@ namespace Views.Pages
             MessageBoxResult result = MessageBox.Show($"Ben je zeker dat je {DriverList.SelectedItem} wilt verwijderen?", "Confirmation", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
-                dm.DeleteDriver((Driver)DriverList.SelectedItem);
+                dm.DeleteDriver((Driver)DriverList.SelectedItem, AR);
                 update();
             }
             else if(result == MessageBoxResult.No)
