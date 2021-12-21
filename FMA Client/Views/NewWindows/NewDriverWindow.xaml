@@ -201,6 +201,8 @@
                 </Grid>
             </Border>
         </StackPanel>
+        <ListBox Grid.Column="1" Grid.Row="1" Margin="46,270,287,38"/>
+        <ListBox Grid.Column="1" Grid.Row="1" Margin="276,270,57,38"/>
 
 
     </Grid>
