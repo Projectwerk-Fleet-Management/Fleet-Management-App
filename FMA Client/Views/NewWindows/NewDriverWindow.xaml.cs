@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -178,6 +179,29 @@ namespace Views.NewWindows
                 a = am.GetAddress(null, straatnaamField.Text, housenumberField.Text, addendumField.Text, cityField.Text,
                     int.Parse(postalcodeField.Text));
             }
+        }
+
+        private void NummerplaatZoekBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            //carlist.UnselectAll();
+            string x = nummerplaatField.Text;
+            CarRepository cr =
+                new CarRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+            CarManager cm = new CarManager(cr);
+            var list = cm.GetCars(null, null, x, null, null, null, null, null, null);
+            carlist.ItemsSource = new ObservableCollection<Car>(list);
+        }
+
+        private void tankkaartZoekBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            string x = nummerplaatField.Text;
+            FuelcardRepository fr =
+                new FuelcardRepository(
+                    @"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+            FuelcardManager fm = new FuelcardManager(fr);
+
+            var list = fm.GetFuelcard(x);
+            carlist.ItemsSource = new ObservableCollection<Fuelcard>(list);
         }
     }
 }

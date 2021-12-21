@@ -25,6 +25,10 @@ namespace BusinessLayer.Managers
             }
         }
 
+        public IReadOnlyList<Fuelcard> GetFuelcard(string cardnumber)
+        {
+            return _repo.GetFuelcard(null, cardnumber, null, null, null);
+        }
 
         //IReadOnlyList<Fuelcard> GetFuelcard(int? fuelcardId, string cardnumber, string expiryDate, List<Fuel> fueltypes, bool? isActive);
         //bool Exists(int? fuelcardId, string cardnumber, string expiryDate, List<Fuel> fueltypes, bool? isActive);
