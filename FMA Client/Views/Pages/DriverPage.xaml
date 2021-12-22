@@ -95,7 +95,7 @@
                     <TextBlock Name="tankkaartField" Grid.Row="6" Grid.Column="1" Text=" " FontSize="15" VerticalAlignment="Center"/>
                     <Label Grid.Row="7" Grid.Column="0" Content="Auto" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <TextBlock Name="autoField" Grid.Row="7" Grid.Column="1" Text=" " FontSize="15" VerticalAlignment="Center"/>
-                    <Button x:Name="bewerkButton" Grid.Row="9" Grid.Column="0" Content="Bewerken" Background="#FF96D6FB" BorderThickness="0" Width="140">
+                    <Button x:Name="bewerkButton" Grid.Row="9" Grid.Column="0" Content="Bewerken" Background="#FF96D6FB" BorderThickness="0" Width="140" Click="BewerkButton_OnClick">
 
                         <Button.Resources>
                             <Style TargetType="Border">

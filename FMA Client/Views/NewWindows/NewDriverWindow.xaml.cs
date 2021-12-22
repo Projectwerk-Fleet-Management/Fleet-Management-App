@@ -185,7 +185,6 @@ namespace Views.NewWindows
 
         private void NummerplaatZoekBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            //carlist.UnselectAll();
             string x = nummerplaatField.Text;
             CarRepository cr =
                 new CarRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");

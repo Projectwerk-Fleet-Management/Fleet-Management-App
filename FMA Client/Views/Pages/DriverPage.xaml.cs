@@ -7,8 +7,10 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Views.FilterWindows;
+using System.Windows.Navigation;
+using Views.FilterPages;
 using Views.NewWindows;
+using Views.UpdateWindows;
 
 
 namespace Views.Pages
@@ -28,6 +30,12 @@ namespace Views.Pages
             DriverManager d = new DriverManager(dr);
             IReadOnlyList<Driver> drlist = d.GetAllDrivers();
             DriverList.ItemsSource = new ObservableCollection<Driver>(drlist);
+        }
+        public DriverPage(List<Driver> resultDrivers)
+        {
+            InitializeComponent();
+            SelectedItemContent.IsEnabled = false;
+            DriverList.ItemsSource = new ObservableCollection<Driver>(resultDrivers);
         }
 
         private void update()
@@ -121,8 +129,9 @@ namespace Views.Pages
 
         private void FilterButton_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            DriverFilter df = new DriverFilter();
-            df.Show();
+            NavigationService ns = this.NavigationService;
+            DriverFilter dfFilter = new DriverFilter();
+            ns.Navigate(dfFilter);
         }
 
         private void NieuwButton_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -148,6 +157,12 @@ namespace Views.Pages
             }
 
 
+        }
+
+        private void BewerkButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            UpdateDriverWindow x = new UpdateDriverWindow((Driver) DriverList.SelectedItem);
+            x.Show();
         }
     }
 }
