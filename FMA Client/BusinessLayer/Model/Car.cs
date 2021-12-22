@@ -115,7 +115,7 @@ namespace BusinessLayer
         public void SetDriver(Driver driver)
         {
             if (driver == null) throw new CarException("Driver cannot be null");
-            if (Driver != null) throw new CarException("Driver is already assigned");
+            if (Driver != null && Driver != driver) throw new CarException("Driver is already assigned");
             this.Driver = driver;
             if (driver.AssignedCar != this) driver.SetCar(this);
         }
@@ -172,15 +172,7 @@ namespace BusinessLayer
 
         public override string ToString()
         {
-            var x = $"{Vin}, ";
-            if (Driver == null)
-            {
-                return x += "Geen bestuurder";
-            } else
-            {
-                return x += Driver;
-            }
-
+            return $"{Licenseplate}, {Make} {Model}";
         }
 
         #region INotifypropertychanged members
