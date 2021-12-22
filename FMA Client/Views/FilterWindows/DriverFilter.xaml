@@ -41,21 +41,23 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Name ="topbar"
-                       Text="Filter"
+                       Text="Filter "
                        Foreground="Black"
                        Grid.Column="0"
                        VerticalAlignment="Center"
                        HorizontalAlignment="center"
                        FontWeight="Black">
             </TextBlock>
-            <TextBlock Name ="typebar"
-                       Text="Driver"
-                       Foreground="Black"
-                       Grid.Column="1"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="center"
-                       FontWeight="Medium">
-            </TextBlock>
+
+            <Button Content="X"
+                    Foreground="White"
+                    FontWeight="Black"
+                    Grid.Column="15"
+                    Background="#FE6584"
+                    BorderThickness="0"
+                    Click="ButtonBase_OnClick"
+                    
+            ></Button>
 
 
         </Grid>

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BusinessLayer;
 
 namespace Views.UpdateWindows
 {
@@ -19,14 +20,26 @@ namespace Views.UpdateWindows
     /// </summary>
     public partial class UpdateDriverWindow : Window
     {
-        public UpdateDriverWindow()
+        private Driver _driver;
+        public UpdateDriverWindow(Driver driver)
         {
             InitializeComponent();
+            _driver = driver;
+            
+ 
         }
 
         private void menubardrag_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left) this.DragMove();
         }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+
+
     }
 }

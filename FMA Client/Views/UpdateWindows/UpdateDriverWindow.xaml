@@ -7,6 +7,58 @@
         mc:Ignorable="d"
         Title="UpdateDriverWindow" Height="450" Width="800">
     <Grid>
-        
-    </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Background="#ffffff" Grid.ColumnSpan="2" MouseDown="menubardrag_OnMouseDown">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Name ="topbar"
+                           Text="Update "
+                           Foreground="Black"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="center"
+                           FontWeight="Black">
+                </TextBlock>
+
+                <Button Content="X"
+                        Foreground="White"
+                        FontWeight="Black"
+                        Grid.Column="15"
+                        Background="#FE6584"
+                        BorderThickness="0"
+                        Click="ButtonBase_OnClick"
+                    
+                ></Button>
+
+
+            </Grid>
+        </Grid>
+        </Grid>
 </Window>

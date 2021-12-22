@@ -18,5 +18,11 @@ namespace Views.FilterWindows
         {
             if (e.ChangedButton == MouseButton.Left) this.DragMove();
         }
+
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
