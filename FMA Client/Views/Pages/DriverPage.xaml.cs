@@ -31,7 +31,7 @@ namespace Views.Pages
             IReadOnlyList<Driver> drlist = d.GetAllDrivers();
             DriverList.ItemsSource = new ObservableCollection<Driver>(drlist);
         }
-        public DriverPage(List<Driver> resultDrivers)
+        public DriverPage(IReadOnlyList<Driver> resultDrivers)
         {
             InitializeComponent();
             SelectedItemContent.IsEnabled = false;

@@ -10,7 +10,7 @@
 
     <Grid Margin="0,0,31,10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="20"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -19,48 +19,9 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Grid Background="#ffffff" Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-            <TextBlock Name ="topbar"
-                       Text="New"
-                       Foreground="Black"
-                       Grid.Column="0"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="center"
-                       FontWeight="Black">
-            </TextBlock>
-            <TextBlock Name ="typebar"
-                       Text="Driver"
-                       Foreground="Black"
-                       Grid.Column="1"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="center"
-                       FontWeight="Medium">
-            </TextBlock>
-
-
-        </Grid>
-
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10,20,497,0" Grid.ColumnSpan="2">
-            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="384" Width="503" Background="#e8e8e8">
+        
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10,20,0,0" Grid.ColumnSpan="2">
+            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="370" Width="657" Background="#e8e8e8">
                 <Grid Margin="10,5,10,5" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="160"/>
@@ -94,9 +55,9 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" Name="AM" Content="AM"/>
-                            <CheckBox Grid.Column="1" Name="A" Content="A"/>
-                            <CheckBox Grid.Column="2" Name="A1" Content="A1"/>
+                            <CheckBox Grid.Column="0" x:Name="AM" Content="AM"/>
+                            <CheckBox Grid.Column="1" x:Name="A" Content="A"/>
+                            <CheckBox Grid.Column="2" x:Name="A1" Content="A1"/>
                         </Grid>
                         <Grid Grid.Row="5">
                             <Grid.ColumnDefinitions>
@@ -104,9 +65,9 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" Name="A2" Content="A2"/>
-                            <CheckBox Grid.Column="1" Name="B" Content="B"/>
-                            <CheckBox Grid.Column="2" Name="BE" Content="BE"/>
+                            <CheckBox Grid.Column="0" x:Name="A2" Content="A2"/>
+                            <CheckBox Grid.Column="1" x:Name="B" Content="B"/>
+                            <CheckBox Grid.Column="2" x:Name="BE" Content="BE"/>
                         </Grid>
                         <Grid Grid.Row="6">
                             <Grid.ColumnDefinitions>
@@ -114,9 +75,9 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" Name="C" Content="C"/>
-                            <CheckBox Grid.Column="1" Name="CE" Content="CE"/>
-                            <CheckBox Grid.Column="2" Name="C1" Content="C1"/>
+                            <CheckBox Grid.Column="0" x:Name="C" Content="C"/>
+                            <CheckBox Grid.Column="1" x:Name="CE" Content="CE"/>
+                            <CheckBox Grid.Column="2" x:Name="C1" Content="C1"/>
                         </Grid>
                         <Grid Grid.Row="7">
                             <Grid.ColumnDefinitions>
@@ -124,9 +85,9 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" Name="C1E" Content="C1E"/>
-                            <CheckBox Grid.Column="1" Name="D" Content="D"/>
-                            <CheckBox Grid.Column="2" Name="DE" Content="DE"/>
+                            <CheckBox Grid.Column="0" x:Name="C1E" Content="C1E"/>
+                            <CheckBox Grid.Column="1" x:Name="D" Content="D"/>
+                            <CheckBox Grid.Column="2" x:Name="DE" Content="DE"/>
                         </Grid>
                         <Grid Grid.Row="8">
                             <Grid.ColumnDefinitions>
@@ -134,23 +95,14 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" Name="D1" Content="D1"/>
-                            <CheckBox Grid.Column="1" Name="D1E" Content="D1E"/>
-                            <CheckBox Grid.Column="2" Name="G" Content="G"/>
+                            <CheckBox Grid.Column="0" x:Name="D1" Content="D1"/>
+                            <CheckBox Grid.Column="1" x:Name="D1E" Content="D1E"/>
+                            <CheckBox Grid.Column="2" x:Name="G" Content="G"/>
                         </Grid>
 
                     </StackPanel>
 
-                    <Button x:Name="opslaanButton" Grid.Row="9" Grid.Column="0" Content="Opslaan" Background="GreenYellow" BorderThickness="0" Width="140" Margin="10,0,10,0" >
-
-                        <Button.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="7"/>
-                            </Style>
-                        </Button.Resources>
-
-                    </Button>
-                    <Button x:Name="cancelButton" Grid.Row="9" Grid.Column="1" Content="annuleren" Background="Red" BorderThickness="0" Width="140" Margin="10,0,10,0" >
+                    <Button x:Name="opslaanButton" Grid.Row="9" Grid.Column="0" Content="Zoek" Background="GreenYellow" BorderThickness="0" Width="140" Margin="10,0,10,0" Click="OpslaanButton_OnClick">
 
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
@@ -165,48 +117,7 @@
             </Border>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Background="Transparent" Margin="520,20,0,0" Grid.ColumnSpan="2">
-            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="377" Width="510" Background="#e8e8e8">
-                <Grid Margin="10,5,10,5" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="160"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Content="Straatnaam" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <TextBox x:Name="straatnaamField" Grid.Row="0" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
-                    <Label Grid.Row="1" Grid.Column="0" Content="Huisnummer" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <TextBox x:Name="housenumberField" Grid.Row="1" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
-                    <Label Grid.Row="2" Grid.Column="0" Content="Bijvoegsel" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <TextBox x:Name="addendumField" Grid.Row="2" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
-                    <Label Grid.Row="3" Grid.Column="0" Content="Postcode" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <TextBox x:Name="postalcodeField" Grid.Row="3" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
-                    <Label Grid.Row="4" Grid.Column="0" Content="Stad" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <TextBox x:Name="cityField" Grid.Row="4" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
-
-
-                </Grid>
-            </Border>
-        </StackPanel>
-        <TextBox Name="nummerplaatField" Text="Nummerplaat Wagen" TextWrapping="Wrap" Grid.Column="1" Margin="94,212,113,186" Grid.Row="1"/>
-        <Button Margin="418,212,41,187" Grid.Row="1" Grid.Column="1" Name="nummerplaatZoekBtn" >Zoek</Button>
-        <ListBox Name="carlist" Grid.Column="1" Grid.Row="1" Margin="94,243,41,137">
-        </ListBox>
-        <ListBox Name="tankkaarlist" Grid.Column="1" Grid.Row="1" Margin="94,327,41,51"/>
-        <TextBox Name="tankkaartField" Text="Tankkaart Nummer" TextWrapping="Wrap" Grid.Column="1" Margin="94,298,113,102" Grid.Row="1"/>
-        <Button Margin="418,298,41,101" Grid.Row="1" Grid.Column="1" Content="Zoek"/>
 
 
     </Grid>
