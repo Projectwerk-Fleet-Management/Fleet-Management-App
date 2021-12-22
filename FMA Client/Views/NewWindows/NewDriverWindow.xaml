@@ -201,13 +201,13 @@
                 </Grid>
             </Border>
         </StackPanel>
-        <TextBox Name="nummerplaatField" Text="Nummerplaat Wagen" TextWrapping="Wrap" Width="120" Grid.Column="1" Margin="50,249,356,150" Grid.Row="1"/>
-        <Button Margin="176,249,282,150" Grid.Row="1" Grid.Column="1" Name="nummerplaatZoekBtn" Click="NummerplaatZoekBtn_OnClick"> Zoek</Button>
-        <ListBox Name="carlist" Grid.Column="1" Grid.Row="1" Margin="51,279,282,29">
+        <TextBox Name="nummerplaatField" Text="Nummerplaat Wagen" TextWrapping="Wrap" Grid.Column="1" Margin="94,212,113,186" Grid.Row="1"/>
+        <Button Margin="418,212,41,187" Grid.Row="1" Grid.Column="1" Name="nummerplaatZoekBtn" Click="NummerplaatZoekBtn_OnClick">Zoek</Button>
+        <ListBox Name="carlist" Grid.Column="1" Grid.Row="1" Margin="94,243,41,137">
         </ListBox>
-        <ListBox Name="tankkaarlist" Grid.Column="1" Grid.Row="1" Margin="275,279,58,29"/>
-        <TextBox Name="tankkaartField" Text="Tankkaart Nummer" TextWrapping="Wrap" Width="120" Grid.Column="1" Margin="275,249,131,150" Grid.Row="1"/>
-        <Button Margin="400,249,58,150" Grid.Row="1" Grid.Column="1" Content="Zoek" Click="tankkaartZoekBtn_OnClick"/>
+        <ListBox Name="tankkaarlist" Grid.Column="1" Grid.Row="1" Margin="94,327,41,51"/>
+        <TextBox Name="tankkaartField" Text="Tankkaart Nummer" TextWrapping="Wrap" Grid.Column="1" Margin="94,298,113,102" Grid.Row="1"/>
+        <Button Margin="418,298,41,101" Grid.Row="1" Grid.Column="1" Content="Zoek" Click="tankkaartZoekBtn_OnClick"/>
 
 
     </Grid>
