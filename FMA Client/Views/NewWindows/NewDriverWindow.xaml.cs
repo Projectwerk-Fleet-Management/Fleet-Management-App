@@ -66,8 +66,10 @@ namespace Views.NewWindows
             DateTime dt = geboortedatumField.SelectedDate.Value;
             createDriverAddress();
             Address address = a.First();
+            Car car = (Car)carlist.SelectedItem;
+            Fuelcard fuelcard = (Fuelcard) tankkaarlist.SelectedItem;
 
-            dm.InsertDriver(voornaamField.Text, achternaamField.Text, dt.ToString("yyyy-MM-dd"), rijksregisternummerField.Text, createDriverLicenseList(), address.AddressId, null, null);
+            dm.InsertDriver(voornaamField.Text, achternaamField.Text, dt.ToString("yyyy-MM-dd"), rijksregisternummerField.Text, createDriverLicenseList(), address.AddressId, fuelcard.FuelcardId, car.CarId);
             if (!dm.Exists(null, voornaamField.Text, achternaamField.Text, dt.ToString("yyyy/MM/dd"),
                 rijksregisternummerField.Text, createDriverLicenseList()))
             {
@@ -194,14 +196,14 @@ namespace Views.NewWindows
 
         private void tankkaartZoekBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            string x = nummerplaatField.Text;
+            string x = tankkaartField.Text;
             FuelcardRepository fr =
                 new FuelcardRepository(
                     @"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
             FuelcardManager fm = new FuelcardManager(fr);
 
             var list = fm.GetFuelcard(x);
-            carlist.ItemsSource = new ObservableCollection<Fuelcard>(list);
+            tankkaarlist.ItemsSource = new ObservableCollection<Fuelcard>(list);
         }
     }
 }
