@@ -317,7 +317,7 @@ namespace DAL
                     AND = true;
                 }
             }
-            if (licenses != null)
+            if (licenses != null && licenses.Count > 0)
             {
                 if (AND == true)
                 {
