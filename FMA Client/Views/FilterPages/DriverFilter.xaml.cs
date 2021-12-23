@@ -47,13 +47,13 @@ namespace Views.FilterPages
         private void OpslaanButton_OnClick(object sender, RoutedEventArgs e)
         {
             DriverManager dm = new DriverManager(dr);
-            DateTime dt = new DateTime();
+            string date = null;
             if (geboortedatumField.SelectedDate != null)
             {
-                dt = geboortedatumField.SelectedDate.Value;
+                date = geboortedatumField.SelectedDate.Value.ToString("yyyy-MM-dd");
             }
-            driverList = dm.GetDrivers(null, voornaamField.Text, achternaamField.Text, dt.ToString("yyyy-MM-dd"), rijksregisternummerField.Text, createDriverLicenseList());
-
+            driverList = dm.GetDrivers(null, voornaamField.Text, achternaamField.Text, date, rijksregisternummerField.Text, createDriverLicenseList());
+           
             returnToDriver();
         }
 
