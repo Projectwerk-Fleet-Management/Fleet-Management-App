@@ -104,6 +104,10 @@ namespace BusinessLayer.Managers
                 if (_repo.Exists(oldDriverInfo.DriverId, null, null, null, null, null))
                 {
                     _repo.UpdateDriver(oldDriverInfo, newDriverInfo);
+                    if (oldDriverInfo.AssignedFuelcard != newDriverInfo.AssignedFuelcard)
+                    {
+                        //todo: delete old fuelcard
+                    }
                 }
                 else
                 {

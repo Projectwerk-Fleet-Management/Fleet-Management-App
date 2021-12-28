@@ -42,11 +42,11 @@
                     <Label Grid.Row="0" Grid.Column="0" Content="Voornaam" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <TextBox x:Name="voornaamField" Grid.Row="0" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
                     <Label Grid.Row="1" Grid.Column="0" Content="Achternaam" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <TextBox x:Name="achternaamField" Grid.Row="1" Grid.Column="1" Text=" " FontSize="15"  VerticalAlignment="Center"/>
+                    <TextBox x:Name="achternaamField" Grid.Row="1" Grid.Column="1" Text="" FontSize="15"  VerticalAlignment="Center"/>
                     <Label Grid.Row="2" Grid.Column="0" Content="Geboortedatum" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <DatePicker x:Name="geboortedatumField" Grid.Row="2" Grid.Column="1"   FontSize="15" VerticalAlignment="Center"/>
                     <Label Grid.Row="3" Grid.Column="0" Content="Rijksregisternummer" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <TextBox x:Name="rijksregisternummerField" Grid.Row="3" Grid.Column="1" Text=" " FontSize="15" VerticalAlignment="Center"/>
+                    <TextBox x:Name="rijksregisternummerField" Grid.Row="3" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center"/>
                     <Label Grid.Row="4" Grid.Column="0" Content="Rijbewijzen" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <StackPanel Grid.Row="4" Grid.Column="1" Margin="0,0,10,19" Grid.RowSpan="3">
                         <Grid Grid.Row="4" Margin="0,10,0,0">

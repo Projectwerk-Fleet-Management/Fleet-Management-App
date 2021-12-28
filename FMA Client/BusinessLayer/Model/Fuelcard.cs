@@ -139,8 +139,11 @@ namespace BusinessLayer
         public void RemoveDriver()
         {
             if (Driver == null) throw new FuelcardException("Fuelcard does not have driver to remove");
+            if (Driver.AssignedFuelcard == this)
+            {
+                Driver.RemoveFuelcard();
+            }
             Driver = null;
-            Driver.RemoveFuelcard();
         }
         public void RemoveFueltype(Fuel fueltype)
         {
