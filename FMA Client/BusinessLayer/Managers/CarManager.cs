@@ -108,5 +108,17 @@ namespace BusinessLayer.Managers
                 throw new CarmanagerException("can't update car", e);
             }
         }
+
+        public IReadOnlyList<Car> Search(string x)
+        {
+            try
+            {
+                return _repo.Search(x);
+            }
+            catch (Exception e)
+            {
+                throw new CarmanagerException("can't search car", e);
+            }
+        }
     }
 }

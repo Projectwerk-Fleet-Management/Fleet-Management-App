@@ -4,6 +4,7 @@ using BusinessLayer.Managers;
 using DAL;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,9 +19,9 @@ namespace Views.Pages
 
     public partial class DriverPage : Page
     {
-        private IDriverRepository dr =
-            new DriverRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
-        private IAddressRepository AR = new AddressRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+        private static string _connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
+        private IDriverRepository dr = new DriverRepository(_connectionString);
+        private IAddressRepository AR = new AddressRepository(_connectionString);
 
 
         public DriverPage()
@@ -138,8 +139,6 @@ namespace Views.Pages
         {
             NewDriverWindow ndw = new NewDriverWindow();
             ndw.Show();
-            //NewDriverWindow ndw = new NewDriverWindow();
-            //ndw.Show();
         }
 
         private void VerwijderButton_OnClick(object sender, RoutedEventArgs e)
