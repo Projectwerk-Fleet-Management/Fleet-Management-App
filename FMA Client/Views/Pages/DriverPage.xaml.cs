@@ -60,6 +60,7 @@ namespace Views.Pages
 
         private void DriverList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            rijbewijzenField.Text = "";
             SelectedItemContent.IsEnabled = true;
             var item = DriverList.SelectedItem;
             if (item != null)
@@ -76,23 +77,19 @@ namespace Views.Pages
                     bool moreThanOne = false;
                     foreach (var license in driverDetails.Licenses)
                     {
-                        if (license == driverDetails.Licenses[driverDetails.Licenses.Count - 1])
+                        if (moreThanOne == false)
                         {
-                            if (moreThanOne == false)
-                            {
-                                x += license;
-                                moreThanOne = true;
-                            }
-                            else
-                            {
-                                x = $", {license}";
-                            }
+                            x += license;
+                            moreThanOne = true;
+                        } else
+                        {
+                            x += $", {license}";
                         }
+
                     }
 
                     rijbewijzenField.Text = x;
-                }
-                else
+                } else
                 {
                     rijbewijzenField.Text = "Geen rijbewijzen";
                 }
@@ -102,8 +99,7 @@ namespace Views.Pages
                 if (driverDetails.AssignedFuelcard != null)
                 {
                     tankkaartField.Text = driverDetails.AssignedFuelcard.Cardnumber.ToString();
-                }
-                else
+                } else
                 {
                     tankkaartField.Text = "Geen tankkaart";
                 }
@@ -111,8 +107,7 @@ namespace Views.Pages
                 if (driverDetails.AssignedCar != null)
                 {
                     autoField.Text = $"{driverDetails.AssignedCar.Make} {driverDetails.AssignedCar.Model}";
-                }
-                else
+                } else
                 {
                     autoField.Text = "Geen auto";
                 }
@@ -149,8 +144,7 @@ namespace Views.Pages
             {
                 dm.DeleteDriver((Driver)DriverList.SelectedItem, AR);
                 update();
-            }
-            else if(result == MessageBoxResult.No)
+            } else if (result == MessageBoxResult.No)
             {
                 MessageBox.Show("Niets is verwijderd");
             }
@@ -160,7 +154,7 @@ namespace Views.Pages
 
         private void BewerkButton_OnClick(object sender, RoutedEventArgs e)
         {
-            UpdateDriverWindow x = new UpdateDriverWindow((Driver) DriverList.SelectedItem);
+            UpdateDriverWindow x = new UpdateDriverWindow((Driver)DriverList.SelectedItem);
             x.Show();
         }
     }
