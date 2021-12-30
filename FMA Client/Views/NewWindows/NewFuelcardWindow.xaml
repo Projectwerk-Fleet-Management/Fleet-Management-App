@@ -1,0 +1,151 @@
+﻿<Window x:Class="Views.NewWindows.NewFuelcardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Views.NewWindows"
+        mc:Ignorable="d"
+        Title="New Driver" Height="459" Width="1084"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="#ffffff"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,31,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Background="#ffffff" Grid.ColumnSpan="2" MouseDown="menubardrag_OnMouseDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Name ="topbar"
+                       Text="New"
+                       Foreground="Black"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="center"
+                       FontWeight="Black">
+            </TextBlock>
+            <TextBlock Name ="typebar"
+                       Text="Driver"
+                       Foreground="Black"
+                       Grid.Column="1"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="center"
+                       FontWeight="Medium">
+            </TextBlock>
+
+
+        </Grid>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10,20,497,0" Grid.ColumnSpan="2">
+            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="379" Width="503" Background="#e8e8e8">
+                <Grid Margin="10,5,10,5" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Kaartnummer" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBox ToolTip="Verplicht. De lengte van een kaartnummer is 18 en bevat enkel cijfers" x:Name="kaartnummerField" Grid.Row="0" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="Vervaldatum" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <DatePicker ToolTip="Verplicht." x:Name="vervaldatumField" Grid.Row="1" Grid.Column="1" FontSize="15"  VerticalAlignment="Center"/>
+                    <Label Grid.Row="2" Grid.Column="0" Content="Pincode" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBox ToolTip="Verplicht. Tussen de 4 en 6 cijfers." x:Name="pincodeField" Grid.Row="2" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center"/>
+                    <Label Grid.Row="3" Grid.Column="0" Content="Is Actief?" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="3" Grid.Column="1" Margin="0,0,10,19" Grid.RowSpan="2">
+                        <Grid ToolTip="Minstens één verplicht." Grid.Row="4" Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <RadioButton Grid.Column="0" Name="Ja" Content="Ja"/>
+                            <RadioButton Grid.Column="1" Name="Nee" Content="Nee"/>
+                        </Grid>
+                    </StackPanel>
+                    <Label Grid.Row="4" Grid.Column="0" Content="Brandstof" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="4" Grid.Column="1" Margin="0,0,10,19" Grid.RowSpan="2">
+                        <Grid ToolTip="Minstens één verplicht." Grid.Row="4" Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" Name="Benzine" Content="Benzine"/>
+                            <CheckBox Grid.Column="1" Name="Diesel" Content="Diesel"/>
+                            <CheckBox Grid.Column="2" Name="Electrisch" Content="Electrisch"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <Button x:Name="opslaanButton" Grid.Row="9" Grid.Column="0" Content="Opslaan" Background="GreenYellow" BorderThickness="0" Width="140" Margin="10,0,10,0" Click="OpslaanButton_OnClick">
+
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="7"/>
+                            </Style>
+                        </Button.Resources>
+
+                    </Button>
+                    <Button x:Name="cancelButton" Grid.Row="9" Grid.Column="1" Content="annuleren" Background="Red" BorderThickness="0" Width="140" Margin="10,0,10,0" Click="CancelButton_OnClick">
+
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="7"/>
+                            </Style>
+                        </Button.Resources>
+
+                    </Button>
+
+
+                </Grid>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Background="Transparent" Margin="520,20,0,0" Grid.ColumnSpan="2">
+            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="377" Width="478" Background="#e8e8e8">
+                
+            </Border>
+        </StackPanel>
+        <ListBox Name="bestuurderlist" Grid.Column="1" Grid.Row="1" Margin="94,327,41,51"/>
+        <TextBox Name="bestuurderField" Text="Rijksregisternummer bestuurder" TextWrapping="Wrap" Grid.Column="1" Margin="94,298,113,102" Grid.Row="1"/>
+        <Button Margin="418,298,41,101" Grid.Row="1" Grid.Column="1" Content="Zoek" Click="driverZoekBtn_OnClick"/>
+
+
+    </Grid>
+
+</Window>

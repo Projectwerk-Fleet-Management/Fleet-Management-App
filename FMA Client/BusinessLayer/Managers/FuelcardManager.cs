@@ -19,15 +19,67 @@ namespace BusinessLayer.Managers
             try
             {
                 return _repo.GetAllFuelcards();
-            } catch
+            } catch (Exception e)
             {
-                throw new DriverManagerException("Getting fuelcard list failed");
+                throw new FuelcardManagerException("Getting fuelcard list failed" + e.Message);
+            }
+        }
+
+        public IReadOnlyList<Fuelcard> Filter(string cardnumber, List<Fuel> fueltypes, bool? isActive)
+        {
+            try
+            {
+                return _repo.GetFuelcard(null, cardnumber, null, fueltypes, isActive);
+            }
+            catch
+            {
+                throw new FuelcardManagerException("Getting fuelcard list failed");
             }
         }
 
         public IReadOnlyList<Fuelcard> GetFuelcard(string cardnumber)
         {
-            return _repo.GetFuelcard(null, cardnumber, null, null, null);
+            try
+            {
+                return _repo.GetFuelcard(null, cardnumber, null, null, null);
+            } catch
+            {
+                throw new FuelcardManagerException("Getting fuelcard list failed");
+            }
+        }
+
+        public IReadOnlyList<Fuelcard> Search(string x)
+        {
+            try
+            {
+                return _repo.Search(x);
+            } catch
+            {
+                throw new FuelcardManagerException("Getting fuelcard list failed");
+            }
+        }
+
+        public void Insert(string cardnumber, DateTime expiryDate, List<Fuel> fueltypes,int? pincode,bool isActive)
+        {
+            try
+            {
+                _repo.InsertFuelcard(cardnumber, expiryDate, fueltypes, pincode, isActive);
+            }
+            catch
+            {
+                throw new FuelcardManagerException("Getting fuelcard list failed");
+            }
+        }
+
+        public bool Exists(string cardnumber)
+        {
+            try
+            {
+                return _repo.Exists(null, cardnumber, null, null, null);
+            } catch
+            {
+                throw new FuelcardManagerException("Getting fuelcard list failed");
+            }
         }
 
         //IReadOnlyList<Fuelcard> GetFuelcard(int? fuelcardId, string cardnumber, string expiryDate, List<Fuel> fueltypes, bool? isActive);

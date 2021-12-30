@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,8 +27,9 @@ namespace Views.UpdateWindows
     /// </summary>
     public partial class UpdateDriverWindow : Window
     {
-        private static IAddressRepository addressRepository = new AddressRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
-        private static IDriverRepository driverRepository = new DriverRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+        private static string _connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
+        private static IAddressRepository addressRepository = new AddressRepository(_connectionString);
+        private static IDriverRepository driverRepository = new DriverRepository(_connectionString);
 
         private AddressManager am = new AddressManager(addressRepository);
         private DriverManager dm = new DriverManager(driverRepository);
