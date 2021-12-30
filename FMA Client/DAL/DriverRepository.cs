@@ -57,6 +57,7 @@ namespace DAL
                         if (DBNull.Value != datareader["Licenses"])
                         {
                             #region Db licenses to program
+
                             //In the database the licenses are put in as a string with a "," seperating each type.
                             //This basically turns it into a list for us to use
                             //We're also making the licenses all upper case in the array to eliminate the case sensitivity
@@ -66,67 +67,8 @@ namespace DAL
 
                             foreach (var l in licensesArray)
                             {
-                                if (string.IsNullOrWhiteSpace(l)) { continue; }
-                                if (l == LicenseType.A.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.A);
-                                }
-                                if (l == LicenseType.A1.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.A1);
-                                }
-                                if (l == LicenseType.A2.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.A2);
-                                }
-                                if (l == LicenseType.AM.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.AM);
-                                }
-                                if (l == LicenseType.B.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.B);
-                                }
-                                if (l == LicenseType.BE.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.BE);
-                                }
-                                if (l == LicenseType.C.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.C);
-                                }
-                                if (l == LicenseType.CE.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.CE);
-                                }
-                                if (l == LicenseType.C1.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.C1);
-                                }
-                                if (l == LicenseType.C1E.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.C1E);
-                                }
-                                if (l == LicenseType.D.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.D);
-                                }
-                                if (l == LicenseType.DE.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.DE);
-                                }
-                                if (l == LicenseType.D1.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.D1);
-                                }
-                                if (l == LicenseType.D1E.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.D1E);
-                                }
-                                if (l == LicenseType.G.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.G);
-                                }
+                                LicenseType lt = (LicenseType)Enum.Parse(typeof(LicenseType), l);
+                                licensesList.Add(lt);
                             }
                             #endregion
                         }
@@ -430,6 +372,7 @@ namespace DAL
                         if (DBNull.Value != datareader["Licenses"])
                         {
                             #region Db licenses to program
+
                             //In the database the licenses are put in as a string with a "," seperating each type.
                             //This basically turns it into a list for us to use
                             //We're also making the licenses all upper case in the array to eliminate the case sensitivity
@@ -439,67 +382,8 @@ namespace DAL
 
                             foreach (var l in licensesArray)
                             {
-                                if (string.IsNullOrWhiteSpace(l)) { continue; }
-                                if (l == LicenseType.A.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.A);
-                                }
-                                if (l == LicenseType.A1.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.A1);
-                                }
-                                if (l == LicenseType.A2.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.A2);
-                                }
-                                if (l == LicenseType.AM.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.AM);
-                                }
-                                if (l == LicenseType.B.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.B);
-                                }
-                                if (l == LicenseType.BE.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.BE);
-                                }
-                                if (l == LicenseType.C.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.C);
-                                }
-                                if (l == LicenseType.CE.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.CE);
-                                }
-                                if (l == LicenseType.C1.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.C1);
-                                }
-                                if (l == LicenseType.C1E.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.C1E);
-                                }
-                                if (l == LicenseType.D.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.D);
-                                }
-                                if (l == LicenseType.DE.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.DE);
-                                }
-                                if (l == LicenseType.D1.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.D1);
-                                }
-                                if (l == LicenseType.D1E.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.D1E);
-                                }
-                                if (l == LicenseType.G.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.G);
-                                }
+                                LicenseType lt = (LicenseType)Enum.Parse(typeof(LicenseType), l);
+                                licensesList.Add(lt);
                             }
                             #endregion
                         }
@@ -1179,6 +1063,7 @@ namespace DAL
                         if (DBNull.Value != datareader["Licenses"])
                         {
                             #region Db licenses to program
+
                             //In the database the licenses are put in as a string with a "," seperating each type.
                             //This basically turns it into a list for us to use
                             //We're also making the licenses all upper case in the array to eliminate the case sensitivity
@@ -1188,67 +1073,8 @@ namespace DAL
 
                             foreach (var l in licensesArray)
                             {
-                                if (string.IsNullOrWhiteSpace(l)) { continue; }
-                                if (l == LicenseType.A.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.A);
-                                }
-                                if (l == LicenseType.A1.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.A1);
-                                }
-                                if (l == LicenseType.A2.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.A2);
-                                }
-                                if (l == LicenseType.AM.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.AM);
-                                }
-                                if (l == LicenseType.B.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.B);
-                                }
-                                if (l == LicenseType.BE.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.BE);
-                                }
-                                if (l == LicenseType.C.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.C);
-                                }
-                                if (l == LicenseType.CE.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.CE);
-                                }
-                                if (l == LicenseType.C1.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.C1);
-                                }
-                                if (l == LicenseType.C1E.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.C1E);
-                                }
-                                if (l == LicenseType.D.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.D);
-                                }
-                                if (l == LicenseType.DE.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.DE);
-                                }
-                                if (l == LicenseType.D1.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.D1);
-                                }
-                                if (l == LicenseType.D1E.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.D1E);
-                                }
-                                if (l == LicenseType.G.ToString().ToUpper())
-                                {
-                                    licensesList.Add(LicenseType.G);
-                                }
+                                LicenseType lt = (LicenseType)Enum.Parse(typeof(LicenseType), l);
+                                licensesList.Add(lt);
                             }
                             #endregion
                         }

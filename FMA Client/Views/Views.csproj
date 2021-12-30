@@ -30,8 +30,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="FilterPages\FuelcardFilter.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="FilterPages\CarFilter.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="NewWindows\NewFuelcardWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
     </Page>
     <Page Update="NewWindows\NewCarWindow.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>

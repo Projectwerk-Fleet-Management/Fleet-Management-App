@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,9 +27,9 @@ namespace Views.FilterPages
     /// </summary>
     public partial class DriverFilter : Page
     {
+        private static string _connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         private IReadOnlyList<Driver> driverList = new List<Driver>();
-        private IDriverRepository dr =
-            new DriverRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+        private IDriverRepository dr = new DriverRepository(_connectionString);
 
         
         public DriverFilter()

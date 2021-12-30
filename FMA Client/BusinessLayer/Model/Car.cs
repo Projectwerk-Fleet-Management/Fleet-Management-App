@@ -173,7 +173,10 @@ namespace BusinessLayer
 
         public override string ToString()
         {
-            return $"{Licenseplate}, {Make} {Model}";
+            string x = $"{Licenseplate}, {Make} {Model}, ";
+            if (this.Driver != null) x += $"{Driver.FirstName} {Driver.LastName}";
+            else x += "Geen bestuurder.";
+            return x;
         }
 
         #region INotifypropertychanged members
