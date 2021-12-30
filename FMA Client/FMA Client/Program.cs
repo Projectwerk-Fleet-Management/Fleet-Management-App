@@ -27,7 +27,7 @@ namespace FMA_Client
             #endregion
 
             #region AddressRepository Testing
-            //AddressRepository p = new(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+            AddressRepository p = new(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
 
             #region InsertAddress
             //p.InsertAddress("Steenbakkerij", "21", null, "Geraardsbergen", 9500);
@@ -44,15 +44,15 @@ namespace FMA_Client
             {
                 Console.WriteLine($"{t.AddressId} {t.Street} {t.Housenumber} {t.Addendum} {t.City} {t.Postalcode}");
             }
-            
+            */
 
-            var testtt = p.GetAddress(null, null, null, null, null, 9500);
+            var testtt = p.GetAddress(null, "Steenbakkerij", "21", null, null, 9500);
 
             foreach (var t in testtt)
             {
                 Console.WriteLine($"{t.AddressId} {t.Street} {t.Housenumber} {t.Addendum} {t.City} {t.Postalcode}");
             }
-            */
+            
             #endregion
 
             #region Exists Testing
@@ -221,6 +221,16 @@ namespace FMA_Client
             //Console.WriteLine(x.IsValid("WAUZZZ8V5KA106598"));
 
             #endregion
+
+            VINValidator vt = new();
+
+            Console.WriteLine("Is valid VIN?");
+            Console.WriteLine(vt.IsValid("1FADP3K22DL218948"));
+
+            LicenseplateValidator lt = new();
+
+            Console.WriteLine("Is valid licenseplate?");
+            Console.WriteLine(lt.isValid("1-bou-109"));
         }
     }
 }

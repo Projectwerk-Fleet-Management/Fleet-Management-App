@@ -16,7 +16,8 @@
                 FontSize="20"
                 FontWeight="Medium"
                 HorizontalAlignment="Left"
-                Margin="35,0,0,10">
+                Margin="35,0,0,10"
+                >
             </TextBlock>
             <StackPanel Name="search" Orientation="Horizontal">
 
@@ -106,7 +107,7 @@
                         </Button.Resources>
 
                     </Button>
-                    <Button x:Name="verwijderButton" Grid.Row="10" Grid.Column="1" Content="Verwijderen" BorderThickness="0" Width="140">
+                    <Button x:Name="verwijderButton" Grid.Row="10" Grid.Column="1" Content="Verwijderen" BorderThickness="0" Width="140" Click="verwijderButton_Click">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="7"/>

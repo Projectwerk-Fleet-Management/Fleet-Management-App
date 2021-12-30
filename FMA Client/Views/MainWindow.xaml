@@ -8,7 +8,8 @@
         Title="Fleet Management App" Height="450" Width="800"
         WindowStyle="None"
         ResizeMode="NoResize"
-        Background="#ffffff">
+        Background="#ffffff"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>

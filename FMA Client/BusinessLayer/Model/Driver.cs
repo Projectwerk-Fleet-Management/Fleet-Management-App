@@ -92,6 +92,13 @@ namespace BusinessLayer
 
         }
 
+        public Driver(int driverId, string firstName, string lastName, Address address, DateTime dateOfBirth, string nationalIdentificationNumber,
+            List<LicenseType> licenses, Fuelcard fuelcard)
+            : this(driverId, firstName, lastName, address, dateOfBirth, nationalIdentificationNumber, licenses, null, fuelcard)
+        {
+
+        }
+
         public Driver(int driverId, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentificationNumber,
             Car car, Fuelcard fuelcard)
             : this(driverId, firstName, lastName, null, dateOfBirth, nationalIdentificationNumber, null, car, fuelcard)
@@ -190,13 +197,13 @@ namespace BusinessLayer
         public void RemoveFuelcard()
         {
             if (this.AssignedFuelcard == null) throw new DriverException("There is no fuelcard assigned to this driver");
-            AssignedFuelcard.RemoveDriver();
+            if (AssignedFuelcard.Driver != null) AssignedFuelcard.RemoveDriver();
             AssignedFuelcard = null;
         }
         public void RemoveCar()
         {
             if (AssignedCar == null) throw new DriverException("Car is already null");
-            AssignedCar.Driver.RemoveCar();
+            if (AssignedCar.Driver != null) AssignedCar.RemoveDriver();
             AssignedCar = null;
         }
         public void RemoveLicense(LicenseType license)

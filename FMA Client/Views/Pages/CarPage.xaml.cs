@@ -4,8 +4,11 @@ using BusinessLayer.Managers;
 using DAL;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Views.NewWindows;
 
 namespace Views.Pages
 {
@@ -14,16 +17,69 @@ namespace Views.Pages
     /// </summary>
     public partial class CarPage : Page
     {
-        private ICarRepository cr =
-            new CarRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+        private static string _connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
+        private static ICarRepository cr = new CarRepository(_connectionString);
+        private static IDriverRepository dr = new DriverRepository(_connectionString);
+
+        private static DriverManager d = new DriverManager(dr);
+        private static CarManager c = new CarManager(cr);
 
         public CarPage()
         {
             InitializeComponent();
+            LoadPage();
+        }
+
+        private void LoadPage()
+        {
+            CarList.ItemsSource = null;
             SelectedItemContent.IsEnabled = false;
-            CarManager c = new CarManager(cr);
             IReadOnlyList<Car> clist = c.GetAllCars();
             CarList.ItemsSource = new ObservableCollection<Car>(clist);
+        }
+
+        private void verwijderButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Car selectedCar = (Car)CarList.SelectedItem;
+            MessageBoxResult result =
+                MessageBox.Show($"Bent u zeker dat u deze auto ({selectedCar}) wilt verwijderen?"
+                    , "Confirmatie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                if (selectedCar.Driver != null)
+                {
+                    var result2 = MessageBox.Show($"Deze auto heeft een bestuurder " +
+                                                  $"({selectedCar.Driver.FirstName} " + $"{selectedCar.Driver.LastName})," +
+                                                  $"als u deze auto verwijdert zal deze bestuurder geen auto meer hebben?"
+                        , "Confirmatie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                    if (result2 == MessageBoxResult.Yes)
+                    {
+                        Driver oldDriverInfo = selectedCar.Driver;
+                        Fuelcard fc = new(oldDriverInfo.AssignedFuelcard.FuelcardId,
+                            oldDriverInfo.AssignedFuelcard.Cardnumber, oldDriverInfo.AssignedFuelcard.ExpiryDate);
+                        Driver newDriverInfo = new(oldDriverInfo.DriverId, oldDriverInfo.FirstName,
+                            oldDriverInfo.LastName, oldDriverInfo.Address, oldDriverInfo.DateOfBirth,
+                            oldDriverInfo.NationalIdentificationNumber, oldDriverInfo.Licenses,
+                            fc);
+                        d.UpdateDriver(oldDriverInfo, newDriverInfo);
+                        c.DeleteCar(selectedCar);
+                    } else
+                    {
+                        MessageBox.Show("Verwijderen is gestopt", "Gestopt");
+                    }
+                } else
+                {
+                    c.DeleteCar(selectedCar);
+                }
+
+                LoadPage();
+                MakeTextBoxesEmpty();
+            } else
+            {
+                MessageBox.Show("Verwijderen is gestopt", "Gestopt");
+            }
         }
 
         //TODO -> First the search method in the repo
@@ -87,18 +143,18 @@ namespace Views.Pages
 
         }
 
-        //Wait on Filter page to be made
+        //TODO
         private void FilterButton_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
         }
 
-        //Wait on New page to be made
+        //Done
         private void NieuwButton_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            NewCarWindow ncw = new NewCarWindow();
+            ncw.Show();
         }
-
 
         private void MakeTextBoxesEmpty()
         {
