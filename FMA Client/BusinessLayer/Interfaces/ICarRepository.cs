@@ -14,5 +14,6 @@ namespace BusinessLayer.Interfaces
         void InsertCar(string vin, string licenseplate, string make, string model, string vehicleType, List<Fuel> fueltypes, string doors, string colour);
         void DeleteCar(Car car);
         void UpdateCar(Car oldCarInfo, Car newCarInfo);
+        IReadOnlyList<Car> Search(string x);
     }
 }

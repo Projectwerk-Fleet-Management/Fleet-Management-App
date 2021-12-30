@@ -8,6 +8,8 @@ using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
+using Views.FilterPages;
 using Views.NewWindows;
 
 namespace Views.Pages
@@ -29,6 +31,12 @@ namespace Views.Pages
             InitializeComponent();
             LoadPage();
         }
+        public CarPage(IReadOnlyList<Car> resultCars)
+        {
+            InitializeComponent();
+            SelectedItemContent.IsEnabled = false;
+            CarList.ItemsSource = new ObservableCollection<Car>(resultCars);
+        }
 
         private void LoadPage()
         {
@@ -38,6 +46,7 @@ namespace Views.Pages
             CarList.ItemsSource = new ObservableCollection<Car>(clist);
         }
 
+        //Done
         private void verwijderButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             Car selectedCar = (Car)CarList.SelectedItem;
@@ -82,17 +91,24 @@ namespace Views.Pages
             }
         }
 
-        //TODO -> First the search method in the repo
+        //Done
         private void SearchButtonCar_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             MakeTextBoxesEmpty();
             CarList.UnselectAll();
             SelectedItemContent.IsEnabled = false;
             string x = userInputCarPage.Text;
-            CarManager c = new CarManager(cr);
-            //Still need to make the Search method for fuelcard
-            //IReadOnlyList<Car> clist = c.Search(x);
-            //CarList.ItemsSource = new ObservableCollection<Car>(clist);
+            IReadOnlyList<Car> clist;
+
+            if (!string.IsNullOrWhiteSpace(x))
+            {
+                clist = c.Search(x);
+            } else
+            {
+                clist = c.GetAllCars();
+            }
+
+            CarList.ItemsSource = new ObservableCollection<Car>(clist);
         }
 
         //Done
@@ -114,16 +130,13 @@ namespace Views.Pages
                 bool moreThanOne = false;
                 foreach (var fueltype in carDetails.FuelType)
                 {
-                    if (fueltype == carDetails.FuelType[carDetails.FuelType.Count - 1])
+                    if (moreThanOne == false)
                     {
-                        if (moreThanOne == false)
-                        {
-                            x += fueltype;
-                            moreThanOne = true;
-                        } else
-                        {
-                            x = $", {fueltype}";
-                        }
+                        x = fueltype.ToString();
+                        moreThanOne = true;
+                    } else
+                    {
+                        x += $", {fueltype}";
                     }
 
                     brandstofTypesField.Text = x;
@@ -131,22 +144,27 @@ namespace Views.Pages
 
                 bestuurderField.Text = carDetails.Driver != null ? $"{carDetails.Driver}" : "Geen bestuurder";
 
-                deurenField.Text = carDetails.Doors != null ? carDetails.Doors : "Geen deuren meegegeven";
+                deurenField.Text = carDetails.Doors ?? "niet gespecificeerd";
 
-                kleurField.Text = carDetails.Colour != null ? carDetails.Colour : "Geen deuren meegegeven";
+                kleurField.Text = carDetails.Colour ?? "niet gespecificeerd";
             }
         }
 
-        //TODO -> What is the meaning for this?
+        //Done
         private void UserInputCarPage_OnKeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.Key == Key.Return)
+            {
+                SearchButtonCar_OnMouseLeftButtonUp(sender, null);
+            }
         }
 
-        //TODO
+        //Done
         private void FilterButton_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            NavigationService ns = this.NavigationService;
+            CarFilter cf = new CarFilter();
+            ns.Navigate(cf);
         }
 
         //Done

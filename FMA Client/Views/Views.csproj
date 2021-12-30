@@ -30,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="FilterPages\CarFilter.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="NewWindows\NewCarWindow.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
