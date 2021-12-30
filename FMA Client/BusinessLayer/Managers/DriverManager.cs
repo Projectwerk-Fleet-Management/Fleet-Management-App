@@ -79,10 +79,9 @@ namespace BusinessLayer.Managers
             {
                 if (_repo.Exists(driver.DriverId, null, null, null, null, null))
                 {
-                    
                     AddressManager am = new AddressManager(iar);
-                    am.Delete(driver.Address);
                     _repo.DeleteDriver(driver);
+                    am.Delete(driver.Address);
                 }
                 else
                 {
