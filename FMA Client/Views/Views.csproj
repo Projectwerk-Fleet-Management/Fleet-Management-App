@@ -29,4 +29,10 @@
     <Resource Include="Images\user.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="NewWindows\NewCarWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
 </Project>

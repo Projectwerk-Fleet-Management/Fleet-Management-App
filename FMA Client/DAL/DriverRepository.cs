@@ -927,24 +927,21 @@ namespace DAL
                     if (addressId == null)
                     {
                         command.Parameters.AddWithValue("@AddressId", DBNull.Value);
-                    }
-                    else
+                    } else
                     {
                         command.Parameters.AddWithValue("@AddressId", addressId);
                     }
                     if (fuelcardId == null)
                     {
                         command.Parameters.AddWithValue("@FuelcardId", DBNull.Value);
-                    }
-                    else
+                    } else
                     {
                         command.Parameters.AddWithValue("@FuelcardId", fuelcardId);
                     }
                     if (carId == null)
                     {
                         command.Parameters.AddWithValue("@CarId", DBNull.Value);
-                    }
-                    else
+                    } else
                     {
                         command.Parameters.AddWithValue("@CarId", carId);
                     }
@@ -972,8 +969,16 @@ namespace DAL
             bool lastNameDifferent = oldDriverInfo.LastName != newDriverInfo.LastName;
             bool addressDifferent = oldDriverInfo.Address != newDriverInfo.Address;
             bool licensesDifferent = oldDriverInfo.Licenses != newDriverInfo.Licenses;
-            bool carDifferent = oldDriverInfo.AssignedCar != newDriverInfo.AssignedCar;
-            bool fuelcardDifferent = oldDriverInfo.AssignedFuelcard != newDriverInfo.AssignedFuelcard;
+            bool carDifferent;
+            if (oldDriverInfo.AssignedCar == null || newDriverInfo.AssignedCar == null)
+            {
+                carDifferent = true;
+            } else
+            {
+                carDifferent = oldDriverInfo.AssignedCar.CarId != newDriverInfo.AssignedCar.CarId;
+            }
+
+            bool fuelcardDifferent = oldDriverInfo.AssignedFuelcard.FuelcardId != newDriverInfo.AssignedFuelcard.FuelcardId;
             #endregion
 
             if (firstNameDifferent || lastNameDifferent || addressDifferent || licensesDifferent || carDifferent || fuelcardDifferent)
@@ -1081,7 +1086,7 @@ namespace DAL
                             } else
                             {
                                 command.Parameters.AddWithValue("@CarId", newDriverInfo.AssignedCar.CarId);
-                            }                           
+                            }
                         }
                         if (fuelcardDifferent)
                         {
@@ -1360,12 +1365,10 @@ namespace DAL
                     }
                     datareader.Close();
 
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
                     throw new DriverRepositoryException("GetAllDrivers failed" + ex.Message);
-                }
-                finally
+                } finally
                 {
                     connection.Close();
                 }

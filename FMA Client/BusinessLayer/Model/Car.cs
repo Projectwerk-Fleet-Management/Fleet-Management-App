@@ -164,9 +164,10 @@ namespace BusinessLayer
         {  
             if (Driver.AssignedCar != null)
             {
-                Driver.RemoveCar();
+                var d = Driver;
+                Driver = null;
+                d.RemoveCar();
             }
-            this.Driver = null;
         }
         #endregion
 
