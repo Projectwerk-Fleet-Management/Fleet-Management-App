@@ -1,14 +1,13 @@
-﻿<Window x:Class="Views.NewWindows.NewFuelcardWindow"
+﻿<Window x:Class="Views.NewWindows.refactorattempt"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Views.NewWindows"
         mc:Ignorable="d"
-        Title="New Driver" Height="459" Width="1084"
+        Title="New Driver" Height="459" Width="903"
         WindowStyle="None"
         ResizeMode="NoResize"
-        Background="#ffffff"
         WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,31,10">
         <Grid.RowDefinitions>
@@ -134,16 +133,13 @@
 
                 </Grid>
             </Border>
+
+            <ListBox Name="bestuurderlist" Grid.Column="1" Grid.Row="1" Margin="94,327,41,51"/>
+            <TextBox Name="bestuurderField" Text="Rijksregisternummer bestuurder" TextWrapping="Wrap" Grid.Column="1" Margin="94,298,113,102" Grid.Row="1"/>
+            <Button Margin="418,298,41,101" Grid.Row="1" Grid.Column="1" Content="Zoek" Click="driverZoekBtn_OnClick"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Background="Transparent" Margin="520,20,0,0" Grid.ColumnSpan="2">
-            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="117" Width="478" Background="#e8e8e8">
-
-            </Border>
-        </StackPanel>
-        <ListBox Name="bestuurderlist" Grid.Column="1" Grid.Row="1" Margin="72,61,64,317"/>
-        <TextBox Name="bestuurderField" Text="Rijksregisternummer bestuurder" TextWrapping="Wrap" Grid.Column="1" Margin="72,32,136,368" Grid.Row="1"/>
-        <Button Margin="396,32,64,367" Grid.Row="1" Grid.Column="1" Content="Zoek" Click="driverZoekBtn_OnClick"/>
+ 
 
 
     </Grid>
