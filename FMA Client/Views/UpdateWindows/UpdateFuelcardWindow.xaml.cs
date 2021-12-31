@@ -40,7 +40,7 @@ namespace Views.UpdateWindows
 
             kaartnummerField.Text = fuelcard.Cardnumber;
             vervaldatumField.SelectedDate = fuelcard.ExpiryDate;
-            pincodeField.Text = fuelcard.Pincode == 0 ? "Geen pincode" : fuelcard.Pincode.ToString();
+            pincodeField.Text = fuelcard.Pincode == 0 ? "" : fuelcard.Pincode.ToString();
             if (fuelcard.IsActive)
             {
                 Ja.IsChecked = true;
@@ -61,7 +61,8 @@ namespace Views.UpdateWindows
         private void updateFuelcard()
         {
             int? pincode = null;
-            if (pincodeField.Text != "Geen pincode") pincode = int.Parse(pincodeField.Text);
+            bool nietCorrect;
+            if (!string.IsNullOrWhiteSpace(pincodeField.Text)) pincode = TryParseNullable(pincodeField.Text);
             Fuelcard newFuelcard = new(_fuelcard.FuelcardId, kaartnummerField.Text, vervaldatumField.SelectedDate.Value, pincode,
                  CreateFueltypeList(), GetActief());
 
@@ -113,6 +114,12 @@ namespace Views.UpdateWindows
             }
 
             return fuelList;
+        }
+
+        public int? TryParseNullable(string val)
+        {
+            int outValue;
+            return int.TryParse(val, out outValue) ? (int?)outValue : null;
         }
     }
 }

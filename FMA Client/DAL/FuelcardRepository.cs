@@ -1178,7 +1178,18 @@ namespace DAL
                         if (ExpiryDateDifferent)
                             command.Parameters.AddWithValue("@ExpiryDate",
                                 newFuelcard.ExpiryDate.ToString("yyyy/MM/dd"));
-                        if (PincodeDifferent) command.Parameters.AddWithValue("@Pincode", newFuelcard.Pincode);
+                        if (PincodeDifferent)
+                        {
+                            if (newFuelcard.Pincode == 0)
+                            {
+                                command.Parameters.AddWithValue("@Pincode", DBNull.Value);
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@Pincode", newFuelcard.Pincode);
+                            }
+                            
+                        }
                         if (FueltypesDifferent)
                         {
                             string fueltypesString = "";

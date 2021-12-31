@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using Views.FilterPages;
 using Views.NewWindows;
+using Views.UpdateWindows;
 
 namespace Views.Pages
 {
@@ -114,6 +115,7 @@ namespace Views.Pages
         //Done
         private void CarList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            MakeTextBoxesEmpty();
             SelectedItemContent.IsEnabled = true;
             var item = CarList.SelectedItem;
             if (item != null)
@@ -174,6 +176,12 @@ namespace Views.Pages
             ncw.Show();
         }
 
+        private void bewerkButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateCarWindow ucw = new UpdateCarWindow((Car)CarList.SelectedItem);
+            ucw.Show();
+        }
+
         private void MakeTextBoxesEmpty()
         {
             chassisnummerField.Text = null;
@@ -186,5 +194,7 @@ namespace Views.Pages
             deurenField.Text = null;
             kleurField.Text = null;
         }
+
+        
     }
 }
