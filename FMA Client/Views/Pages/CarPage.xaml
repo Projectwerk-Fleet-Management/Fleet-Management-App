@@ -98,7 +98,7 @@
                     <TextBlock Name="bestuurderField" Grid.Row="8" Grid.Column="1" Text=" " FontSize="15" VerticalAlignment="Center"/>
                     
 
-                    <Button x:Name="bewerkButton" Grid.Row="10" Grid.Column="0" Content="Bewerken" Background="#FF96D6FB" BorderThickness="0" Width="140">
+                    <Button x:Name="bewerkButton" Grid.Row="10" Grid.Column="0" Content="Bewerken" Background="#FF96D6FB" BorderThickness="0" Width="140" Click="bewerkButton_Click">
 
                         <Button.Resources>
                             <Style TargetType="Border">

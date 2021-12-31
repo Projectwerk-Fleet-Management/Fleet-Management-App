@@ -45,13 +45,13 @@ namespace DAL
                     SqlDataReader datareader = command.ExecuteReader();
                     while (datareader.Read())
                     {
-                        int carId = (int) datareader["CarId"];
-                        string make = (string) datareader["Make"];
-                        string model = (string) datareader["Model"];
-                        string vin = (string) datareader["Vin"];
-                        string licenseplate = (string) datareader["Licenseplate"];
-                        string vehicleType = (string) datareader["VehicleType"];
-                        string fueltypesString = (string) datareader["Fueltypes"];
+                        int carId = (int)datareader["CarId"];
+                        string make = (string)datareader["Make"];
+                        string model = (string)datareader["Model"];
+                        string vin = (string)datareader["Vin"];
+                        string licenseplate = (string)datareader["Licenseplate"];
+                        string vehicleType = (string)datareader["VehicleType"];
+                        string fueltypesString = (string)datareader["Fueltypes"];
                         string doors = "";
                         string colour = "";
                         Driver driver = null;
@@ -60,21 +60,21 @@ namespace DAL
 
                         if (DBNull.Value != datareader["Doors"])
                         {
-                            doors = (string) datareader["Doors"];
+                            doors = (string)datareader["Doors"];
                         }
 
                         if (DBNull.Value != datareader["Colour"])
                         {
-                            colour = (string) datareader["Colour"];
+                            colour = (string)datareader["Colour"];
                         }
 
                         if (DBNull.Value != datareader["DriverId"])
                         {
-                            int driverId = (int) datareader["DriverId"];
-                            string firstName = (string) datareader["FirstName"];
-                            string lastName = (string) datareader["LastName"];
-                            DateTime dateOfBirth = (DateTime) datareader["DateOfBirth"];
-                            string nationalIdentificationNumber = (string) datareader["NationalIdentificationNumber"];
+                            int driverId = (int)datareader["DriverId"];
+                            string firstName = (string)datareader["FirstName"];
+                            string lastName = (string)datareader["LastName"];
+                            DateTime dateOfBirth = (DateTime)datareader["DateOfBirth"];
+                            string nationalIdentificationNumber = (string)datareader["NationalIdentificationNumber"];
                             List<LicenseType> licensesList = new();
                             Address address = null;
                             Fuelcard fuelcard = null;
@@ -102,18 +102,18 @@ namespace DAL
 
                             if (DBNull.Value != datareader["AddressId"])
                             {
-                                int addressId = (int) datareader["AddressId"];
-                                string street = (string) datareader["Street"];
-                                string housenumber = (string) datareader["Housenumber"];
-                                int postalcode = (int) datareader["Postalcode"];
-                                string city = (string) datareader["City"];
+                                int addressId = (int)datareader["AddressId"];
+                                string street = (string)datareader["Street"];
+                                string housenumber = (string)datareader["Housenumber"];
+                                int postalcode = (int)datareader["Postalcode"];
+                                string city = (string)datareader["City"];
                                 string addendum = "";
 
                                 #region Null checking
 
                                 if (DBNull.Value != datareader["Addendum"])
                                 {
-                                    addendum = (string) datareader["Addendum"];
+                                    addendum = (string)datareader["Addendum"];
                                 }
 
                                 address = new(addressId, street, housenumber, addendum, city, postalcode, null);
@@ -122,10 +122,10 @@ namespace DAL
                             if (DBNull.Value != datareader["FuelcardId"])
                             {
 
-                                int fuelcardId = (int) datareader["FuelcardId"];
-                                string cardnumber = (string) datareader["Cardnumber"];
-                                DateTime expiryDate = (DateTime) datareader["ExpiryDate"];
-                                bool isActive = (bool) datareader["IsActive"];
+                                int fuelcardId = (int)datareader["FuelcardId"];
+                                string cardnumber = (string)datareader["Cardnumber"];
+                                DateTime expiryDate = (DateTime)datareader["ExpiryDate"];
+                                bool isActive = (bool)datareader["IsActive"];
                                 List<Fuel> fueltypesListFuelcard = new();
 
                                 if (DBNull.Value != datareader["fuelcardFueltypes"])
@@ -135,7 +135,7 @@ namespace DAL
                                     //In the database the fueltypes are put in as a string with a "," seperating each type.
                                     //This basically turns it into a list for us to use
                                     //We're also making the fueltypes all upper case in the array to eliminate the case sensitivity
-                                    string fueltypesStringFuelcard = (string) datareader["fuelcardFueltypes"];
+                                    string fueltypesStringFuelcard = (string)datareader["fuelcardFueltypes"];
                                     fueltypesStringFuelcard = fueltypesStringFuelcard.Replace(" ", "");
                                     string[] fueltypesArrayFuelcard = fueltypesStringFuelcard.ToUpper().Split(",");
 
@@ -224,12 +224,10 @@ namespace DAL
 
                     datareader.Close();
 
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
                     throw new CarRepositoryException("GetAllCars failed" + ex.Message);
-                }
-                finally
+                } finally
                 {
                     connection.Close();
                 }
@@ -264,8 +262,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND C.Vin = @Vin ";
-                }
-                else
+                } else
                 {
                     query += "WHERE C.Vin = @Vin ";
                     AND = true;
@@ -277,8 +274,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND C.Licenseplate = @Licenseplate ";
-                }
-                else
+                } else
                 {
                     query += "WHERE C.Licenseplate = @Licenseplate ";
                     AND = true;
@@ -290,8 +286,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND C.Make = @Make ";
-                }
-                else
+                } else
                 {
                     query += "WHERE C.Make = @Make ";
                     AND = true;
@@ -303,8 +298,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND C.Model = @Model ";
-                }
-                else
+                } else
                 {
                     query += "WHERE C.Model = @Model ";
                     AND = true;
@@ -316,8 +310,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND C.VehicleType = @VehicleType ";
-                }
-                else
+                } else
                 {
                     query += "WHERE C.VehicleType = @VehicleType ";
                     AND = true;
@@ -329,8 +322,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND C.Fueltypes = @Fueltypes ";
-                }
-                else
+                } else
                 {
                     query += "WHERE C.Fueltypes = @Fueltypes ";
                     AND = true;
@@ -342,8 +334,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND C.Doors = @Doors ";
-                }
-                else
+                } else
                 {
                     query += "WHERE C.Doors = @Doors ";
                     AND = true;
@@ -355,8 +346,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND C.Colour = @Colour ";
-                }
-                else
+                } else
                 {
                     query += "WHERE C.Colour = @Colour ";
                     AND = true;
@@ -397,8 +387,7 @@ namespace DAL
                                 {
                                     fueltypesString += "Benzine";
                                     first = false;
-                                }
-                                else
+                                } else
                                 {
                                     fueltypesString += ", Benzine";
                                 }
@@ -411,8 +400,7 @@ namespace DAL
                                 {
                                     fueltypesString += "Diesel";
                                     first = false;
-                                }
-                                else
+                                } else
                                 {
                                     fueltypesString += ", Diesel";
                                 }
@@ -424,8 +412,7 @@ namespace DAL
                                 {
                                     fueltypesString += "Electrisch";
                                     first = false;
-                                }
-                                else
+                                } else
                                 {
                                     fueltypesString += ", Electrisch";
                                 }
@@ -441,13 +428,13 @@ namespace DAL
                     SqlDataReader datareader = command.ExecuteReader();
                     while (datareader.Read())
                     {
-                        int carIdDb = (int) datareader["CarId"];
-                        string makeDb = (string) datareader["Make"];
-                        string modelDb = (string) datareader["Model"];
-                        string vinDb = (string) datareader["Vin"];
-                        string licenseplateDb = (string) datareader["Licenseplate"];
-                        string vehicleTypeDb = (string) datareader["VehicleType"];
-                        string fueltypesStringDb = (string) datareader["Fueltypes"];
+                        int carIdDb = (int)datareader["CarId"];
+                        string makeDb = (string)datareader["Make"];
+                        string modelDb = (string)datareader["Model"];
+                        string vinDb = (string)datareader["Vin"];
+                        string licenseplateDb = (string)datareader["Licenseplate"];
+                        string vehicleTypeDb = (string)datareader["VehicleType"];
+                        string fueltypesStringDb = (string)datareader["Fueltypes"];
                         string doorsDb = "";
                         string colourDb = "";
                         Driver driver = null;
@@ -456,21 +443,21 @@ namespace DAL
 
                         if (DBNull.Value != datareader["Doors"])
                         {
-                            doors = (string) datareader["Doors"];
+                            doors = (string)datareader["Doors"];
                         }
 
                         if (DBNull.Value != datareader["Colour"])
                         {
-                            colour = (string) datareader["Colour"];
+                            colour = (string)datareader["Colour"];
                         }
 
                         if (DBNull.Value != datareader["DriverId"])
                         {
-                            int driverId = (int) datareader["DriverId"];
-                            string firstName = (string) datareader["FirstName"];
-                            string lastName = (string) datareader["LastName"];
-                            DateTime dateOfBirth = (DateTime) datareader["DateOfBirth"];
-                            string nationalIdentificationNumber = (string) datareader["NationalIdentificationNumber"];
+                            int driverId = (int)datareader["DriverId"];
+                            string firstName = (string)datareader["FirstName"];
+                            string lastName = (string)datareader["LastName"];
+                            DateTime dateOfBirth = (DateTime)datareader["DateOfBirth"];
+                            string nationalIdentificationNumber = (string)datareader["NationalIdentificationNumber"];
                             List<LicenseType> licensesList = new();
                             Address address = null;
                             Fuelcard fuelcard = null;
@@ -498,18 +485,18 @@ namespace DAL
 
                             if (DBNull.Value != datareader["AddressId"])
                             {
-                                int addressId = (int) datareader["AddressId"];
-                                string street = (string) datareader["Street"];
-                                string housenumber = (string) datareader["Housenumber"];
-                                int postalcode = (int) datareader["Postalcode"];
-                                string city = (string) datareader["City"];
+                                int addressId = (int)datareader["AddressId"];
+                                string street = (string)datareader["Street"];
+                                string housenumber = (string)datareader["Housenumber"];
+                                int postalcode = (int)datareader["Postalcode"];
+                                string city = (string)datareader["City"];
                                 string addendum = "";
 
                                 #region Null checking
 
                                 if (DBNull.Value != datareader["Addendum"])
                                 {
-                                    addendum = (string) datareader["Addendum"];
+                                    addendum = (string)datareader["Addendum"];
                                 }
 
                                 address = new(addressId, street, housenumber, addendum, city, postalcode, null);
@@ -518,10 +505,10 @@ namespace DAL
                             if (DBNull.Value != datareader["FuelcardId"])
                             {
 
-                                int fuelcardId = (int) datareader["FuelcardId"];
-                                string cardnumber = (string) datareader["Cardnumber"];
-                                DateTime expiryDate = (DateTime) datareader["ExpiryDate"];
-                                bool isActive = (bool) datareader["IsActive"];
+                                int fuelcardId = (int)datareader["FuelcardId"];
+                                string cardnumber = (string)datareader["Cardnumber"];
+                                DateTime expiryDate = (DateTime)datareader["ExpiryDate"];
+                                bool isActive = (bool)datareader["IsActive"];
                                 List<Fuel> fueltypesListFuelcard = new();
 
                                 if (DBNull.Value != datareader["fuelcardFueltypes"])
@@ -531,7 +518,7 @@ namespace DAL
                                     //In the database the fueltypes are put in as a string with a "," seperating each type.
                                     //This basically turns it into a list for us to use
                                     //We're also making the fueltypes all upper case in the array to eliminate the case sensitivity
-                                    string fueltypesStringFuelcard = (string) datareader["fuelcardFueltypes"];
+                                    string fueltypesStringFuelcard = (string)datareader["fuelcardFueltypes"];
                                     fueltypesStringFuelcard = fueltypesStringFuelcard.Replace(" ", "");
                                     string[] fueltypesArrayFuelcard = fueltypesStringFuelcard.ToUpper().Split(",");
 
@@ -620,12 +607,10 @@ namespace DAL
 
                     datareader.Close();
 
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
                     throw new CarRepositoryException("GetCars failed" + ex.Message);
-                }
-                finally
+                } finally
                 {
                     connection.Close();
                 }
@@ -656,8 +641,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND Vin = @Vin ";
-                }
-                else
+                } else
                 {
                     query += "WHERE Vin = @Vin ";
                     AND = true;
@@ -669,8 +653,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND Licenseplate = @Licenseplate ";
-                }
-                else
+                } else
                 {
                     query += "WHERE Licenseplate = @Licenseplate ";
                     AND = true;
@@ -682,8 +665,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND Make = @Make ";
-                }
-                else
+                } else
                 {
                     query += "WHERE Make = @Make ";
                     AND = true;
@@ -695,8 +677,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND Model = @Model ";
-                }
-                else
+                } else
                 {
                     query += "WHERE Model = @Model ";
                     AND = true;
@@ -708,8 +689,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND VehicleType = @VehicleType ";
-                }
-                else
+                } else
                 {
                     query += "WHERE VehicleType = @VehicleType ";
                     AND = true;
@@ -721,8 +701,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND Fueltypes = @Fueltypes ";
-                }
-                else
+                } else
                 {
                     query += "WHERE Fueltypes = @Fueltypes ";
                     AND = true;
@@ -734,8 +713,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND Doors = @Doors ";
-                }
-                else
+                } else
                 {
                     query += "WHERE Doors = @Doors ";
                     AND = true;
@@ -747,8 +725,7 @@ namespace DAL
                 if (AND == true)
                 {
                     query += "AND Colour = @Colour ";
-                }
-                else
+                } else
                 {
                     query += "WHERE Colour = @Colour ";
                     AND = true;
@@ -789,8 +766,7 @@ namespace DAL
                                 {
                                     fueltypesString += "Benzine";
                                     first = false;
-                                }
-                                else
+                                } else
                                 {
                                     fueltypesString += ", Benzine";
                                 }
@@ -803,8 +779,7 @@ namespace DAL
                                 {
                                     fueltypesString += "Diesel";
                                     first = false;
-                                }
-                                else
+                                } else
                                 {
                                     fueltypesString += ", Diesel";
                                 }
@@ -816,8 +791,7 @@ namespace DAL
                                 {
                                     fueltypesString += "Electrisch";
                                     first = false;
-                                }
-                                else
+                                } else
                                 {
                                     fueltypesString += ", Electrisch";
                                 }
@@ -830,19 +804,17 @@ namespace DAL
                     #endregion
 
                     command.CommandText = query;
-                    int n = (int) command.ExecuteScalar();
+                    int n = (int)command.ExecuteScalar();
                     if (n > 0)
                     {
                         return true;
                     }
 
                     return false;
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
                     throw new CarRepositoryException("Exists failed" + ex.Message);
-                }
-                finally
+                } finally
                 {
                     connection.Close();
                 }
@@ -943,8 +915,7 @@ namespace DAL
                                 {
                                     fueltypesString += "Benzine";
                                     first = false;
-                                }
-                                else
+                                } else
                                 {
                                     fueltypesString += ", Benzine";
                                 }
@@ -957,8 +928,7 @@ namespace DAL
                                 {
                                     fueltypesString += "Diesel";
                                     first = false;
-                                }
-                                else
+                                } else
                                 {
                                     fueltypesString += ", Diesel";
                                 }
@@ -970,8 +940,7 @@ namespace DAL
                                 {
                                     fueltypesString += "Electrisch";
                                     first = false;
-                                }
-                                else
+                                } else
                                 {
                                     fueltypesString += ", Electrisch";
                                 }
@@ -979,8 +948,7 @@ namespace DAL
                         }
 
                         command.Parameters.AddWithValue("@Fueltypes", fueltypesString);
-                    }
-                    else
+                    } else
                     {
                         command.Parameters.AddWithValue("@Fueltypes", DBNull.Value);
                     }
@@ -988,8 +956,7 @@ namespace DAL
                     if (!string.IsNullOrWhiteSpace(doors))
                     {
                         command.Parameters.AddWithValue("@Doors", doors);
-                    }
-                    else
+                    } else
                     {
                         command.Parameters.AddWithValue("@Doors", DBNull.Value);
                     }
@@ -997,8 +964,7 @@ namespace DAL
                     if (!string.IsNullOrWhiteSpace(colour))
                     {
                         command.Parameters.AddWithValue("@Colour", colour);
-                    }
-                    else
+                    } else
                     {
                         command.Parameters.AddWithValue("@Colour", DBNull.Value);
                     }
@@ -1007,19 +973,17 @@ namespace DAL
 
                     command.ExecuteNonQuery();
 
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
                     throw new CarRepositoryException("InsertCar failed - " + ex.Message);
-                }
-                finally
+                } finally
                 {
                     connection.Close();
                 }
             }
         }
 
-        //Done -> Only able to change lincenseplate and colour
+        //Done
         public void UpdateCar(Car oldCarInfo, Car newCarInfo)
         {
             bool Comma = false;
@@ -1028,10 +992,12 @@ namespace DAL
 
             bool licenseplateDifferent = oldCarInfo.Licenseplate != newCarInfo.Licenseplate;
             bool colourDifferent = oldCarInfo.Colour != newCarInfo.Colour;
+            bool doorsDifferent = oldCarInfo.Doors != newCarInfo.Doors;
+            bool fuellistDifferent = oldCarInfo.FuelType != newCarInfo.FuelType;
 
             #endregion
 
-            if (licenseplateDifferent || colourDifferent)
+            if (licenseplateDifferent || colourDifferent || doorsDifferent || fuellistDifferent)
             {
                 SqlConnection connection = getConnection();
                 string query = "UPDATE dbo.Car SET ";
@@ -1046,14 +1012,36 @@ namespace DAL
 
                 if (colourDifferent)
                 {
-                    if (Comma == true)
+                    if (Comma)
                     {
                         query += ",[Colour] = @Colour ";
-                    }
-                    else
+                    } else
                     {
                         query += "[Colour] = @Colour ";
                         Comma = true;
+                    }
+                }
+
+                if (doorsDifferent)
+                {
+                    if (Comma)
+                    {
+                        query += ",[Doors] = @Doors ";
+                    } else
+                    {
+                        query += "[Doors] = @Doors ";
+                        Comma = true;
+                    }
+                }
+
+                if (fuellistDifferent)
+                {
+                    if (Comma)
+                    {
+                        query += ",[Fueltypes] = @Fueltypes ";
+                    } else
+                    {
+                        query += "[Fueltypes] = @Fueltypes ";
                     }
                 }
 
@@ -1072,7 +1060,49 @@ namespace DAL
 
                         if (licenseplateDifferent)
                             command.Parameters.AddWithValue("@Licenseplate", newCarInfo.Licenseplate);
-                        if (colourDifferent) command.Parameters.AddWithValue("@Colour", newCarInfo.Colour);
+                        if (colourDifferent)
+                        {
+                            if (newCarInfo.Colour == null)
+                            {
+                                command.Parameters.AddWithValue("@Colour", DBNull.Value);
+                            } else
+                            {
+                                command.Parameters.AddWithValue("@Colour", newCarInfo.Colour);
+                            }
+
+                        }
+
+                        if (doorsDifferent)
+                        {
+                            if (newCarInfo.Doors == null)
+                            {
+                                command.Parameters.AddWithValue("@Doors", DBNull.Value);
+                            } else
+                            {
+                                command.Parameters.AddWithValue("@Doors", newCarInfo.Doors);
+                            }
+
+                        }
+
+                        if (fuellistDifferent)
+                        {
+                            string fuelString = "";
+                            bool first = true;
+                            foreach (var fuel in newCarInfo.FuelType)
+                            {
+                                if (first)
+                                {
+                                    fuelString += fuel;
+                                    first = false;
+                                }
+                                else
+                                {
+                                    fuelString += $", {fuel}";
+                                }
+                                
+                            }
+                            command.Parameters.AddWithValue("@Fueltypes", fuelString);
+                        }
 
                         #endregion
 
@@ -1086,12 +1116,10 @@ namespace DAL
                         command.ExecuteNonQuery();
 
 
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
-                        throw new AddressRepositoryException("UpdateCar failed - " + ex.Message);
-                    }
-                    finally
+                        throw new CarRepositoryException("UpdateCar failed - " + ex.Message);
+                    } finally
                     {
                         connection.Close();
                     }
@@ -1120,12 +1148,10 @@ namespace DAL
 
                 command.ExecuteNonQuery();
 
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 throw new AddressRepositoryException("DeleteCar failed - " + ex.Message);
-            }
-            finally
+            } finally
             {
                 connection.Close();
             }
@@ -1159,13 +1185,13 @@ namespace DAL
                     SqlDataReader datareader = command.ExecuteReader();
                     while (datareader.Read())
                     {
-                        int carIdDb = (int) datareader["CarId"];
-                        string makeDb = (string) datareader["Make"];
-                        string modelDb = (string) datareader["Model"];
-                        string vinDb = (string) datareader["Vin"];
-                        string licenseplateDb = (string) datareader["Licenseplate"];
-                        string vehicleTypeDb = (string) datareader["VehicleType"];
-                        string fueltypesStringDb = (string) datareader["carFueltypes"];
+                        int carIdDb = (int)datareader["CarId"];
+                        string makeDb = (string)datareader["Make"];
+                        string modelDb = (string)datareader["Model"];
+                        string vinDb = (string)datareader["Vin"];
+                        string licenseplateDb = (string)datareader["Licenseplate"];
+                        string vehicleTypeDb = (string)datareader["VehicleType"];
+                        string fueltypesStringDb = (string)datareader["carFueltypes"];
                         string doorsDb = "";
                         string colourDb = "";
                         Driver driver = null;
@@ -1174,21 +1200,21 @@ namespace DAL
 
                         if (DBNull.Value != datareader["Doors"])
                         {
-                            doorsDb = (string) datareader["Doors"];
+                            doorsDb = (string)datareader["Doors"];
                         }
 
                         if (DBNull.Value != datareader["Colour"])
                         {
-                            colourDb = (string) datareader["Colour"];
+                            colourDb = (string)datareader["Colour"];
                         }
 
                         if (DBNull.Value != datareader["DriverId"])
                         {
-                            int driverId = (int) datareader["DriverId"];
-                            string firstName = (string) datareader["FirstName"];
-                            string lastName = (string) datareader["LastName"];
-                            DateTime dateOfBirth = (DateTime) datareader["DateOfBirth"];
-                            string nationalIdentificationNumber = (string) datareader["NationalIdentificationNumber"];
+                            int driverId = (int)datareader["DriverId"];
+                            string firstName = (string)datareader["FirstName"];
+                            string lastName = (string)datareader["LastName"];
+                            DateTime dateOfBirth = (DateTime)datareader["DateOfBirth"];
+                            string nationalIdentificationNumber = (string)datareader["NationalIdentificationNumber"];
                             List<LicenseType> licensesList = new();
                             Address address = null;
                             Fuelcard fuelcard = null;
@@ -1202,13 +1228,13 @@ namespace DAL
                                 //In the database the licenses are put in as a string with a "," seperating each type.
                                 //This basically turns it into a list for us to use
                                 //We're also making the licenses all upper case in the array to eliminate the case sensitivity
-                                string licensesString = (string) datareader["Licenses"];
+                                string licensesString = (string)datareader["Licenses"];
                                 licensesString = licensesString.Replace(" ", "");
                                 string[] licensesArray = licensesString.ToUpper().Split(",");
 
                                 foreach (var l in licensesArray)
                                 {
-                                    LicenseType lt = (LicenseType) Enum.Parse(typeof(LicenseType), l);
+                                    LicenseType lt = (LicenseType)Enum.Parse(typeof(LicenseType), l);
                                     licensesList.Add(lt);
                                 }
                                 #endregion
@@ -1216,18 +1242,18 @@ namespace DAL
 
                             if (DBNull.Value != datareader["AddressId"])
                             {
-                                int addressId = (int) datareader["AddressId"];
-                                string street = (string) datareader["Street"];
-                                string housenumber = (string) datareader["Housenumber"];
-                                int postalcode = (int) datareader["Postalcode"];
-                                string city = (string) datareader["City"];
+                                int addressId = (int)datareader["AddressId"];
+                                string street = (string)datareader["Street"];
+                                string housenumber = (string)datareader["Housenumber"];
+                                int postalcode = (int)datareader["Postalcode"];
+                                string city = (string)datareader["City"];
                                 string addendum = "";
 
                                 #region Null checking
 
                                 if (DBNull.Value != datareader["Addendum"])
                                 {
-                                    addendum = (string) datareader["Addendum"];
+                                    addendum = (string)datareader["Addendum"];
                                 }
 
                                 address = new(addressId, street, housenumber, addendum, city, postalcode, null);
@@ -1236,10 +1262,10 @@ namespace DAL
                             if (DBNull.Value != datareader["FuelcardId"])
                             {
 
-                                int fuelcardId = (int) datareader["FuelcardId"];
-                                string cardnumber = (string) datareader["Cardnumber"];
-                                DateTime expiryDate = (DateTime) datareader["ExpiryDate"];
-                                bool isActive = (bool) datareader["IsActive"];
+                                int fuelcardId = (int)datareader["FuelcardId"];
+                                string cardnumber = (string)datareader["Cardnumber"];
+                                DateTime expiryDate = (DateTime)datareader["ExpiryDate"];
+                                bool isActive = (bool)datareader["IsActive"];
                                 List<Fuel> fueltypesListFuelcard = new();
 
                                 if (DBNull.Value != datareader["fuelcardFueltypes"])
@@ -1249,7 +1275,7 @@ namespace DAL
                                     //In the database the fueltypes are put in as a string with a "," seperating each type.
                                     //This basically turns it into a list for us to use
                                     //We're also making the fueltypes all upper case in the array to eliminate the case sensitivity
-                                    string fueltypesStringFuelcard = (string) datareader["fuelcardFueltypes"];
+                                    string fueltypesStringFuelcard = (string)datareader["fuelcardFueltypes"];
                                     fueltypesStringFuelcard = fueltypesStringFuelcard.Replace(" ", "");
                                     string[] fueltypesArrayFuelcard = fueltypesStringFuelcard.ToUpper().Split(",");
 
@@ -1338,12 +1364,10 @@ namespace DAL
 
                     datareader.Close();
 
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
                     throw new CarRepositoryException("GetCars failed" + ex.Message);
-                }
-                finally
+                } finally
                 {
                     connection.Close();
                 }

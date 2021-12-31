@@ -1,11 +1,11 @@
-﻿<Window x:Class="Views.NewWindows.NewCarWindow"
+﻿<Window x:Class="Views.UpdateWindows.UpdateCarWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Views.NewWindows"
+        xmlns:local="clr-namespace:Views.UpdateWindows"
         mc:Ignorable="d"
-        Title="New Driver" Height="459" Width="1084"
+        Title="UpdateDriverWindow" Height="459" Width="1084"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="#ffffff"
@@ -42,7 +42,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Name ="topbar"
-                       Text="New"
+                       Text="Update"
                        Foreground="Black"
                        Grid.Column="0"
                        VerticalAlignment="Center"
@@ -50,7 +50,7 @@
                        FontWeight="Black">
             </TextBlock>
             <TextBlock Name ="typebar"
-                       Text="Driver"
+                       Text="Fuelcard"
                        Foreground="Black"
                        Grid.Column="1"
                        VerticalAlignment="Center"
@@ -81,15 +81,15 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="Chassisnummer" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <TextBox ToolTip="Verplicht. De lengte van een chassisnummer is 17" x:Name="chassisnummerField" Grid.Row="0" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
+                    <TextBox IsReadOnly="True" x:Name="chassisnummerField" Grid.Row="0" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center" />
                     <Label Grid.Row="1" Grid.Column="0" Content="Nummerplaat" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <TextBox ToolTip="Verplicht. Gelieve de koppeltekens ook toe te voegen" x:Name="nummerplaatField" Grid.Row="1" Grid.Column="1" Text="" FontSize="15"  VerticalAlignment="Center"/>
                     <Label Grid.Row="2" Grid.Column="0" Content="Merk" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <TextBox ToolTip="Verplicht." x:Name="merkField" Grid.Row="2" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center"/>
+                    <TextBox IsReadOnly="True" x:Name="merkField" Grid.Row="2" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center"/>
                     <Label Grid.Row="3" Grid.Column="0" Content="Model" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <TextBox ToolTip="Verplicht." x:Name="modelField" Grid.Row="3" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center"/>
+                    <TextBox IsReadOnly="True" x:Name="modelField" Grid.Row="3" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center"/>
                     <Label Grid.Row="4" Grid.Column="0" Content="Type" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <TextBox ToolTip="Verplicht." x:Name="typeField" Grid.Row="4" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center"/>
+                    <TextBox IsReadOnly="True" x:Name="typeField" Grid.Row="4" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center"/>
                     <Label Grid.Row="5" Grid.Column="0" Content="Aantal deuren" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <TextBox x:Name="deurenField" Grid.Row="5" Grid.Column="1" Text="" FontSize="15" VerticalAlignment="Center"/>
                     <Label Grid.Row="6" Grid.Column="0" Content="Kleur" FontWeight="Bold" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"/>
@@ -119,7 +119,6 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                         </Grid>
-                        
 
                     </StackPanel>
 
@@ -147,15 +146,7 @@
             </Border>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Background="Transparent" Margin="520,20,0,0" Grid.ColumnSpan="2">
-            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="377" Width="478" Background="#e8e8e8">
-                
-            </Border>
-        </StackPanel>
-        <ListBox Name="bestuurderlist" Grid.Column="1" Grid.Row="1" Margin="94,327,41,51"/>
-        <TextBox Name="bestuurderField" Text="Rijksregisternummer bestuurder" TextWrapping="Wrap" Grid.Column="1" Margin="94,298,113,102" Grid.Row="1"/>
-        <Button Margin="418,298,41,101" Grid.Row="1" Grid.Column="1" Content="Zoek" Click="driverZoekBtn_OnClick"/>
-
+        
 
     </Grid>
 
