@@ -53,7 +53,7 @@ namespace Views.Pages
             SelectedItemContent.IsEnabled = false;
             string x = userInputDriverPage.Text;
             DriverManager d = new DriverManager(dr);
-            var drlist = d.Search(x);
+            IReadOnlyList<Driver> drlist = !string.IsNullOrWhiteSpace(x) ? d.Search(x) : d.GetAllDrivers();
             DriverList.ItemsSource = new ObservableCollection<Driver>(drlist);
 
         }

@@ -862,7 +862,15 @@ namespace DAL
                 carDifferent = oldDriverInfo.AssignedCar.CarId != newDriverInfo.AssignedCar.CarId;
             }
 
-            bool fuelcardDifferent = oldDriverInfo.AssignedFuelcard.FuelcardId != newDriverInfo.AssignedFuelcard.FuelcardId;
+            bool fuelcardDifferent;
+            if (oldDriverInfo.AssignedFuelcard == null || newDriverInfo.AssignedFuelcard == null)
+            {
+                fuelcardDifferent = true;
+            } else
+            {
+                fuelcardDifferent = oldDriverInfo.AssignedFuelcard.FuelcardId != newDriverInfo.AssignedFuelcard.FuelcardId;
+            }
+
             #endregion
 
             if (firstNameDifferent || lastNameDifferent || addressDifferent || licensesDifferent || carDifferent || fuelcardDifferent)

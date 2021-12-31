@@ -475,7 +475,7 @@ namespace DAL
                     string cardnumberDb = (string) datareader["Cardnumber"];
                     DateTime expiryDateDb = (DateTime) datareader["ExpiryDate"];
                     bool isActiveDb = (bool) datareader["IsActive"];
-                    int pincode = 0;
+                    int? pincode = null;
                     List<Fuel> fueltypesList = new();
                     Driver driver = null;
 

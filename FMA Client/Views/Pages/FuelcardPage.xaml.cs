@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using Views.FilterPages;
 using Views.NewWindows;
+using Views.UpdateWindows;
 
 namespace Views.Pages
 {
@@ -107,7 +108,7 @@ namespace Views.Pages
             }
         }
 
-        //Wait on Filter page to be made
+        //Done
         private void FilterButton_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             NavigationService ns = this.NavigationService;
@@ -115,11 +116,17 @@ namespace Views.Pages
             ns.Navigate(fcp);
         }
 
-        //Wait on New page to be made
+        //Done
         private void NieuwButton_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             NewFuelcardWindow nfcw = new NewFuelcardWindow();
             nfcw.Show();
+        }
+
+        private void bewerkButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            UpdateFuelcardWindow ufcw = new UpdateFuelcardWindow((Fuelcard)FuelcardList.SelectedItem);
+            ufcw.Show();
         }
 
         private void MakeTextBoxesEmpty()
