@@ -82,6 +82,17 @@ namespace BusinessLayer.Managers
             }
         }
 
+        public void UpdateFuelcard(Fuelcard fuelcard, Fuelcard newFuelcard)
+        {
+            try
+            {
+                _repo.UpdateFuelcard(fuelcard, newFuelcard);
+            } catch
+            {
+                throw new FuelcardManagerException("Update fuelcard failed");
+            }
+        }
+
         //IReadOnlyList<Fuelcard> GetFuelcard(int? fuelcardId, string cardnumber, string expiryDate, List<Fuel> fueltypes, bool? isActive);
         //bool Exists(int? fuelcardId, string cardnumber, string expiryDate, List<Fuel> fueltypes, bool? isActive);
         //void InsertFuelcard(string cardnumber, string expiryDate, List<Fuel> fueltypes, int? pincode, bool? isActive);

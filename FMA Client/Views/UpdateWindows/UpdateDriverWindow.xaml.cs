@@ -122,6 +122,8 @@ namespace Views.UpdateWindows
             DateTime dt = geboortedatumField.SelectedDate.Value;
             Car car = (Car)carlist.SelectedItem;
             Fuelcard fuelcard = (Fuelcard)tankkaarlist.SelectedItem;
+            if (car.Driver != null) car.RemoveDriver();
+            if (fuelcard.Driver != null) fuelcard.RemoveDriver();
             Address a = new Address(_driver.Address.AddressId, straatnaamField.Text, housenumberField.Text,
                 addendumField.Text, cityField.Text, int.Parse(postalcodeField.Text), _driver);
             if (a != _driver.Address)
@@ -163,7 +165,7 @@ namespace Views.UpdateWindows
             
             string x = nummerplaatField.Text;
             CarRepository cr =
-                new CarRepository(@"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+                new CarRepository(_connectionString);
             CarManager cm = new CarManager(cr);
             var list = cm.GetCars(null, null, x, null, null, null, null, null, null);
             carlist.UnselectAll();
@@ -176,7 +178,7 @@ namespace Views.UpdateWindows
             string x = tankkaartField.Text;
             FuelcardRepository fr =
                 new FuelcardRepository(
-                    @"Data Source=.\SQLEXPRESS;Initial Catalog=fmaDatabase;Integrated Security=True");
+                    _connectionString);
             FuelcardManager fm = new FuelcardManager(fr);
 
             var list = fm.GetFuelcard(x);
