@@ -1,4 +1,5 @@
-﻿using BusinessLayer;
+﻿using System;
+using BusinessLayer;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Managers;
@@ -52,31 +53,38 @@ namespace Views.NewWindows
 
         private void CreateCar()
         {
-            List<Fuel> fuelList = CreateFueltypeList();
-            string vin = chassisnummerField.Text;
-            string nummerplaat = nummerplaatField.Text;
-            string merk = merkField.Text;
-            string model = modelField.Text;
-            string wagenType = typeField.Text;
-            string deuren = deurenField.Text;
-            string kleur = kleurField.Text;
+            try
+            {
+                List<Fuel> fuelList = CreateFueltypeList();
+                string vin = chassisnummerField.Text;
+                string nummerplaat = nummerplaatField.Text;
+                string merk = merkField.Text;
+                string model = modelField.Text;
+                string wagenType = typeField.Text;
+                string deuren = deurenField.Text;
+                string kleur = kleurField.Text;
 
-            if (string.IsNullOrWhiteSpace(vin) || string.IsNullOrWhiteSpace(nummerplaat) ||
-                string.IsNullOrWhiteSpace(merk)
-                || string.IsNullOrWhiteSpace(model) || string.IsNullOrWhiteSpace(wagenType) || fuelList == null)
-            {
-                MessageBox.Show("Niet alle verplichte velden zijn ingevuld, opslaan is gestopt");
-            } else
-            {
-                cm.InsertCar(vin, nummerplaat, merk, model, wagenType, fuelList, deuren, kleur);
-                if (!cm.Exists(null, vin, nummerplaat, merk, model, wagenType, fuelList, deuren, kleur))
+                if (string.IsNullOrWhiteSpace(vin) || string.IsNullOrWhiteSpace(nummerplaat) ||
+                    string.IsNullOrWhiteSpace(merk)
+                    || string.IsNullOrWhiteSpace(model) || string.IsNullOrWhiteSpace(wagenType) || fuelList == null)
                 {
-                    throw new UserInterfaceException("Failed to create car in newcarwindow");
+                    MessageBox.Show("Niet alle verplichte velden zijn ingevuld, opslaan is gestopt");
                 } else
                 {
-                    MessageBox.Show("Nieuwe Car is aangemaakt en toegevoegd");
-                    this.Close();
+                    cm.InsertCar(vin, nummerplaat, merk, model, wagenType, fuelList, deuren, kleur);
+                    if (!cm.Exists(null, vin, nummerplaat, merk, model, wagenType, fuelList, deuren, kleur))
+                    {
+                        throw new UserInterfaceException("Failed to create car in newcarwindow");
+                    } else
+                    {
+                        MessageBox.Show("Nieuwe Car is aangemaakt en toegevoegd");
+                        this.Close();
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"failed to create new car {e.Message} - {e.InnerException.Message}");
             }
 
 
@@ -111,9 +119,16 @@ namespace Views.NewWindows
 
         private void driverZoekBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            string x = bestuurderField.Text;
-            var list = dm.GetDrivers(null, null, null, null, x, null);
-            bestuurderlist.ItemsSource = new ObservableCollection<Driver>(list);
+            try
+            {
+                string x = bestuurderField.Text;
+                var list = dm.GetDrivers(null, null, null, null, x, null);
+                bestuurderlist.ItemsSource = new ObservableCollection<Driver>(list);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to search driver {ex.Message} - {ex.InnerException.Message}");
+            }
         }
     }
 }

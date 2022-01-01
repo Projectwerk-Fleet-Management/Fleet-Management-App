@@ -1,4 +1,5 @@
-﻿using BusinessLayer;
+﻿using System;
+using BusinessLayer;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Managers;
 using DAL;
@@ -37,27 +38,27 @@ namespace Views.FilterPages
 
         private void OpslaanButton_OnClick(object sender, RoutedEventArgs e)
         {
-            List<Fuel> fuelList;
-            if (CreateFueltypeList().Count <= 0)
+            try
             {
-                fuelList = null;
-            } else
-            {
-                fuelList = CreateFueltypeList();
+                List<Fuel> fuelList;
+                if (CreateFueltypeList().Count <= 0)
+                {
+                    fuelList = null;
+                }
+                else
+                {
+                    fuelList = CreateFueltypeList();
+                }
+
+                carList = cm.GetCars(null, chassisnummerField.Text, nummerplaatField.Text, merkField.Text,
+                    modelField.Text, typeField.Text, fuelList, deurenField.Text, kleurField.Text);
+                returnToCar();
             }
-
-            carList = cm.GetCars(null, chassisnummerField.Text, nummerplaatField.Text, merkField.Text,
-                modelField.Text, typeField.Text, fuelList, deurenField.Text, kleurField.Text);
-            returnToCar();
-            //DriverManager dm = new DriverManager(dr);
-            //string date = null;
-            //if (geboortedatumField.SelectedDate != null)
-            //{
-            //    date = geboortedatumField.SelectedDate.Value.ToString("yyyy-MM-dd");
-            //}
-            //driverList = dm.GetDrivers(null, voornaamField.Text, achternaamField.Text, date, rijksregisternummerField.Text, createDriverLicenseList());
-
-            //returnToDriver();
+            catch (Exception e)
+            {
+                MessageBox.Show($"Kon de filter niet uitvoerem, {e.Message} - {e.InnerException.Message}");
+            }
+ 
         }
 
         private List<Fuel> CreateFueltypeList()

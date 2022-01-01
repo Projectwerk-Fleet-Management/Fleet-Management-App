@@ -52,55 +52,62 @@ namespace Views.NewWindows
 
         private void CreateCar()
         {
-            List<Fuel> fuelList = CreateFueltypeList();
-            string kaartnummer = kaartnummerField.Text;
-            if (kaartnummer.Length != 18)
+            try
             {
-                MessageBox.Show("De lengte van een kaartnummer moet 18 zijn");
-            }
-            DateTime vervaldatum = new DateTime(1888, 01, 01);
-            if (vervaldatumField.Text != "")
-            {
-                vervaldatum = vervaldatumField.SelectedDate.Value;
-            }
-
-            bool isActief = true;
-            if (Ja.IsChecked == true)
-            {
-                isActief = true;
-            } else if (Nee.IsChecked == true)
-            {
-                isActief = false;
-            }
-
-            int? pincode = null;
-            if (!string.IsNullOrWhiteSpace(pincodeField.Text))
-            {
-                pincode = int.Parse(pincodeField.Text);
-            }
-
-            if (string.IsNullOrWhiteSpace(kaartnummer) || (Ja.IsChecked == false && Nee.IsChecked == false) || vervaldatum == new DateTime(1888, 01, 01))
-            {
-                MessageBox.Show("Nieuwe tankkaart aanmaken is gestopt, niet alle verplichte velden zijn ingevuld");
-            } else
-            {
-                var result = MessageBox.Show("Bent u zeker dat u deze tankkaart wilt toevoegen?", "Confirmatie",
-                    MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.No)
+                List<Fuel> fuelList = CreateFueltypeList();
+                string kaartnummer = kaartnummerField.Text;
+                if (kaartnummer.Length != 18)
                 {
-                    MessageBox.Show("Toevoegen gestopt");
+                    MessageBox.Show("De lengte van een kaartnummer moet 18 zijn");
+                }
+                DateTime vervaldatum = new DateTime(1888, 01, 01);
+                if (vervaldatumField.Text != "")
+                {
+                    vervaldatum = vervaldatumField.SelectedDate.Value;
+                }
+
+                bool isActief = true;
+                if (Ja.IsChecked == true)
+                {
+                    isActief = true;
+                } else if (Nee.IsChecked == true)
+                {
+                    isActief = false;
+                }
+
+                int? pincode = null;
+                if (!string.IsNullOrWhiteSpace(pincodeField.Text))
+                {
+                    pincode = int.Parse(pincodeField.Text);
+                }
+
+                if (string.IsNullOrWhiteSpace(kaartnummer) || (Ja.IsChecked == false && Nee.IsChecked == false) || vervaldatum == new DateTime(1888, 01, 01))
+                {
+                    MessageBox.Show("Nieuwe tankkaart aanmaken is gestopt, niet alle verplichte velden zijn ingevuld");
                 } else
                 {
-                    if (fcm.Exists(kaartnummer))
+                    var result = MessageBox.Show("Bent u zeker dat u deze tankkaart wilt toevoegen?", "Confirmatie",
+                        MessageBoxButton.YesNo);
+                    if (result == MessageBoxResult.No)
                     {
-                        MessageBox.Show("Er bestaat al een tankkaart met deze nummer, gelieve dit te controleren.");
+                        MessageBox.Show("Toevoegen gestopt");
                     } else
                     {
-                        fcm.Insert(kaartnummer, vervaldatum, fuelList, pincode, isActief);
-                        MessageBox.Show("Toevoegen is succesvol doorgegaan");
-                    }
+                        if (fcm.Exists(kaartnummer))
+                        {
+                            MessageBox.Show("Er bestaat al een tankkaart met deze nummer, gelieve dit te controleren.");
+                        } else
+                        {
+                            fcm.Insert(kaartnummer, vervaldatum, fuelList, pincode, isActief);
+                            MessageBox.Show("Toevoegen is succesvol doorgegaan");
+                        }
 
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"kon geen tankkaart aanmaken {e.Message} - {e.InnerException.Message}");
             }
         }
 

@@ -10,14 +10,10 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 using BusinessLayer;
-using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Managers;
-using BusinessLayer.Model;
 using DAL;
 
 namespace Views.UpdateWindows
@@ -60,15 +56,23 @@ namespace Views.UpdateWindows
 
         private void updateFuelcard()
         {
-            int? pincode = null;
-            bool nietCorrect;
-            if (!string.IsNullOrWhiteSpace(pincodeField.Text)) pincode = TryParseNullable(pincodeField.Text);
-            Fuelcard newFuelcard = new(_fuelcard.FuelcardId, kaartnummerField.Text, vervaldatumField.SelectedDate.Value, pincode,
-                 CreateFueltypeList(), GetActief());
+            try
+            {
+                int? pincode = null;
+                bool nietCorrect;
+                if (!string.IsNullOrWhiteSpace(pincodeField.Text)) pincode = TryParseNullable(pincodeField.Text);
+                Fuelcard newFuelcard = new(_fuelcard.FuelcardId, kaartnummerField.Text, vervaldatumField.SelectedDate.Value, pincode,
+                    CreateFueltypeList(), GetActief());
 
-            fcm.UpdateFuelcard(_fuelcard, newFuelcard);
-            MessageBox.Show("Fuelcard updated");
-            this.Close();
+                fcm.UpdateFuelcard(_fuelcard, newFuelcard);
+                MessageBox.Show("Fuelcard updated");
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"failed to update fuelcard, {ex.Message} - {ex.InnerException.Message}");
+            }
+            
         }
 
         private void menubardrag_OnMouseDown(object sender, MouseButtonEventArgs e)

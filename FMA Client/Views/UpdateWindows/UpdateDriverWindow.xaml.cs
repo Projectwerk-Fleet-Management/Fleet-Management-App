@@ -118,25 +118,33 @@ namespace Views.UpdateWindows
 
         private void updateDriver()
         {
-            List<LicenseType> driverslicense = createDriverLicenseList();
-            DateTime dt = geboortedatumField.SelectedDate.Value;
-            Car car = (Car)carlist.SelectedItem;
-            Fuelcard fuelcard = (Fuelcard)tankkaarlist.SelectedItem;
-            if (car.Driver != null) car.RemoveDriver();
-            if (fuelcard.Driver != null) fuelcard.RemoveDriver();
-            Address a = new Address(_driver.Address.AddressId, straatnaamField.Text, housenumberField.Text,
-                addendumField.Text, cityField.Text, int.Parse(postalcodeField.Text), _driver);
-            if (a != _driver.Address)
+            try
             {
-                am.Update(_driver.Address, a);
+                List<LicenseType> driverslicense = createDriverLicenseList();
+                DateTime dt = geboortedatumField.SelectedDate.Value;
+                Car car = (Car)carlist.SelectedItem;
+                Fuelcard fuelcard = (Fuelcard)tankkaarlist.SelectedItem;
+                if (car.Driver != null) car.RemoveDriver();
+                if (fuelcard.Driver != null) fuelcard.RemoveDriver();
+                Address a = new Address(_driver.Address.AddressId, straatnaamField.Text, housenumberField.Text,
+                    addendumField.Text, cityField.Text, int.Parse(postalcodeField.Text), _driver);
+                if (a != _driver.Address)
+                {
+                    am.Update(_driver.Address, a);
+                }
+
+                Driver d = new Driver(_driver.DriverId, voornaamField.Text, achternaamField.Text, a, dt,
+                    rijksregisternummerField.Text, createDriverLicenseList(), car, fuelcard);
+
+                dm.UpdateDriver(_driver, d);
+                MessageBox.Show("Driver updated");
+                this.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Failed to update driver {ex.Message} - {ex.InnerException.Message}");
             }
 
-            Driver d = new Driver(_driver.DriverId, voornaamField.Text, achternaamField.Text, a, dt,
-                rijksregisternummerField.Text, createDriverLicenseList(), car, fuelcard);
-
-            dm.UpdateDriver(_driver, d);
-            MessageBox.Show("Driver updated");
-            this.Close();
         }
 
         private void menubardrag_OnMouseDown(object sender, MouseButtonEventArgs e)

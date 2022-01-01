@@ -1,4 +1,5 @@
-﻿using BusinessLayer;
+﻿using System;
+using BusinessLayer;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Managers;
 using DAL;
@@ -57,11 +58,19 @@ namespace Views.UpdateWindows
                 MessageBox.Show("Niet alle verplichte velden zijn ingevuld, updaten is gestopt");
             } else
             {
-                Car newCar = new(_car.CarId, merk, model, vin, nummerplaat, wagenType, fuelList, kleur, deuren);
-                cm.UpdateCar(_car, newCar);
+                try
+                {
+                    Car newCar = new(_car.CarId, merk, model, vin, nummerplaat, wagenType, fuelList, kleur, deuren);
+                    cm.UpdateCar(_car, newCar);
 
-                MessageBox.Show("Car is geupdate");
-                this.Close();
+                    MessageBox.Show("Car is geupdate");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to update car, {ex.Message} - {ex.InnerException.Message}");
+                }
+
 
             }
         }

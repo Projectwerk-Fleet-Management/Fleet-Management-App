@@ -1,4 +1,5 @@
-﻿using BusinessLayer;
+﻿using System;
+using BusinessLayer;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Managers;
 using DAL;
@@ -37,35 +38,42 @@ namespace Views.FilterPages
 
         private void OpslaanButton_OnClick(object sender, RoutedEventArgs e)
         {
-            List<Fuel> fuelList;
-            if (CreateFueltypeList().Count <= 0)
+            try
             {
-                fuelList = null;
-            } else
-            {
-                fuelList = CreateFueltypeList();
-            }
+                List<Fuel> fuelList;
+                if (CreateFueltypeList().Count <= 0)
+                {
+                    fuelList = null;
+                } else
+                {
+                    fuelList = CreateFueltypeList();
+                }
 
-            bool? isActief = null;
-            if (ja.IsChecked == true)
-            {
-                isActief = true;
-                nee.IsChecked = false;
-                beide.IsChecked = false;
-            } else if (nee.IsChecked == true)
-            {
-                isActief = false;
-                nee.IsChecked = true;
-                beide.IsChecked = false;
-            } else if (beide.IsChecked == true)
-            {
-                isActief = null;
-                ja.IsChecked = false;
-                nee.IsChecked = false;
-            }
+                bool? isActief = null;
+                if (ja.IsChecked == true)
+                {
+                    isActief = true;
+                    nee.IsChecked = false;
+                    beide.IsChecked = false;
+                } else if (nee.IsChecked == true)
+                {
+                    isActief = false;
+                    nee.IsChecked = true;
+                    beide.IsChecked = false;
+                } else if (beide.IsChecked == true)
+                {
+                    isActief = null;
+                    ja.IsChecked = false;
+                    nee.IsChecked = false;
+                }
 
-            fuelcardList = fcm.Filter(KaartnummerField.Text, fuelList, isActief);
-            ReturnToFuelcard();
+                fuelcardList = fcm.Filter(KaartnummerField.Text, fuelList, isActief);
+                ReturnToFuelcard();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show($"kon niet filteren, {exception.Message} - {exception.InnerException.Message}");
+            }
         }
 
         private List<Fuel> CreateFueltypeList()
