@@ -1,4 +1,5 @@
-﻿using BusinessLayer;
+﻿using System;
+using BusinessLayer;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Managers;
 using DAL;
@@ -49,12 +50,20 @@ namespace Views.Pages
 
         private void SearchButtonDriver_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            DriverList.UnselectAll();
-            SelectedItemContent.IsEnabled = false;
-            string x = userInputDriverPage.Text;
-            DriverManager d = new DriverManager(dr);
-            IReadOnlyList<Driver> drlist = !string.IsNullOrWhiteSpace(x) ? d.Search(x) : d.GetAllDrivers();
-            DriverList.ItemsSource = new ObservableCollection<Driver>(drlist);
+            try
+            {
+                DriverList.UnselectAll();
+                SelectedItemContent.IsEnabled = false;
+                string x = userInputDriverPage.Text;
+                DriverManager d = new DriverManager(dr);
+                IReadOnlyList<Driver> drlist = !string.IsNullOrWhiteSpace(x) ? d.Search(x) : d.GetAllDrivers();
+                DriverList.ItemsSource = new ObservableCollection<Driver>(drlist);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to search, {ex.Message} - {ex.InnerException.Message}");
+            }
+            
 
         }
 

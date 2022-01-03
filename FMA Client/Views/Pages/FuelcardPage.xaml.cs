@@ -1,4 +1,5 @@
-﻿using BusinessLayer;
+﻿using System;
+using BusinessLayer;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Managers;
 using DAL;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
@@ -42,21 +44,29 @@ namespace Views.Pages
         //Done
         private void SearchButtonFuelcard_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            MakeTextBoxesEmpty();
-            FuelcardList.UnselectAll();
-            SelectedItemContent.IsEnabled = false;
-            string x = userInputFuelcardPage.Text;
-            IReadOnlyList<Fuelcard> fclist;
-            if (!string.IsNullOrWhiteSpace(x))
+            try
             {
-                fclist = f.Search(x);
+                MakeTextBoxesEmpty();
+                FuelcardList.UnselectAll();
+                SelectedItemContent.IsEnabled = false;
+                string x = userInputFuelcardPage.Text;
+                IReadOnlyList<Fuelcard> fclist;
+                if (!string.IsNullOrWhiteSpace(x))
+                {
+                    fclist = f.Search(x);
+                }
+                else
+                {
+                    fclist = f.GetAllFuelcards();
+                }
+
+                FuelcardList.ItemsSource = new ObservableCollection<Fuelcard>(fclist);
             }
-            else
+            catch (Exception ex)
             {
-                fclist = f.GetAllFuelcards();
+                MessageBox.Show($"Failed to search, {ex.Message} - {ex.InnerException.Message}");
             }
 
-            FuelcardList.ItemsSource = new ObservableCollection<Fuelcard>(fclist);
         }
 
         //Done

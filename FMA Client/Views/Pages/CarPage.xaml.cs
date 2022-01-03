@@ -1,4 +1,5 @@
-﻿using BusinessLayer;
+﻿using System;
+using BusinessLayer;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Managers;
 using DAL;
@@ -50,66 +51,86 @@ namespace Views.Pages
         //Done
         private void verwijderButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Car selectedCar = (Car)CarList.SelectedItem;
-            MessageBoxResult result =
-                MessageBox.Show($"Bent u zeker dat u deze auto ({selectedCar}) wilt verwijderen?"
-                    , "Confirmatie", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
+            try
             {
-                if (selectedCar.Driver != null)
-                {
-                    var result2 = MessageBox.Show($"Deze auto heeft een bestuurder " +
-                                                  $"({selectedCar.Driver.FirstName} " + $"{selectedCar.Driver.LastName})," +
-                                                  $"als u deze auto verwijdert zal deze bestuurder geen auto meer hebben?"
+                Car selectedCar = (Car)CarList.SelectedItem;
+                MessageBoxResult result =
+                    MessageBox.Show($"Bent u zeker dat u deze auto ({selectedCar}) wilt verwijderen?"
                         , "Confirmatie", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-                    if (result2 == MessageBoxResult.Yes)
-                    {
-                        Driver oldDriverInfo = selectedCar.Driver;
-                        Fuelcard fc = new(oldDriverInfo.AssignedFuelcard.FuelcardId,
-                            oldDriverInfo.AssignedFuelcard.Cardnumber, oldDriverInfo.AssignedFuelcard.ExpiryDate);
-                        Driver newDriverInfo = new(oldDriverInfo.DriverId, oldDriverInfo.FirstName,
-                            oldDriverInfo.LastName, oldDriverInfo.Address, oldDriverInfo.DateOfBirth,
-                            oldDriverInfo.NationalIdentificationNumber, oldDriverInfo.Licenses,
-                            fc);
-                        d.UpdateDriver(oldDriverInfo, newDriverInfo);
-                        c.DeleteCar(selectedCar);
-                    } else
-                    {
-                        MessageBox.Show("Verwijderen is gestopt", "Gestopt");
-                    }
-                } else
+                if (result == MessageBoxResult.Yes)
                 {
-                    c.DeleteCar(selectedCar);
-                }
+                    if (selectedCar.Driver != null)
+                    {
+                        var result2 = MessageBox.Show($"Deze auto heeft een bestuurder " +
+                                                      $"({selectedCar.Driver.FirstName} " + $"{selectedCar.Driver.LastName})," +
+                                                      $"als u deze auto verwijdert zal deze bestuurder geen auto meer hebben?"
+                            , "Confirmatie", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-                LoadPage();
-                MakeTextBoxesEmpty();
-            } else
-            {
-                MessageBox.Show("Verwijderen is gestopt", "Gestopt");
+                        if (result2 == MessageBoxResult.Yes)
+                        {
+                            Driver oldDriverInfo = selectedCar.Driver;
+                            Fuelcard fc = new(oldDriverInfo.AssignedFuelcard.FuelcardId,
+                                oldDriverInfo.AssignedFuelcard.Cardnumber, oldDriverInfo.AssignedFuelcard.ExpiryDate);
+                            Driver newDriverInfo = new(oldDriverInfo.DriverId, oldDriverInfo.FirstName,
+                                oldDriverInfo.LastName, oldDriverInfo.Address, oldDriverInfo.DateOfBirth,
+                                oldDriverInfo.NationalIdentificationNumber, oldDriverInfo.Licenses,
+                                fc);
+                            d.UpdateDriver(oldDriverInfo, newDriverInfo);
+                            c.DeleteCar(selectedCar);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Verwijderen is gestopt", "Gestopt");
+                        }
+                    }
+                    else
+                    {
+                        c.DeleteCar(selectedCar);
+                    }
+
+                    LoadPage();
+                    MakeTextBoxesEmpty();
+                }
+                else
+                {
+                    MessageBox.Show("Verwijderen is gestopt", "Gestopt");
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to delete, {ex.Message} - {ex.InnerException.Message}");
+            }
+            
         }
 
         //Done
         private void SearchButtonCar_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            MakeTextBoxesEmpty();
-            CarList.UnselectAll();
-            SelectedItemContent.IsEnabled = false;
-            string x = userInputCarPage.Text;
-            IReadOnlyList<Car> clist;
+            try
+            {
+                MakeTextBoxesEmpty();
+                CarList.UnselectAll();
+                SelectedItemContent.IsEnabled = false;
+                string x = userInputCarPage.Text;
+                IReadOnlyList<Car> clist;
 
-            if (!string.IsNullOrWhiteSpace(x))
+                if (!string.IsNullOrWhiteSpace(x))
+                {
+                    clist = c.Search(x);
+                }
+                else
+                {
+                    clist = c.GetAllCars();
+                }
+
+                CarList.ItemsSource = new ObservableCollection<Car>(clist);
+            }
+            catch (Exception ex)
             {
-                clist = c.Search(x);
-            } else
-            {
-                clist = c.GetAllCars();
+                MessageBox.Show($"Failed to search, {ex.Message} - {ex.InnerException.Message}");
             }
 
-            CarList.ItemsSource = new ObservableCollection<Car>(clist);
         }
 
         //Done

@@ -64,29 +64,31 @@ namespace Views.NewWindows
 
         private void CreateDriver()
         {
-            List <LicenseType> driverslicense  = createDriverLicenseList();
-            DateTime dt = geboortedatumField.SelectedDate.Value;
-            createDriverAddress();
-            Address address = a.First();
-            Car car = (Car)carlist.SelectedItem;
-            Fuelcard fuelcard = (Fuelcard) tankkaarlist.SelectedItem;
-
-            dm.InsertDriver(voornaamField.Text, achternaamField.Text, dt.ToString("yyyy-MM-dd"), rijksregisternummerField.Text, createDriverLicenseList(), address.AddressId, fuelcard.FuelcardId, car.CarId);
-            if (!dm.Exists(null, voornaamField.Text, achternaamField.Text, dt.ToString("yyyy/MM/dd"),
-                rijksregisternummerField.Text, createDriverLicenseList()))
+            try
             {
-                throw new UserInterfaceException("Failed to create driver in newdriverwindow");
-            }
-            else
-            {
-                MessageBox.Show("Nieuwe Driver is aangemaakt en toegevoegd");
-                this.Close();
-            }
-        }
+                List <LicenseType> driverslicense  = createDriverLicenseList();
+                DateTime dt = geboortedatumField.SelectedDate.Value;
+                createDriverAddress();
+                Address address = a.First();
+                Car car = (Car)carlist.SelectedItem;
+                Fuelcard fuelcard = (Fuelcard) tankkaarlist.SelectedItem;
 
-        private void endcreate()
-        {
-            MessageBox.Show("Driver is toegevoegd");
+                dm.InsertDriver(voornaamField.Text, achternaamField.Text, dt.ToString("yyyy-MM-dd"), rijksregisternummerField.Text, createDriverLicenseList(), address.AddressId, fuelcard.FuelcardId, car.CarId);
+                if (!dm.Exists(null, voornaamField.Text, achternaamField.Text, dt.ToString("yyyy/MM/dd"),
+                    rijksregisternummerField.Text, createDriverLicenseList()))
+                {
+                    throw new UserInterfaceException("Failed to create driver in newdriverwindow");
+                }
+                else
+                {
+                    MessageBox.Show("Nieuwe Driver is aangemaakt en toegevoegd");
+                    this.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Driver kon niet aangemaakt worden, {e.Message} - {e.InnerException.Message} ");
+            }
         }
 
         private List<LicenseType> createDriverLicenseList()

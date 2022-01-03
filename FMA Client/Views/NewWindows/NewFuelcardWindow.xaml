@@ -137,13 +137,13 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Background="Transparent" Margin="520,20,0,0" Grid.ColumnSpan="2">
-            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="377" Width="478" Background="#e8e8e8">
-                
+            <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" Height="117" Width="478" Background="#e8e8e8">
+
             </Border>
         </StackPanel>
-        <ListBox Name="bestuurderlist" Grid.Column="1" Grid.Row="1" Margin="94,327,41,51"/>
-        <TextBox Name="bestuurderField" Text="Rijksregisternummer bestuurder" TextWrapping="Wrap" Grid.Column="1" Margin="94,298,113,102" Grid.Row="1"/>
-        <Button Margin="418,298,41,101" Grid.Row="1" Grid.Column="1" Content="Zoek" Click="driverZoekBtn_OnClick"/>
+        <ListBox Name="bestuurderlist" Grid.Column="1" Grid.Row="1" Margin="72,61,64,317"/>
+        <TextBox Name="bestuurderField" Text="Rijksregisternummer bestuurder" TextWrapping="Wrap" Grid.Column="1" Margin="72,32,136,368" Grid.Row="1"/>
+        <Button Margin="396,32,64,367" Grid.Row="1" Grid.Column="1" Content="Zoek" Click="driverZoekBtn_OnClick"/>
 
 
     </Grid>
