@@ -1,8 +1,8 @@
-﻿using System;
-using BusinessLayer;
+﻿using BusinessLayer;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Managers;
 using DAL;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
@@ -40,12 +40,16 @@ namespace Views.Pages
             DriverList.ItemsSource = new ObservableCollection<Driver>(resultDrivers);
         }
 
-        private void update()
+        private void Update()
         {
             SelectedItemContent.IsEnabled = false;
             DriverManager d = new DriverManager(dr);
             IReadOnlyList<Driver> drlist = d.GetAllDrivers();
             DriverList.ItemsSource = new ObservableCollection<Driver>(drlist);
+            DriverList.UnselectAll();
+            MakeTextBoxesEmpty();
+            bewerkButton.IsEnabled = false;
+            verwijderButton.IsEnabled = false;
         }
 
         private void SearchButtonDriver_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -58,13 +62,25 @@ namespace Views.Pages
                 DriverManager d = new DriverManager(dr);
                 IReadOnlyList<Driver> drlist = !string.IsNullOrWhiteSpace(x) ? d.Search(x) : d.GetAllDrivers();
                 DriverList.ItemsSource = new ObservableCollection<Driver>(drlist);
-            }
-            catch (Exception ex)
+                MakeTextBoxesEmpty();
+            } catch (Exception ex)
             {
                 MessageBox.Show($"Failed to search, {ex.Message} - {ex.InnerException.Message}");
             }
-            
 
+
+        }
+
+        private void MakeTextBoxesEmpty()
+        {
+            voornaamField.Text = "";
+            achternaamField.Text = "";
+            geboortedatumField.Text = "";
+            rijksregisternummerField.Text = "";
+            rijbewijzenField.Text = "";
+            adresField.Text = "";
+            tankkaartField.Text = "";
+            autoField.Text = "";
         }
 
         private void DriverList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -121,6 +137,9 @@ namespace Views.Pages
                     autoField.Text = "Geen auto";
                 }
 
+                bewerkButton.IsEnabled = true;
+                verwijderButton.IsEnabled = true;
+
             }
         }
 
@@ -152,7 +171,7 @@ namespace Views.Pages
             if (result == MessageBoxResult.Yes)
             {
                 dm.DeleteDriver((Driver)DriverList.SelectedItem, AR);
-                update();
+                Update();
             } else if (result == MessageBoxResult.No)
             {
                 MessageBox.Show("Niets is verwijderd");
@@ -165,6 +184,7 @@ namespace Views.Pages
         {
             UpdateDriverWindow x = new UpdateDriverWindow((Driver)DriverList.SelectedItem);
             x.Show();
+            Update();
         }
     }
 }

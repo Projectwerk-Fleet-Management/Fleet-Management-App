@@ -170,6 +170,9 @@ namespace Views.Pages
                 deurenField.Text = carDetails.Doors ?? "niet gespecificeerd";
 
                 kleurField.Text = carDetails.Colour ?? "niet gespecificeerd";
+
+                bewerkButton.IsEnabled = true;
+                verwijderButton.IsEnabled = true;
             }
         }
 
@@ -201,6 +204,10 @@ namespace Views.Pages
         {
             UpdateCarWindow ucw = new UpdateCarWindow((Car)CarList.SelectedItem);
             ucw.Show();
+            CarList.UnselectAll();
+            MakeTextBoxesEmpty();
+            bewerkButton.IsEnabled = false;
+            verwijderButton.IsEnabled = false;
         }
 
         private void MakeTextBoxesEmpty()

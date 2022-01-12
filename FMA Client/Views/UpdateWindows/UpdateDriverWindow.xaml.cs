@@ -34,6 +34,7 @@ namespace Views.UpdateWindows
         private AddressManager am = new AddressManager(addressRepository);
         private DriverManager dm = new DriverManager(driverRepository);
         private Driver _driver;
+
         public UpdateDriverWindow(Driver driver)
         {
             InitializeComponent();
@@ -114,7 +115,6 @@ namespace Views.UpdateWindows
             tankkaarlist.ItemsSource = fuelcards;
             tankkaarlist.SelectedItem = f;
         }
-
 
         private void updateDriver()
         {

@@ -1241,7 +1241,7 @@ namespace DAL
                             command.Parameters.AddWithValue("@Fueltypes", fueltypesString);
                         }
 
-                        if (IsActiveDifferent) command.Parameters.AddWithValue("@Postalcode", newFuelcard.IsActive);
+                        if (IsActiveDifferent) command.Parameters.AddWithValue("@IsActive", newFuelcard.IsActive);
 
                         #endregion
 
