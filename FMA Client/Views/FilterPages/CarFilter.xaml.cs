@@ -54,9 +54,9 @@ namespace Views.FilterPages
                     modelField.Text, typeField.Text, fuelList, deurenField.Text, kleurField.Text);
                 returnToCar();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                MessageBox.Show($"Kon de filter niet uitvoerem, {e.Message} - {e.InnerException.Message}");
+                MessageBox.Show($"Kon de filter niet uitvoerem, {ex.Message} - {ex.InnerException.Message}");
             }
  
         }

@@ -106,6 +106,9 @@ namespace Views.Pages
                 bestuurderField.Text = fuelcardDetails.Driver != null ? $"{fuelcardDetails.Driver}" : "Geen bestuurder";
 
                 pincodeField.Text = fuelcardDetails.Pincode > 0 ? fuelcardDetails.Pincode.ToString() : "Geen pincode";
+
+                bewerkButton.IsEnabled = true;
+                verwijderButton.IsEnabled = true;
             }
         }
 
@@ -137,6 +140,7 @@ namespace Views.Pages
         {
             UpdateFuelcardWindow ufcw = new UpdateFuelcardWindow((Fuelcard)FuelcardList.SelectedItem);
             ufcw.Show();
+            MakeTextBoxesEmpty();
         }
 
         private void MakeTextBoxesEmpty()
@@ -147,6 +151,9 @@ namespace Views.Pages
             brandstofTypesField.Text = null;
             bestuurderField.Text = null;
             pincodeField.Text = null;
+            bewerkButton.IsEnabled = false;
+            verwijderButton.IsEnabled = false;
+            FuelcardList.UnselectAll();
         }
     }
 }
